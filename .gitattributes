@@ -1,0 +1,20 @@
+* text=auto
+*.command text eol=lf
+*.sh text eol=lf
+*.swift text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.flac binary
+*.wav binary
+*.png binary
+*.icns binary
+AGENTS.md export-ignore
+CHATGPT-HANDOFF.md export-ignore
+NATIVE-VALIDATION.json export-ignore
+DEVELOPMENT-TREE-VALIDATION.json export-ignore
+Docs/History export-ignore
+Docs/Audio/DEVICE-VALIDATION.md export-ignore
+Docs/Audio/PRESET-MUSIC-VALIDATION.json export-ignore

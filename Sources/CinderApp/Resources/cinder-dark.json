@@ -1,0 +1,22 @@
+{
+  "$schema": "../schemas/theme.schema.json",
+  "schema_version": 1,
+  "kind": "cinder_theme",
+  "id": "cinder-dark",
+  "name": "Cinder Dark",
+  "colors": {
+    "window.background": "#17212B",
+    "text.primary": "#F1F5F9",
+    "text.secondary": "#BAC7D5",
+    "accent": "#F0B561",
+    "warning": "#FFD18A",
+    "control.background": "#273645",
+    "control.foreground": "#F1F5F9",
+    "selection.background": "#F0B561",
+    "selection.foreground": "#17212B",
+    "meter.background": "#17212B",
+    "meter.track": "#30404D",
+    "meter.fill": "#F0B561",
+    "meter.text": "#F1F5F9"
+  }
+}

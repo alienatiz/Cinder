@@ -1,0 +1,22 @@
+{
+  "$schema": "../schemas/theme.schema.json",
+  "schema_version": 1,
+  "kind": "cinder_theme",
+  "id": "high-contrast",
+  "name": "High Contrast",
+  "colors": {
+    "window.background": "#000000",
+    "text.primary": "#FFFFFF",
+    "text.secondary": "#DDDDDD",
+    "accent": "#FFFF00",
+    "warning": "#FFFF00",
+    "control.background": "#111111",
+    "control.foreground": "#FFFFFF",
+    "selection.background": "#FFFF00",
+    "selection.foreground": "#000000",
+    "meter.background": "#000000",
+    "meter.track": "#444444",
+    "meter.fill": "#FFFF00",
+    "meter.text": "#FFFFFF"
+  }
+}

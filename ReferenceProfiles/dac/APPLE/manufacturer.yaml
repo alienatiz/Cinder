@@ -1,0 +1,7 @@
+schema_version: 1
+manufacturer: APPLE
+display_name: Apple
+default_gain_db: -30
+# Mac internal jack ratings live in outputs.yaml and use the Mac model table.
+# External Apple DAC models can be added below after verification.
+models: []

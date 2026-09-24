@@ -1,0 +1,26 @@
+[
+  {
+    "id": "nk1_max",
+    "name": "NICEHCK NK1 Max",
+    "manufacturer": "NICEHCK",
+    "gain": -30,
+    "specification": "CX31993\nPCM maximum (published): 384000 Hz / 32 bit\n3.5 mm: 63 mW / 32 Ω (unspecified gain)\nReference checked: 2026-09-06",
+    "source": "https://www.nicehck.com/blogs/guides/nicehck-dongle-choice-between-nk1-max-nk1-ultra"
+  },
+  {
+    "id": "nk1_ultra",
+    "name": "NICEHCK NK1 Ultra",
+    "manufacturer": "NICEHCK",
+    "gain": -30,
+    "specification": "CX31993\nPCM maximum (published): 384000 Hz / 32 bit\n3.5 mm: 122 mW / 32 Ω (unspecified gain)\nReference checked: 2026-09-06",
+    "source": "https://www.nicehck.com/blogs/guides/nicehck-dongle-choice-between-nk1-max-nk1-ultra"
+  },
+  {
+    "id": "octave",
+    "name": "NICEHCK Octave",
+    "manufacturer": "NICEHCK",
+    "gain": -36,
+    "specification": "ES9039Q2M\nPCM maximum (published): 768000 Hz / 32 bit\n3.5 mm: unknown mW / unknown Ω (unspecified gain)\n4.4 mm balanced: 550 mW / 32 Ω (high gain)\nReference checked: 2026-09-06",
+    "source": "https://www.nicehck.com/products/nicehck-octave-es9039q2m-flagship-portable-dac"
+  }
+]

@@ -1,0 +1,82 @@
+# 개발판과 정식판 운영
+
+현재 개발 브랜치는 `dev`입니다. 정식판에는 `main`과 버전 태그를 사용합니다.
+아직 정식 1.0.0과 LTS는 없습니다.
+
+| 구분 | 기준 | 자동 빌드 결과 |
+|---|---|---|
+| 개발판 | `dev`, 현재 `1.0.0-dev` | 가벼운 소스 검사만 실행. 앱 빌드 없음 |
+| staging 검증 | `dev` 또는 `main`의 선택한 커밋에서 수동 실행 | 앱 ZIP·SHA-256, Actions에서 14일 보관 |
+| 정식판 준비 | `main`, 예: `1.0.0` | 가벼운 소스 검사만 실행. 앱 빌드 없음 |
+| 출시 지점 | `main`에 포함된 커밋의 `v1.0.0` 같은 태그 | 빌드 성공 후 GitHub Release **초안** 생성 |
+| 변경 검토 | `dev` 또는 `main` 대상 PR | 가벼운 소스 검사만 실행 |
+
+개발 커밋마다 Mac 빌드나 Release를 만들지 않습니다. staging도 브랜치가 아니라
+선택한 커밋을 수동으로 검증하는 단계입니다. `latest`, `stable`, `beta` 등의 브랜치를
+추가하지 않습니다. GitHub Releases는 승인한 버전만 공개합니다. 현재 개발
+소스는 `dev`에만 올리며 `main`은 첫 정식판 승격 시 만듭니다.
+
+## 자동화
+
+`.github/workflows/build.yml` 하나를 사용합니다. push/PR에서는 1번만 실행합니다.
+기능이 충분히 모이면 Actions → Build → Run workflow에서 `dev`를 골라
+staging 검증을 시작합니다. 커밋 수로 자동 실행하지 않습니다. 정식 버전 태그를
+push할 때에도 앱 빌드를 실행합니다. 상시 서버나 예약 실행은 두지 않습니다.
+
+1. 메타데이터·번역·음원 해시·Bash 문법 및 브랜치/태그 정책 검사.
+2. GitHub의 `xcode-27` arm64 실행 환경에서 의존성 준비.
+3. 별도 Swift 6 검사와 기본 모드 XCTest·릴리스 앱 빌드.
+4. 실행 권한을 보존한 앱 ZIP·체크섬·빌드 식별 정보를 Actions에 저장.
+5. 정식 버전 태그일 때만 출시 초안을 생성합니다. 자동 공개하지 않습니다.
+
+같은 실행 종류·브랜치의 오래된 검사는 새 실행이 오면 취소합니다. 로그 보관은 7일,
+앱은 14일이며 빌드 결과와 로컬 작업 자료는 저장소에 포함하지 않습니다.
+staging 파일 이름에는 버전과 짧은 커밋 해시를 넣어 같은 개발 버전의 빌드를 구분합니다.
+앱 안에서는 `Cinder (Dev)`와 공개 버전 `1.0.0-dev`를 표시합니다.
+
+GitHub `xcode-27`은 2026-09-24 확인 당시 **public preview**입니다. 워크플로가
+실제 OS·Xcode·SDK·Swift를 검사하며, 맞지 않으면 실패합니다. 이미지 번호만으로
+실기기 호환성을 인정하지 않습니다. Actions 사용 가능 여부·실행 결과는 GitHub에서
+확인해야 합니다. [공식 runner 목록](https://docs.github.com/en/actions/reference/runners/github-hosted-runners),
+[Xcode 27 이미지](https://github.com/actions/runner-images/blob/main/images/macos/xcode-27-arm64-Readme.md).
+
+## 버전 승격
+
+현재 개발 버전은 숫자 접미사 없이 `1.0.0-dev`로 유지합니다. 커밋마다 버전을
+올리지 않으며 staging 산출물은 커밋 해시로 구분합니다. 향후 검증 단계를 나눌
+필요가 생기면 `1.0.0-beta.1`, `1.0.0-rc.1` 같은 번호를 별도로 지정할 수 있습니다.
+`dev`는 접미사가 있는 버전만, `main`은 `1.0.0` 같은 정식 형식만 허용합니다.
+
+출시 준비 시 다음 파일의 버전을 함께 갱신하고 소스 검사를 실행합니다.
+
+- `VERSION`
+- `Build-Identity.sh`: 공개/마케팅/빌드 버전, 채널, 앱 이름
+- `Sources/CinderCore/Models.swift`: Identity 버전·빌드·채널
+- `Sources/CinderApp/Resources/changelog.json`: 해당 버전의 실제 변경 설명
+
+정식판은 채널 `stable`, 앱 이름 `Cinder`를 사용합니다. 현재 개발판은 채널 `dev`,
+앱 이름 `Cinder (Dev)`를 사용합니다. 향후 alpha/beta/rc 검증판은 해당 채널과
+`Cinder (Beta)`를 사용합니다. 새 배포판의 내부 빌드 번호는 이전보다 증가시킵니다.
+식별자 `local.chu.cinder`와 기존 `Swinder` 설정 위치는 유지합니다. 현재 두 채널은
+설정을 공유하며 독립 설치·설정 격리 기능을 제공하지 않습니다.
+
+ROADMAP.md의 출시 조건을 충족한 소스를 `main`으로 승격한 뒤 해당 커밋에
+`v` + VERSION과 정확히 같은 태그를 붙입니다. 태그는 이동하거나 덮어쓰지 않습니다.
+잘못된 태그, 개발 버전 태그, `main`에 없는 커밋은 출시 작업에서 거절합니다.
+
+현재 자동 빌드는 ad-hoc 서명입니다. 출시 초안에서 실기기 결과와 릴리스 노트를
+검토하고 Developer ID 서명·공증된 파일을 준비한 뒤 정식으로 공개해야 합니다.
+
+## LTS를 추가하는 시점
+
+LTS는 새 버전 출시 후에도 특정 이전 버전에 버그·보안 수정을 제공하는 지원 정책입니다.
+
+Cinder는 아직 첫 정식판 전이므로 LTS를 지정하지 않습니다. 향후 새 기능·최소 OS
+변경 때문에 기존 사용자가 구버전에 남아야 한다면, 지원 종료일과 수정 범위를 먼저
+정하고 `release/1.x` 같은 유지보수 브랜치 하나를 추가할 수 있습니다. 그때 CI의
+브랜치·태그 출처 규칙도 명시적으로 확장합니다. 현재 CI는 이 브랜치를 허용하지 않습니다.
+
+## 공동 작업
+
+모든 ChatGPT/Codex 커밋은 Byeongcheol Kim의
+작성자 정보와 `Co-Authored-By: OpenAI <noreply@openai.com>`을 함께 기록합니다.

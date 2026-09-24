@@ -1,0 +1,68 @@
+# Cinder
+
+Cinder는 이어폰·헤드폰의 번인 세션과 오디오 출력 점검을 위한 macOS 앱입니다.
+노이즈·음악·스윕을 원하는 시간 동안 재생하고, 출력 장치와 게인, 휴식이 포함된
+사이클과 예약을 한곳에서 관리합니다.
+
+현재 버전은 **1.0.0-dev**이며 **macOS 27 · Apple Silicon**을 지원합니다.
+첫 정식 출시를 준비하는 개발판입니다. [변경 기록](RELEASE-NOTES.md)에서 기능과 개선 사항을 확인할 수 있습니다.
+
+## 주요 기능
+
+- **Quick Play** — 1분부터 1000시간까지 분 단위 설정, 노이즈·음악·스윕의 개별 재생 또는 휴식이 포함된 60분 전체 사이클, 시작·일시정지·재개·중지.
+- **Music** — 외부 음원 보관함, 곡 선택과 순서 변경, 파일 정보와 초기 읽기 검사, 7종 내장 음악의 반복 재생.
+- **Device & Profile** — 출력 선택과 PCM 정보, Mac·DAC 참고 사양, 수동 게인과 이름을 붙인 게인 프리셋.
+- **Schedule** — 일회성·반복 예약과 재생·예약 프리셋, JSON/YAML 가져오기·내보내기.
+- **Settings** — 한국어·영어·일본어, 시스템·라이트·다크 외관, 사용자 테마와 막대형·바늘형 Peak/RMS 미터.
+
+초기 앱 게인은 −30 dB, 수동 조절 범위는 −60~0 dB입니다. 장치나 참고 프로파일을
+선택해도 게인은 자동으로 바뀌지 않습니다. 디지털 게인과 미터는 실제 음압을
+나타내지 않습니다. 앱을 열거나 프리셋을 불러오는 것만으로 재생·예약을 시작하지 않습니다.
+
+## 개발 상태
+
+Mac의 자동 빌드·오디오 신호 검사는 통과했습니다. 실제 장치에서의 노이즈 연속성,
+7곡의 편곡·다이내믹, 장시간 재생과 배포 검증은 진행 중입니다.
+[검증 범위](VALIDATION.md)와 [1.0.0 계획](ROADMAP.md)을 확인하세요.
+
+## 로컬 빌드
+
+macOS 27.0 이상, Apple Silicon, Xcode 27.x와 macOS 27 SDK가 필요합니다.
+Swift 6.4 컴파일러의 Swift 5 언어 모드와 전체 동시성 진단을 기본으로 사용합니다.
+Yams 6.2.2는 고정된 의존성이며 최초 준비 시 인터넷 연결이 필요합니다.
+
+```bash
+bash Setup-Mac.command
+bash Check-Xcode.command
+bash Build-App.command
+```
+
+생성 앱은 `dist/Cinder (Dev).app`입니다. 로컬 ad-hoc 서명을 사용하며
+Developer ID 서명·공증된 배포본은 아닙니다. 자세한 빌드·패키징 방법과
+별도 Swift 6 검사는 [개발 안내](DEVELOPMENT.md)에 있습니다.
+
+공개 버전은 `1.0.0-dev`입니다. macOS 번들의 숫자 형식에 맞춰 마케팅 버전
+`1.0.0`과 내부 빌드 `5.0.0`을 구분합니다. 앱 식별자는 `local.chu.cinder`,
+설정 위치는 `~/Library/Application Support/Swinder/`이며 기존 설정을 유지합니다.
+
+## 개발판과 정식판
+
+| 구분 | 운영 방식 |
+|---|---|
+| `dev` | 개발 소스. 커밋과 PR에서는 소스 검사만 실행 |
+| staging | 기능이 모인 시점에 Actions에서 수동으로 앱 빌드·검증 |
+| `main` | 첫 정식판부터 검증된 소스를 관리 |
+| `v1.0.0` 같은 태그 | 출시용 빌드 후 Release 초안 생성 |
+
+staging 전용 브랜치나 상시 빌드 서버는 두지 않습니다. 개발 앱은 Actions에서
+14일간 보관하고, 같은 개발 버전의 빌드는 커밋 해시로 구분합니다.
+LTS는 첫 정식판 이후 유지보수 필요에 따라 결정합니다. [출시 운영](Docs/RELEASING.md)을 참조하세요.
+
+## 문서와 크레딧
+
+[개발 안내](DEVELOPMENT.md) · [아키텍처](Docs/ARCHITECTURE.md) ·
+[내장 음악](Docs/Audio/PRESET-MUSIC.md) · [변경 기록](RELEASE-NOTES.md)
+
+Cinder는 **Byeongcheol Kim과 OpenAI의 공동 작업**입니다. ChatGPT/Codex에서
+작성한 커밋에 공동 작성 정보를 기록합니다. [AUTHORS.md](AUTHORS.md)와
+[음원·도구 크레딧](Sources/CinderApp/Resources/preset-music-credits.txt)을 참조하세요.

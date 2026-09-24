@@ -1,0 +1,6 @@
+schema_version: 1
+manufacturer: FIIO
+display_name: FiiO
+default_gain_db: -30
+# No per-model specifications or device names have been verified yet.
+models: []

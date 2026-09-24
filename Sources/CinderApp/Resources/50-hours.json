@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/preset.schema.json",
+  "schema_version": 1,
+  "kind": "cinder_preset",
+  "name": "Extended · 50 h",
+  "settings": {
+    "hours": 50,
+    "gain_db": -30,
+    "music": [],
+    "dac_model": null,
+    "time": "02:00",
+    "repeat_days": 0,
+    "sessions": 1,
+    "keep_awake": true
+  }
+}

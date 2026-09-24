@@ -1,0 +1,1 @@
+Generated synthetic regression fixtures: 239 s and 258 s, 96 kHz, stereo, 24-bit FLAC. Left channel: 440 Hz at 0.2 amplitude in first/last seconds; otherwise silence. Right channel: silence. No copyrighted music.

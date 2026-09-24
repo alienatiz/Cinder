@@ -1,0 +1,12 @@
+# UTF-8 · edit values, keep keys / placeholders consistent.
+schema_version: 1
+profiles:
+  apple_adaptive:
+    low_impedance_below_ohm: 150
+    low_impedance_max_vrms: 1.25
+    high_impedance_max_ohm: 1000
+    high_impedance_vrms: 3.0
+    max_sample_rate_hz: 96000
+    checked: '2026-09-06'
+    source: https://support.apple.com/en-us/108351
+  unknown: null

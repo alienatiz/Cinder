@@ -1,0 +1,409 @@
+[
+  {
+    "identifiers": [
+      "Mac16,3"
+    ],
+    "name": "iMac · 24-inch, 2024, Four ports",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac16,2"
+    ],
+    "name": "iMac · 24-inch, 2024, Two ports",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,5"
+    ],
+    "name": "iMac · 24-inch, 2023, Four ports",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,4"
+    ],
+    "name": "iMac · 24-inch, 2023, Two ports",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "iMac21,1",
+      "iMac21,2"
+    ],
+    "name": "iMac · 24-inch, M1, 2021",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/108054"
+  },
+  {
+    "identifiers": [
+      "iMac20,1",
+      "iMac20,2"
+    ],
+    "name": "iMac · Retina 5K, 27-inch, 2020",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/108054"
+  },
+  {
+    "identifiers": [
+      "iMac19,1"
+    ],
+    "name": "iMac · Retina 5K, 27-inch, 2019",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/108054"
+  },
+  {
+    "identifiers": [
+      "iMac19,2"
+    ],
+    "name": "iMac · Retina 4K, 21.5-inch, 2019",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/108054"
+  },
+  {
+    "identifiers": [
+      "Mac16,9"
+    ],
+    "name": "Mac Studio · M4 Max, 2025",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,14"
+    ],
+    "name": "Mac Studio · M3 Ultra, 2025",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac14,13"
+    ],
+    "name": "Mac Studio · M2 Max, 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac14,14"
+    ],
+    "name": "Mac Studio · M2 Ultra, 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac13,1"
+    ],
+    "name": "Mac Studio · M1 Max, 2022",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac13,2"
+    ],
+    "name": "Mac Studio · M1 Ultra, 2022",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac14,8"
+    ],
+    "name": "Mac Pro · 2023, tower / rack",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "MacPro7,1"
+    ],
+    "name": "Mac Pro · 2019, tower / rack",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/102887"
+  },
+  {
+    "identifiers": [
+      "MacPro6,1"
+    ],
+    "name": "Mac Pro · Late 2013",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/102887"
+  },
+  {
+    "identifiers": [
+      "MacPro5,1"
+    ],
+    "name": "Mac Pro · 2010 / 2012, including Server",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/102887"
+  },
+  {
+    "identifiers": [
+      "MacPro4,1"
+    ],
+    "name": "Mac Pro · Early 2009",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/102887"
+  },
+  {
+    "identifiers": [
+      "Mac14,2"
+    ],
+    "name": "MacBook Air · 13-inch, M2, 2022",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac14,15"
+    ],
+    "name": "MacBook Air · 15-inch, M2, 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,12"
+    ],
+    "name": "MacBook Air · 13-inch, M3, 2024",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,13"
+    ],
+    "name": "MacBook Air · 15-inch, M3, 2024",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac16,12"
+    ],
+    "name": "MacBook Air · 13-inch, M4, 2025",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac16,13"
+    ],
+    "name": "MacBook Air · 15-inch, M4, 2025",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac17,3"
+    ],
+    "name": "MacBook Air · 13-inch, M5, 2026",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac17,4"
+    ],
+    "name": "MacBook Air · 15-inch, M5, 2026",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "MacBookAir10,1"
+    ],
+    "name": "MacBook Air · M1, 2020",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/102869"
+  },
+  {
+    "identifiers": [
+      "MacBookAir9,1"
+    ],
+    "name": "MacBook Air · Retina, 13-inch, 2020",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/102869"
+  },
+  {
+    "identifiers": [
+      "MacBookAir8,2"
+    ],
+    "name": "MacBook Air · Retina, 13-inch, 2019",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/102869"
+  },
+  {
+    "identifiers": [
+      "MacBookAir8,1"
+    ],
+    "name": "MacBook Air · Retina, 13-inch, 2018",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-us/102869"
+  },
+  {
+    "identifiers": [
+      "MacBookPro18,3",
+      "MacBookPro18,4"
+    ],
+    "name": "MacBook Pro · 14-inch, 2021",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "MacBookPro18,1",
+      "MacBookPro18,2"
+    ],
+    "name": "MacBook Pro · 16-inch, 2021",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac14,7"
+    ],
+    "name": "MacBook Pro · 13-inch, M2, 2022",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac14,5",
+      "Mac14,9"
+    ],
+    "name": "MacBook Pro · 14-inch, 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac14,6",
+      "Mac14,10"
+    ],
+    "name": "MacBook Pro · 16-inch, 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,3"
+    ],
+    "name": "MacBook Pro · 14-inch, M3, Nov 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,6",
+      "Mac15,8",
+      "Mac15,10"
+    ],
+    "name": "MacBook Pro · 14-inch, M3 Pro / Max, Nov 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac15,7",
+      "Mac15,9",
+      "Mac15,11"
+    ],
+    "name": "MacBook Pro · 16-inch, M3 Pro / Max, Nov 2023",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac16,1"
+    ],
+    "name": "MacBook Pro · 14-inch, M4, 2024",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac16,6",
+      "Mac16,8"
+    ],
+    "name": "MacBook Pro · 14-inch, M4 Pro / Max, 2024",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac16,7",
+      "Mac16,5"
+    ],
+    "name": "MacBook Pro · 16-inch, M4 Pro / Max, 2024",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac17,2"
+    ],
+    "name": "MacBook Pro · 14-inch, M5, 2025",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac17,7",
+      "Mac17,9"
+    ],
+    "name": "MacBook Pro · 14-inch, M5 Pro / Max, 2026",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "Mac17,6",
+      "Mac17,8"
+    ],
+    "name": "MacBook Pro · 16-inch, M5 Pro / Max, 2026",
+    "output": "Apple reference: <150 Ω up to 1.25 Vrms; 150–1000 Ω up to 3 Vrms; PCM up to 96 kHz. Not a live measurement.",
+    "source": "https://support.apple.com/en-us/108351"
+  },
+  {
+    "identifiers": [
+      "MacBookPro17,1"
+    ],
+    "name": "MacBook Pro · 13-inch, M1, 2020",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/108052"
+  },
+  {
+    "identifiers": [
+      "MacBookPro16,3"
+    ],
+    "name": "MacBook Pro · 13-inch, 2020, two Thunderbolt ports",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/108052"
+  },
+  {
+    "identifiers": [
+      "MacBookPro16,2"
+    ],
+    "name": "MacBook Pro · 13-inch, 2020, four Thunderbolt ports",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/108052"
+  },
+  {
+    "identifiers": [
+      "MacBookPro16,1",
+      "MacBookPro16,4"
+    ],
+    "name": "MacBook Pro · 16-inch, 2019",
+    "output": "Analog output specifications unknown.",
+    "source": "https://support.apple.com/en-gb/108052"
+  }
+]

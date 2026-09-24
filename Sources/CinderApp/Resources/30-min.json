@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/preset.schema.json",
+  "schema_version": 1,
+  "kind": "cinder_preset",
+  "name": "Check · 30 min",
+  "settings": {
+    "hours": 0.5,
+    "gain_db": -30,
+    "music": [],
+    "dac_model": null,
+    "time": "02:00",
+    "repeat_days": 0,
+    "sessions": 1,
+    "keep_awake": true
+  }
+}

@@ -1,0 +1,11 @@
+# Cinder app identity. Reuse the Swift-test settings directory to preserve preferences.
+PRODUCT_NAME="Cinder"
+APP_NAME="Cinder (Dev)"
+BUNDLE_ID="local.chu.cinder"
+SETTINGS_DIRECTORY="Swinder"
+PUBLIC_VERSION="1.0.0-dev"
+MARKETING_VERSION="1.0.0"
+BUILD_VERSION="5.0.0"
+RELEASE_CHANNEL="dev"
+MINIMUM_MACOS="27.0"
+TARGET_ARCH="arm64"

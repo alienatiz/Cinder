@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "releases": [
+    {
+      "version": "1.0.0-dev",
+      "change_count": 15,
+      "changes": {
+        "ko": [
+          {
+            "type": "New",
+            "text": "Cinder는 이어폰·헤드폰의 번인 세션과 오디오 출력 점검을 위한 macOS 앱입니다. macOS 27과 Apple Silicon을 지원하며, 1.0.0-dev에서 첫 정식 출시를 준비합니다."
+          },
+          {
+            "type": "New",
+            "text": "핑크 노이즈, 대역 제한 노이즈, 음악, 스윕을 개별 재생하거나 휴식을 포함한 60분 전체 사이클로 실행할 수 있습니다. 재생 시간은 1분부터 1000시간까지 분 단위로 설정합니다."
+          },
+          {
+            "type": "New",
+            "text": "Quick Play에서 출력 장치와 재생 기능을 선택하고 시작·일시정지·재개·중지를 제어합니다. 원형 진행 표시에서 경과 시간과 현재 단계, 예상 종료 시각을 확인합니다."
+          },
+          {
+            "type": "New",
+            "text": "음원 보관함에서 사용할 곡을 선택하고 순서를 바꿀 수 있습니다. 파일 형식·비트 깊이·샘플레이트·길이를 표시하며, 초기 읽기 검사 결과를 녹색 체크 또는 빨간 오류 표시로 안내합니다. 선택한 파일에 문제가 있으면 재생과 예약을 막습니다."
+          },
+          {
+            "type": "New",
+            "text": "Classic, Balanced, Electronic, Acoustic, POP, Rock, Metal의 내장 음악 7종을 제공합니다. 선택한 곡은 세션이 끝날 때까지 반복됩니다. 각 곡의 편곡과 강약·전개는 계속 개선하고 있습니다."
+          },
+          {
+            "type": "New",
+            "text": "앱 게인을 −60~0 dB 범위에서 직접 조절하고, 이름을 붙인 게인 프리셋으로 저장·불러오기·수정·삭제할 수 있습니다. Reset은 저장한 기본값이나 적용한 재생 프리셋의 값을 복원합니다."
+          },
+          {
+            "type": "New",
+            "text": "Device & Profile에서 연결된 출력 장치와 앱의 PCM 출력 정보, Mac·DAC의 참고 사양을 확인합니다. 장치나 참고 프로파일을 선택해도 게인은 자동으로 바뀌지 않습니다."
+          },
+          {
+            "type": "New",
+            "text": "날짜와 시각을 지정하는 일회성 예약, 일 단위 간격과 총 실행 횟수를 정하는 반복 예약을 지원합니다. 재생·예약 프리셋을 저장하고 JSON/YAML로 가져오거나 내보낼 수 있습니다. 예약은 직접 확정해야 하며 앱 종료 시 해제됩니다."
+          },
+          {
+            "type": "New",
+            "text": "한국어·영어·일본어와 시스템·라이트·다크 외관을 지원합니다. 사용자 테마의 색상을 편집하고 가져오거나 내보낼 수 있으며, Peak/RMS 미터를 막대형 또는 바늘형으로 표시합니다."
+          },
+          {
+            "type": "Fixed",
+            "text": "핑크 노이즈와 대역 제한 노이즈의 반복 경계에서 음량이 내려가던 처리를 보완했습니다. Mac의 자동 신호 검사를 통과했으며, 실제 출력 장치에서의 연속 재생은 추가 검증이 필요합니다."
+          },
+          {
+            "type": "Fixed",
+            "text": "일시정지할 때 페이드가 끝난 뒤 오디오 엔진을 멈추도록 조정했습니다. 재개 실패를 오류로 안내하고, 일시정지 상태에서 중지하면 오디오 자원을 해제합니다. 출력 장치가 바뀌거나 연결이 끊어지면 재생을 중단합니다."
+          },
+          {
+            "type": "Fixed",
+            "text": "음악 준비 중 중지하면 읽기와 변환 작업을 취소하도록 개선했습니다. 불필요한 음악 준비와 전체 음원 복사를 줄이고, 필요한 메모리를 확인해 큰 파일을 처리합니다."
+          },
+          {
+            "type": "Fixed",
+            "text": "Peak는 화면 갱신 사이의 최대 신호를, RMS는 일정한 100ms 구간의 신호를 반영하도록 개선했습니다. 일시정지 중의 무음이 재개 직후 RMS에 섞이지 않도록 했습니다."
+          },
+          {
+            "type": "Fixed",
+            "text": "세션 완료 시 지정 시간을 다시 표시하고, 시간이나 재생 기능을 변경하면 이전 진행 표시를 초기화합니다. 미터 갱신이 다른 화면에 미치는 영향을 줄이고, 테마 변경 시 배경과 글자색이 함께 적용되도록 다듬었습니다."
+          },
+          {
+            "type": "Fixed",
+            "text": "기존 시간·게인·테마·음악 선택과 프리셋을 유지하고, 연결된 출력 장치의 선택을 복원합니다. 앱을 열거나 프리셋을 불러오는 것만으로 재생이나 예약을 시작하지 않습니다."
+          }
+        ],
+        "en": [
+          {
+            "type": "New",
+            "text": "Cinder is a macOS app for running earphone and headphone burn-in sessions and checking audio output. It supports macOS 27 and Apple Silicon; 1.0.0-dev prepares for the first stable release."
+          },
+          {
+            "type": "New",
+            "text": "Play pink noise, band-limited noise, music or a sweep individually, or run a 60-minute cycle with rest periods. Set sessions from 1 minute to 1,000 hours in one-minute increments."
+          },
+          {
+            "type": "New",
+            "text": "Choose an output device and playback mode in Quick Play, with Start, Pause, Resume and Stop controls. The progress display shows elapsed time, the current step and the estimated finish time."
+          },
+          {
+            "type": "New",
+            "text": "Select and reorder tracks in the music library. View each file’s format, bit depth, sample rate and duration, with a green check or red error indicator for the initial read check. Problems in selected files block playback and scheduling."
+          },
+          {
+            "type": "New",
+            "text": "Seven built-in music presets are available: Classic, Balanced, Electronic, Acoustic, POP, Rock and Metal. The selected track repeats until the session ends. Arrangement, dynamics and musical development remain work in progress."
+          },
+          {
+            "type": "New",
+            "text": "Adjust app gain manually from −60 to 0 dB. Save, load, edit and delete named gain presets. Reset restores the saved default or the gain of the applied playback preset."
+          },
+          {
+            "type": "New",
+            "text": "Device & Profile shows connected outputs, app PCM output details and reference specifications for Macs and DACs. Selecting a device or reference profile does not automatically change gain."
+          },
+          {
+            "type": "New",
+            "text": "Schedule a single session by date and time, or repeat it at a daily interval for a chosen total number of runs. Save playback and scheduling presets and import or export them as JSON/YAML. Schedules require explicit confirmation and are cancelled when the app closes."
+          },
+          {
+            "type": "New",
+            "text": "Use Korean, English or Japanese with system, light or dark appearance. Edit, import and export custom theme colors, and display Peak/RMS levels with bar or needle meters."
+          },
+          {
+            "type": "Fixed",
+            "text": "Adjusted pink and band-limited noise loops to address volume dips at repeat boundaries. Automated signal checks passed on Mac; continuous playback still requires verification on actual output devices."
+          },
+          {
+            "type": "Fixed",
+            "text": "Pause now stops the audio engine after the fade finishes. Resume failures are reported, and stopping while paused releases audio resources. Playback stops if the output changes or disconnects."
+          },
+          {
+            "type": "Fixed",
+            "text": "Stopping during music preparation cancels reading and conversion. Unused music preparation and full-file copies have been reduced, with memory checks before handling large files."
+          },
+          {
+            "type": "Fixed",
+            "text": "Peak captures the highest signal between display updates, while RMS uses fixed 100 ms windows. Silence during a pause is excluded from the RMS shown immediately after resuming."
+          },
+          {
+            "type": "Fixed",
+            "text": "The selected duration returns after a session completes, and changing the duration or playback mode resets prior progress. Meter updates have less impact on other views, and theme changes apply background and text colors together."
+          },
+          {
+            "type": "Fixed",
+            "text": "Preserve existing duration, gain, theme, music selections and presets, and restore the selected output when it is connected. Opening the app or loading a preset does not start playback or arm a schedule."
+          }
+        ],
+        "ja": [
+          {
+            "type": "New",
+            "text": "Cinder は、イヤホン・ヘッドホンのバーンインセッションと音声出力の確認を行う macOS アプリです。macOS 27 と Apple Silicon に対応し、1.0.0-dev で初の正式リリースを準備しています。"
+          },
+          {
+            "type": "New",
+            "text": "ピンクノイズ、帯域制限ノイズ、音楽、スイープを個別に再生するか、休憩を含む60分のフルサイクルを実行できます。再生時間は1分から1000時間まで、1分単位で設定できます。"
+          },
+          {
+            "type": "New",
+            "text": "Quick Play で出力機器と再生モードを選び、開始・一時停止・再開・停止を操作できます。進捗表示で経過時間、現在のステップ、終了予定時刻を確認できます。"
+          },
+          {
+            "type": "New",
+            "text": "音楽ライブラリで使用する曲を選択し、順序を変更できます。形式・ビット深度・サンプルレート・長さを表示し、初期読み込みの結果を緑のチェックまたは赤いエラーで案内します。選択したファイルに問題がある場合は再生と予約を開始しません。"
+          },
+          {
+            "type": "New",
+            "text": "Classic、Balanced、Electronic、Acoustic、POP、Rock、Metal の内蔵音楽7種を用意しました。選択した曲をセッション終了まで繰り返します。各曲の編曲、強弱、展開は引き続き改善中です。"
+          },
+          {
+            "type": "New",
+            "text": "アプリのゲインを −60〜0 dB の範囲で手動調整できます。名前付きゲインプリセットの保存・読み込み・編集・削除に対応し、Reset で保存した既定値または適用した再生プリセットの値に戻せます。"
+          },
+          {
+            "type": "New",
+            "text": "Device & Profile で接続中の出力機器、アプリの PCM 出力情報、Mac・DAC の参考仕様を確認できます。機器や参考プロファイルの選択によってゲインが自動で変わることはありません。"
+          },
+          {
+            "type": "New",
+            "text": "日時を指定する1回限りの予約と、日単位の間隔・総実行回数を指定する繰り返し予約に対応します。再生・予約プリセットを保存し、JSON/YAML で入出力できます。予約には明示的な確定が必要で、アプリ終了時に解除されます。"
+          },
+          {
+            "type": "New",
+            "text": "韓国語・英語・日本語と、システム連動・ライト・ダークの外観に対応します。カスタムテーマの色を編集・入出力し、Peak/RMS をバー型または針型メーターで表示できます。"
+          },
+          {
+            "type": "Fixed",
+            "text": "ピンクノイズと帯域制限ノイズのループ境界で音量が下がる処理を改善しました。Mac の自動信号検査は通過していますが、実際の出力機器での連続再生は引き続き検証が必要です。"
+          },
+          {
+            "type": "Fixed",
+            "text": "一時停止時はフェード完了後にオーディオエンジンを停止します。再開失敗を通知し、一時停止中の停止操作で音声リソースを解放します。出力機器の変更や切断時は再生を中断します。"
+          },
+          {
+            "type": "Fixed",
+            "text": "音楽準備中に停止すると、読み込みと変換をキャンセルします。不要な音楽準備や音源全体のコピーを減らし、大きなファイルの処理前に必要なメモリを確認します。"
+          },
+          {
+            "type": "Fixed",
+            "text": "Peak は画面更新間の最大信号を、RMS は一定の100ms区間の信号を反映します。一時停止中の無音が、再開直後の RMS に混ざらないようにしました。"
+          },
+          {
+            "type": "Fixed",
+            "text": "セッション完了時に設定時間を再表示し、時間や再生モードを変更すると前回の進捗をリセットします。メーター更新による他の画面への影響を減らし、テーマ変更時は背景と文字色を同時に適用します。"
+          },
+          {
+            "type": "Fixed",
+            "text": "既存の時間・ゲイン・テーマ・音楽選択・プリセットを保持し、接続中であれば出力機器の選択を復元します。アプリの起動やプリセットの読み込みだけで再生や予約が始まることはありません。"
+          }
+        ]
+      }
+    }
+  ]
+}

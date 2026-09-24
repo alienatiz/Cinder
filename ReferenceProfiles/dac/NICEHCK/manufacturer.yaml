@@ -1,0 +1,61 @@
+schema_version: 1
+manufacturer: NICEHCK
+display_name: NICEHCK
+default_gain_db: -30
+# USB descriptor names are unverified; select these profiles manually in the GUI.
+models:
+  - id: nk1_max
+    name: NICEHCK NK1 Max
+    device_names: []
+    manual_selection: true
+    gain_db: -30
+    source: https://www.nicehck.com/blogs/guides/nicehck-dongle-choice-between-nk1-max-nk1-ultra
+    checked: '2026-09-06'
+    specifications:
+      dac_chip: CX31993
+      max_pcm_hz: 384000
+      max_pcm_bits: 32
+      outputs:
+        - connector: 3.5 mm
+          power_mw: 63
+          load_ohm: 32
+          hardware_gain: unspecified
+      hardware_control: system_volume
+  - id: nk1_ultra
+    name: NICEHCK NK1 Ultra
+    device_names: []
+    manual_selection: true
+    gain_db: -30
+    source: https://www.nicehck.com/blogs/guides/nicehck-dongle-choice-between-nk1-max-nk1-ultra
+    checked: '2026-09-06'
+    specifications:
+      dac_chip: CX31993
+      max_pcm_hz: 384000
+      max_pcm_bits: 32
+      outputs:
+        - connector: 3.5 mm
+          power_mw: 122
+          load_ohm: 32
+          hardware_gain: unspecified
+      hardware_control: system_volume
+  - id: octave
+    name: NICEHCK Octave
+    device_names: []
+    manual_selection: true
+    gain_db: -36
+    source: https://www.nicehck.com/products/nicehck-octave-es9039q2m-flagship-portable-dac
+    checked: '2026-09-06'
+    specifications:
+      dac_chip: ES9039Q2M
+      max_pcm_hz: 768000
+      max_pcm_bits: 32
+      outputs:
+        - connector: 3.5 mm
+          power_mw: null
+          load_ohm: null
+          hardware_gain: unspecified
+        - connector: 4.4 mm balanced
+          power_mw: 550
+          load_ohm: 32
+          hardware_gain: high
+      hardware_control: set_low_gain_and_low_volume

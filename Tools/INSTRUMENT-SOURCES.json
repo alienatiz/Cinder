@@ -1,0 +1,12 @@
+{
+  "fluidsynth": {
+    "version": "v2.6.0",
+    "url": "https://github.com/FluidSynth/fluidsynth/releases/download/v2.6.0/fluidsynth-v2.6.0-win10-x64-cpp11.zip",
+    "sha256": "817262deacaa748edb3af6731dffe1766b00146790becfccc949a9f701e76681"
+  },
+  "soundfont": {
+    "url": "https://raw.githubusercontent.com/mrbumpy409/GeneralUser-GS/main/GeneralUser-GS.sf2",
+    "git_blob": "298b552d2e9d1307e03e5c5c99d2c046aaed9ec3",
+    "sha256": "9575028c7a1f589f5770fccc8cff2734566af40cd26ed836944e9a5152688cfe"
+  }
+}

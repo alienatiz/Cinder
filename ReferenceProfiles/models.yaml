@@ -1,0 +1,279 @@
+# UTF-8 · edit values, keep keys / placeholders consistent.
+schema_version: 1
+families:
+  Air:
+    product: MacBook Air
+    source: https://support.apple.com/en-us/102869
+  Pro:
+    product: MacBook Pro
+    source: https://support.apple.com/en-gb/108052
+  iMac:
+    product: iMac
+    source: https://support.apple.com/en-us/108054
+  Studio:
+    product: Mac Studio
+    source: https://support.apple.com/en-us/102231
+  Mac Pro:
+    product: Mac Pro
+    source: https://support.apple.com/en-gb/102887
+models:
+- identifiers:
+  - Mac16,3
+  family: iMac
+  label: 24-inch, 2024, Four ports
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac16,2
+  family: iMac
+  label: 24-inch, 2024, Two ports
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,5
+  family: iMac
+  label: 24-inch, 2023, Four ports
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,4
+  family: iMac
+  label: 24-inch, 2023, Two ports
+  output_profile: apple_adaptive
+- identifiers:
+  - iMac21,1
+  - iMac21,2
+  family: iMac
+  label: 24-inch, M1, 2021
+  output_profile: unknown
+- identifiers:
+  - iMac20,1
+  - iMac20,2
+  family: iMac
+  label: Retina 5K, 27-inch, 2020
+  output_profile: unknown
+- identifiers:
+  - iMac19,1
+  family: iMac
+  label: Retina 5K, 27-inch, 2019
+  output_profile: unknown
+- identifiers:
+  - iMac19,2
+  family: iMac
+  label: Retina 4K, 21.5-inch, 2019
+  output_profile: unknown
+- identifiers:
+  - Mac16,9
+  family: Studio
+  label: M4 Max, 2025
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,14
+  family: Studio
+  label: M3 Ultra, 2025
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac14,13
+  family: Studio
+  label: M2 Max, 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac14,14
+  family: Studio
+  label: M2 Ultra, 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac13,1
+  family: Studio
+  label: M1 Max, 2022
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac13,2
+  family: Studio
+  label: M1 Ultra, 2022
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac14,8
+  family: Mac Pro
+  label: 2023, tower / rack
+  output_profile: apple_adaptive
+- identifiers:
+  - MacPro7,1
+  family: Mac Pro
+  label: 2019, tower / rack
+  output_profile: unknown
+- identifiers:
+  - MacPro6,1
+  family: Mac Pro
+  label: Late 2013
+  output_profile: unknown
+- identifiers:
+  - MacPro5,1
+  family: Mac Pro
+  label: 2010 / 2012, including Server
+  output_profile: unknown
+- identifiers:
+  - MacPro4,1
+  family: Mac Pro
+  label: Early 2009
+  output_profile: unknown
+- identifiers:
+  - Mac14,2
+  family: Air
+  label: 13-inch, M2, 2022
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac14,15
+  family: Air
+  label: 15-inch, M2, 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,12
+  family: Air
+  label: 13-inch, M3, 2024
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,13
+  family: Air
+  label: 15-inch, M3, 2024
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac16,12
+  family: Air
+  label: 13-inch, M4, 2025
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac16,13
+  family: Air
+  label: 15-inch, M4, 2025
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac17,3
+  family: Air
+  label: 13-inch, M5, 2026
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac17,4
+  family: Air
+  label: 15-inch, M5, 2026
+  output_profile: apple_adaptive
+- identifiers:
+  - MacBookAir10,1
+  family: Air
+  label: M1, 2020
+  output_profile: unknown
+- identifiers:
+  - MacBookAir9,1
+  family: Air
+  label: Retina, 13-inch, 2020
+  output_profile: unknown
+- identifiers:
+  - MacBookAir8,2
+  family: Air
+  label: Retina, 13-inch, 2019
+  output_profile: unknown
+- identifiers:
+  - MacBookAir8,1
+  family: Air
+  label: Retina, 13-inch, 2018
+  output_profile: unknown
+- identifiers:
+  - MacBookPro18,3
+  - MacBookPro18,4
+  family: Pro
+  label: 14-inch, 2021
+  output_profile: apple_adaptive
+- identifiers:
+  - MacBookPro18,1
+  - MacBookPro18,2
+  family: Pro
+  label: 16-inch, 2021
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac14,7
+  family: Pro
+  label: 13-inch, M2, 2022
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac14,5
+  - Mac14,9
+  family: Pro
+  label: 14-inch, 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac14,6
+  - Mac14,10
+  family: Pro
+  label: 16-inch, 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,3
+  family: Pro
+  label: 14-inch, M3, Nov 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,6
+  - Mac15,8
+  - Mac15,10
+  family: Pro
+  label: 14-inch, M3 Pro / Max, Nov 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac15,7
+  - Mac15,9
+  - Mac15,11
+  family: Pro
+  label: 16-inch, M3 Pro / Max, Nov 2023
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac16,1
+  family: Pro
+  label: 14-inch, M4, 2024
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac16,6
+  - Mac16,8
+  family: Pro
+  label: 14-inch, M4 Pro / Max, 2024
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac16,7
+  - Mac16,5
+  family: Pro
+  label: 16-inch, M4 Pro / Max, 2024
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac17,2
+  family: Pro
+  label: 14-inch, M5, 2025
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac17,7
+  - Mac17,9
+  family: Pro
+  label: 14-inch, M5 Pro / Max, 2026
+  output_profile: apple_adaptive
+- identifiers:
+  - Mac17,6
+  - Mac17,8
+  family: Pro
+  label: 16-inch, M5 Pro / Max, 2026
+  output_profile: apple_adaptive
+- identifiers:
+  - MacBookPro17,1
+  family: Pro
+  label: 13-inch, M1, 2020
+  output_profile: unknown
+- identifiers:
+  - MacBookPro16,3
+  family: Pro
+  label: 13-inch, 2020, two Thunderbolt ports
+  output_profile: unknown
+- identifiers:
+  - MacBookPro16,2
+  family: Pro
+  label: 13-inch, 2020, four Thunderbolt ports
+  output_profile: unknown
+- identifiers:
+  - MacBookPro16,1
+  - MacBookPro16,4
+  family: Pro
+  label: 16-inch, 2019
+  output_profile: unknown

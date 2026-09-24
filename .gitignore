@@ -1,0 +1,15 @@
+.build/
+.swiftpm/
+dist/
+.DS_Store
+__pycache__/
+*.py[cod]
+# Local agent instructions must never be published.
+AGENTS.md
+# Local working notes and detailed execution records.
+/CHATGPT-HANDOFF.md
+/NATIVE-VALIDATION.json
+/DEVELOPMENT-TREE-VALIDATION.json
+/Docs/History/
+/Docs/Audio/DEVICE-VALIDATION.md
+/Docs/Audio/PRESET-MUSIC-VALIDATION.json

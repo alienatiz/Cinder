@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "kind": "cinder_scheduling_preset",
+  "name": "Night · Daily × 3",
+  "time": "02:00",
+  "repeat_days": 1,
+  "sessions": 3
+}

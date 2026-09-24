@@ -1,0 +1,124 @@
+name: Build
+
+on:
+  push:
+    branches: [dev, main]
+    tags: ['v*']
+  pull_request:
+    branches: [dev, main]
+  workflow_dispatch:
+    # Run manually when accumulated dev work is ready for staging validation.
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  source:
+    name: Source and release policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      artifact: ${{ steps.policy.outputs.artifact }}
+      channel: ${{ steps.policy.outputs.channel }}
+      version: ${{ steps.policy.outputs.version }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate source and bundled music
+        run: python3 Tools/Validate-Source.py
+      - name: Check build policy
+        id: policy
+        run: python3 Tools/Check-Release.py
+      - name: Test branch and release rules
+        run: python3 -m unittest discover -s Tests/Tooling -v
+      - name: Check shell syntax
+        run: |
+          for script in *.sh *.command; do
+            bash -n "$script"
+          done
+
+  macos:
+    name: Staging / release · macOS 27
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
+    needs: source
+    # GitHub's macOS 27 / Xcode 27 image is currently a public preview.
+    # The scripts verify the actual host, compiler, SDK and architecture.
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Prepare Mac dependencies
+        run: bash Setup-Mac.command
+      - name: Check Swift 6 migration mode
+        run: bash Check-Xcode.command swift6
+      - name: Test and build app
+        run: bash Build-App.command
+      - name: Archive app with executable permissions
+        env:
+          ARTIFACT_NAME: ${{ needs.source.outputs.artifact }}
+          BUILD_CHANNEL: ${{ needs.source.outputs.channel }}
+        run: |
+          source ./Build-Identity.sh
+          ditto -c -k --sequesterRsrc --keepParent "dist/$APP_NAME.app" "dist/$ARTIFACT_NAME.zip"
+          cd dist
+          shasum -a 256 "$ARTIFACT_NAME.zip" > "$ARTIFACT_NAME.zip.sha256"
+          printf 'Channel: %s\nVersion: %s\nCommit: %s\nSigning: local ad-hoc; not notarized\n' \
+            "$BUILD_CHANNEL" "$PUBLIC_VERSION" "$GITHUB_SHA" > "$ARTIFACT_NAME.txt"
+      - name: Upload app
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ${{ needs.source.outputs.artifact }}
+          path: |
+            dist/*.zip
+            dist/*.zip.sha256
+            dist/*.txt
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+      - name: Upload validation logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: logs-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .build/mac-setup/*.log
+            .build/mac-setup/*.txt
+            .build/compatibility-swift6/*.log
+            .build/compatibility-swift6/*.txt
+            .build/golden-gate-app/*.log
+          include-hidden-files: true
+          retention-days: 7
+
+  release:
+    name: Prepare release draft
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [source, macos]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: ${{ needs.source.outputs.artifact }}
+          path: release-assets
+      - name: Create draft for final release review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" release-assets/* \
+            --verify-tag --draft --title "Cinder $RELEASE_TAG" \
+            --notes-file Docs/RELEASE-DRAFT.md

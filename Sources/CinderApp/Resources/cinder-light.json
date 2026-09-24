@@ -1,0 +1,22 @@
+{
+  "$schema": "../schemas/theme.schema.json",
+  "schema_version": 1,
+  "kind": "cinder_theme",
+  "id": "cinder-light",
+  "name": "Cinder Light",
+  "colors": {
+    "window.background": "#F5F7FA",
+    "text.primary": "#1E293B",
+    "text.secondary": "#475569",
+    "accent": "#9A4300",
+    "warning": "#8A3B00",
+    "control.background": "#FFFFFF",
+    "control.foreground": "#1E293B",
+    "selection.background": "#9A4300",
+    "selection.foreground": "#FFFFFF",
+    "meter.background": "#F5F7FA",
+    "meter.track": "#D5DDE7",
+    "meter.fill": "#9A4300",
+    "meter.text": "#1E293B"
+  }
+}
