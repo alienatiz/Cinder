@@ -4,6 +4,20 @@
 실행·테스트 환경은 macOS 27.0 이상과 Apple Silicon이며, Xcode 27.x,
 macOS 27 SDK, Swift 6.4 이상(6.x 컴파일러)이 필요합니다.
 
+## Swift 버전과 앱 채널
+
+| 구분 | 현재 값 | 의미 |
+|---|---|---|
+| Swift 컴파일러 | 6.4 | 소스를 검사하고 실행 파일을 만드는 도구 |
+| Swift 언어 모드 | 기본 5, 별도 검사 6 | 같은 컴파일러에서 적용할 언어·동시성 규칙 |
+| Cinder 버전·출시 채널 | `1.0.0-dev` · `dev` | 앱의 기능 버전과 배포 단계 |
+
+Swift 6.4 컴파일러를 이미 사용합니다. 기본 언어 모드는 Swift 5이며 전체 동시성
+진단을 켜 두었습니다. `Check-Xcode.command swift6`는 같은 컴파일러로 Swift 6
+언어 모드를 별도 검사합니다. 앱의 dev·stable 선택은 이 설정을 바꾸지 않습니다.
+[Swift 공식 버전 호환성 안내](https://docs.swift.org/latest/documentation/the-swift-programming-language/compatibility/)도
+컴파일러 버전과 언어 모드를 구분합니다.
+
 ## 준비와 빌드
 
 ```bash

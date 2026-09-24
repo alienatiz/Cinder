@@ -12,7 +12,8 @@ struct SettingsView: View {
                 Text(model.t("Playback & Presets")).tag(0)
                 Text(model.t("Language & Appearance")).tag(1)
                 Text(model.t("Theme Editor")).tag(2)
-            }.pickerStyle(.segmented).frame(maxWidth: 700)
+                Text(model.t("Updates")).tag(3)
+            }.pickerStyle(.segmented).frame(maxWidth: 800)
             if category == 0 { PlaybackSettingsView(model: model) }
             else if category == 1 {
                 HStack(alignment: .top, spacing: 22) {
@@ -33,7 +34,8 @@ struct SettingsView: View {
                         Text(model.t("Meter style changes visualization only. Values remain digital dBFS."))
                     }
                 }
-            } else { ThemeEditorView(model: model) }
+            } else if category == 2 { ThemeEditorView(model: model) }
+            else { UpdateSettingsView(model: model) }
         }
     }
 }

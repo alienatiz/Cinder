@@ -22,6 +22,7 @@ import CinderStorage
     @Published var message = ""
     @Published var language = Locale.preferredLanguages.first?.hasPrefix("ko") == true ? "ko" : (Locale.preferredLanguages.first?.hasPrefix("ja") == true ? "ja" : "en")
     @Published var appearance = "system"
+    @Published private(set) var updateChannel: UpdateChannel = .installedDefault
     @Published var music: [String] = []
     @Published var musicInspection: [MusicInspection] = []
     @Published var outputRate = 0.0
@@ -119,6 +120,8 @@ import CinderStorage
                 }
             }
         } catch { self.error = error.localizedDescription }
+        do { updateChannel = try storage.loadUpdatePreferences().channel }
+        catch { self.error = t("Update channel could not be loaded. Choose a channel to save it again.") }
         monitor.start { [weak self] in self?.devicesChanged() }
         audio.configurationChanged = { [weak self] in self?.fail(CinderError.deviceChanged) }
         loadCustomizations()
@@ -129,6 +132,12 @@ import CinderStorage
         refreshOutputInfo()
     }
     func t(_ text: String) -> String { catalog[language]?[text] ?? text }
+    func selectUpdateChannel(_ channel: UpdateChannel) {
+        do {
+            try storage.saveUpdatePreferences(UpdatePreferences(channel: channel))
+            updateChannel = channel
+        } catch { self.error = t("Update channel could not be saved. Your previous choice is unchanged.") }
+    }
     /// Selection must refresh validation and persist even when the main window is closed.
     func selectOutput(_ uid: String) {
         guard !isLocked, uid.isEmpty || devices.contains(where: { $0.uid == uid }) else { return }

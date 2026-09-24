@@ -255,5 +255,18 @@
   "Quit Cinder": "Cinder 종료",
   "Quit stops playback and cancels pending sessions.": "종료하면 재생을 멈추고 남은 예약과 실행 계획을 취소합니다.",
   "Closing the window keeps playback and schedules running.": "창을 닫아도 재생과 예약은 계속 실행됩니다.",
-  "%d-hour session": "%d시간 재생"
+  "%d-hour session": "%d시간 재생",
+  "Updates": "업데이트",
+  "Update channel": "업데이트 채널",
+  "Dev · Development": "Dev · 개발판",
+  "Stable · Official releases": "Stable · 정식판",
+  "Development versions for trying new features and fixes.": "새 기능과 개선 사항을 먼저 확인하는 개발판입니다.",
+  "Official versions published after release validation.": "출시 검증을 마친 정식판입니다.",
+  "Channel choice is saved automatically.": "채널 선택은 자동으로 저장됩니다.",
+  "Changing this choice keeps your installed app and playback unchanged.": "채널을 선택해도 설치된 앱과 진행 중인 재생은 그대로 유지됩니다.",
+  "Installed app": "설치된 앱",
+  "Updates are not available yet": "아직 업데이트를 제공하지 않습니다",
+  "No stable release has been published. This version saves your channel choice; downloading and installing updates will be added later.": "정식판은 아직 출시되지 않았습니다. 현재는 채널 선택을 저장하며, 업데이트 다운로드와 설치는 추후 지원합니다.",
+  "Update channel could not be loaded. Choose a channel to save it again.": "업데이트 채널을 불러오지 못했습니다. 채널을 선택해 다시 저장해 주세요.",
+  "Update channel could not be saved. Your previous choice is unchanged.": "업데이트 채널을 저장하지 못했습니다. 이전 선택을 유지합니다."
 }

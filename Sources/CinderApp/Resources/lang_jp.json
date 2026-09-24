@@ -255,5 +255,18 @@
   "Quit Cinder": "Cinder を終了",
   "Quit stops playback and cancels pending sessions.": "終了すると再生を停止し、残りの予約と実行計画を解除します。",
   "Closing the window keeps playback and schedules running.": "ウインドウを閉じても再生と予約は継続します。",
-  "%d-hour session": "%d時間の再生"
+  "%d-hour session": "%d時間の再生",
+  "Updates": "アップデート",
+  "Update channel": "アップデートチャンネル",
+  "Dev · Development": "Dev · 開発版",
+  "Stable · Official releases": "Stable · 正式版",
+  "Development versions for trying new features and fixes.": "新機能や改善を試すための開発版です。",
+  "Official versions published after release validation.": "リリース検証を終えた正式版です。",
+  "Channel choice is saved automatically.": "チャンネルの選択は自動保存されます。",
+  "Changing this choice keeps your installed app and playback unchanged.": "選択を変更しても、インストール済みのアプリと再生はそのままです。",
+  "Installed app": "インストール済みのアプリ",
+  "Updates are not available yet": "アップデートはまだ提供されていません",
+  "No stable release has been published. This version saves your channel choice; downloading and installing updates will be added later.": "正式版はまだリリースされていません。現在はチャンネルの選択を保存します。アップデートのダウンロードとインストールは今後対応予定です。",
+  "Update channel could not be loaded. Choose a channel to save it again.": "アップデートチャンネルを読み込めませんでした。チャンネルを選んで保存し直してください。",
+  "Update channel could not be saved. Your previous choice is unchanged.": "アップデートチャンネルを保存できませんでした。以前の選択を維持します。"
 }

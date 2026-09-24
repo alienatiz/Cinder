@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 17,
+      "change_count": 18,
       "changes": {
         "ko": [
           {
@@ -25,6 +25,10 @@
           {
             "type": "New",
             "text": "메뉴 막대 팝업을 Quick Play Lite로 확장했습니다. 출력 장치와 1·2·4·8·40시간 또는 직접 입력 시간을 선택하고 재생·일시정지·재개·정지를 조작합니다. 기존 분할 계획도 실행할 수 있으며, 현재 신호·음악·게인을 확인합니다. 팝업을 여는 것만으로 계획이 바뀌거나 재생이 시작되지 않습니다. 재생·예약 중에는 설정을 잠급니다."
+          },
+          {
+            "type": "New",
+            "text": "설정의 업데이트 탭에서 Dev·Stable 채널을 선택하고 저장합니다. 설치된 앱의 버전·채널을 별도로 표시하며, 채널 선택은 재생이나 설치된 앱을 바꾸지 않습니다. 정식판 미출시 상태를 안내합니다. 업데이트 다운로드·설치는 추후 지원합니다."
           },
           {
             "type": "New",
@@ -98,6 +102,10 @@
           },
           {
             "type": "New",
+            "text": "Choose and save the Dev or Stable update channel in Settings. Installed app version and channel are shown separately; changing the preference leaves the installed app and playback unchanged. Stable is not released yet. Update downloads and installation will be added later."
+          },
+          {
+            "type": "New",
             "text": "Select and reorder tracks in the music library. View each file’s format, bit depth, sample rate and duration, with a green check or red error indicator for the initial read check. Problems in selected files block playback and scheduling."
           },
           {
@@ -165,6 +173,10 @@
           {
             "type": "New",
             "text": "メニューバーに Quick Play Lite を追加しました。出力機器と1・2・4・8・40時間、または任意の時間を選び、メインウインドウを開かずに再生・一時停止・再開・停止を操作できます。既存の分割計画も実行でき、信号・音楽・ゲインを確認できます。ポップアップを開くだけでは計画の変更や再生は行いません。再生・予約中は設定をロックします。"
+          },
+          {
+            "type": "New",
+            "text": "設定のアップデートタブでDev・Stableチャンネルを選択して保存できます。インストール済みのバージョンとチャンネルを別に表示し、選択を変更してもアプリや再生は変わりません。正式版は未リリースです。アップデートのダウンロードとインストールは今後対応予定です。"
           },
           {
             "type": "New",
