@@ -1,13 +1,50 @@
-This is an automatically prepared release draft, not a published stable release.
+# Cinder
 
-The attached arm64 build passed automated checks. It currently uses an ad-hoc
-signature and is **not Developer ID signed or notarized**.
+**오디오 번인을 간편하게.**
 
-Before publishing:
+Cinder는 이어폰과 헤드폰을 위한 오디오 번인 앱입니다.
+핑크 노이즈와 음악, 주파수 스윕 중 원하는 신호를 선택하고 나에게 맞는 번인
+세션을 시작하세요. 재생 시간과 휴식 간격을 직접 정하고, 메뉴 막대에서 진행
+상황을 확인하며, 지난 번인 기록까지 한곳에서 관리할 수 있습니다.
 
-- Complete the device, listening, scheduling, upgrade and long-duration gates in ROADMAP.md.
-- Review the seven music arrangements and real-device noise continuity.
-- Replace development assets with verified, signed and notarized distribution assets.
-- Replace this text with version-specific release notes and confirmed limitations.
+## 나에게 맞는 번인 시간
+
+40시간 번인을 한 번에 진행하거나, 회당 시간과 쉬는 간격을 정해 나누어 실행하세요.
+필요한 시간을 직접 설정할 수도 있습니다. 번인 중에는 남은 시간과 완료 예상
+시각을 한 화면에서 확인하고 언제든 일시정지하거나 중지할 수 있습니다.
+
+## 다양한 신호로 구성하는 번인
+
+핑크 노이즈, 대역 제한 노이즈, 주파수 스윕을 선택하거나 일곱 가지 내장 음악으로
+번인 세션을 구성하세요. Mac에 보관한 음악을 불러와 곡과 순서를 정할 수도 있습니다.
+여러 신호와 휴식을 순서대로 재생하는 전체 사이클도 준비되어 있습니다.
+
+## 메뉴 막대에서 가볍게
+
+Quick Play Lite에서 출력 장치와 시간을 고르고 바로 시작하세요.
+창을 닫아도 번인은 계속됩니다. 다른 작업을 하는 동안에도 메뉴 막대에서
+남은 시간을 확인하고 재생을 일시정지하거나 다시 이어 갈 수 있습니다.
+
+## 한눈에 확인하는 번인 기록
+
+얼마나 재생하고 쉬었는지, 번인이 어떻게 끝났는지 실행 기록에서 확인하세요.
+필요한 기록을 검색하고 요약을 복사하거나 파일로 내보낼 수 있습니다.
+기록은 이 Mac에 보관되며, 기본 재생에는 계정이나 인터넷 연결이 필요하지 않습니다.
+
+macOS 27 이상 · Apple Silicon · 한국어, 영어, 일본어 지원
+
+---
+
+## 게시 전 확인
+
+이 문서는 자동 생성되는 GitHub Release 초안의 본문입니다. 현재 정식판은
+출시되지 않았습니다. 자동 검사를 통과한 첨부 arm64 빌드는 ad-hoc 서명이며,
+**Developer ID 서명과 공증을 완료한 배포본이 아닙니다.**
+
+- ROADMAP.md의 실기기·예약·업그레이드·장시간 재생 검증을 완료합니다.
+- 실제 출력 장치의 노이즈 연속성과 내장 음악 일곱 곡의 청취 품질을 확인합니다.
+- 첨부 파일을 검증된 Developer ID 서명·공증 배포본으로 교체합니다.
+- 위 제품 소개를 해당 버전의 실제 기능과 대조하고, 확인된 제한 사항과 배포 안내를 덧붙입니다.
+- 모든 출시 조건을 충족한 뒤 이 ‘게시 전 확인’ 절을 제거하고 정식으로 공개합니다.
 
 Developed jointly by Byeongcheol Kim and OpenAI through ChatGPT/Codex.
