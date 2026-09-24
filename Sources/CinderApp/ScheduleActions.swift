@@ -20,12 +20,13 @@ extension AppModel {
     }
     func checkSchedule() {
         guard let target = armed else { return }
+        updateSessionRecord(snapshot: AudioSnapshot())
         switch ScheduleRules.due(target: target, now: Date()) {
         case "due":
             scheduleTicker.stop(); armed = nil
             if planRun?.nextStart != nil {
                 guard planRun?.startNextSession(at: Date()) == true else {
-                    cancelSchedule(); error = t("The scheduled time was missed. Set the schedule again."); return
+                    finishSessionRecord(.missedSchedule); cancelSchedule(); error = t("The scheduled time was missed. Set the schedule again."); return
                 }
                 scheduleMessage = t("Preparing scheduled session…")
                 startCurrentSession()
@@ -35,11 +36,15 @@ extension AppModel {
                 guard device != nil else { cancelSchedule(); error = t("Select an output device first."); return }
                 start()
             }
-        case "missed": cancelSchedule(); error = t("The scheduled time was missed. Set the schedule again.")
+        case "missed":
+            if sessionRecorder == nil { beginSessionRecord() }
+            finishSessionRecord(.missedSchedule)
+            cancelSchedule(); error = t("The scheduled time was missed. Set the schedule again.")
         default: break
         }
     }
     func cancelSchedule() {
+        if planRun?.nextStart != nil { finishSessionRecord(.stopped) }
         scheduleTicker.stop(); armed = nil
         planRun?.cancel()
         repeatRemaining = 0; repeatAnchor = nil; scheduleMessage = ""

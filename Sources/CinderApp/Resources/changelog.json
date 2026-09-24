@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 19,
+      "change_count": 20,
       "changes": {
         "ko": [
           {
@@ -81,6 +81,10 @@
           {
             "type": "New",
             "text": "Quick Play에서 세션 시간·신호 구간·사이클 휴식·회차 사이 휴식을 구분하고 분할 계획 전체의 완료 예상 시각을 표시합니다."
+          },
+          {
+            "type": "New",
+            "text": "최근 500개 실행의 신호·휴식·준비·일시정지 시간과 게인 범위를 로컬에 기록합니다. 완료·중지·실패·중단 결과를 다시 확인하고 요약을 복사·내보낼 수 있으며 자동 재생하지 않습니다."
           }
         ],
         "en": [
@@ -159,6 +163,10 @@
           {
             "type": "New",
             "text": "Quick Play separates session time, signal stages, cycle rests and rests between sessions. Estimated finish covers the entire split plan."
+          },
+          {
+            "type": "New",
+            "text": "Session history keeps the latest 500 runs locally with signal, rest, preparation, pause and gain details. Completed, stopped, failed and interrupted outcomes survive reopening; copy or export a summary without auto-resuming playback."
           }
         ],
         "ja": [
@@ -237,6 +245,10 @@
           {
             "type": "New",
             "text": "Quick Playでセッション時間・信号区間・サイクル内休憩・セッション間休憩を区別し、分割計画全体の終了目安を表示します。"
+          },
+          {
+            "type": "New",
+            "text": "最新500件の信号・休憩・準備・一時停止時間とゲイン範囲をローカルに記録します。完了・停止・失敗・中断結果を再確認し概要をコピー・書き出せます。自動再生はしません。"
           }
         ]
       }

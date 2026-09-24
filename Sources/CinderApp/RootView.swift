@@ -5,7 +5,7 @@ import CinderPlatform
 struct RootView: View {
     @ObservedObject var model: AppModel
     @Environment(\.colorScheme) private var systemColorScheme
-    private let tabs = ["Quick Play", "Music", "Device & Profile", "Schedule", "Settings", "Changelog"]
+    private let tabs = ["Quick Play", "Music", "Device & Profile", "Schedule", "Settings", "Changelog", "Session history"]
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
@@ -27,6 +27,7 @@ struct RootView: View {
                 case 2: DeviceView(model: model)
                 case 3: ScheduleView(model: model)
                 case 4: SettingsView(model: model)
+                case 6: SessionHistoryView(model: model)
                 default: HistoryView(model: model)
                 }
                 }.frame(maxWidth: .infinity, alignment: .top)

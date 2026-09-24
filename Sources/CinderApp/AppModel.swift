@@ -23,6 +23,12 @@ import CinderStorage
     @Published var language = Locale.preferredLanguages.first?.hasPrefix("ko") == true ? "ko" : (Locale.preferredLanguages.first?.hasPrefix("ja") == true ? "ja" : "en")
     @Published var appearance = "system"
     @Published private(set) var updateChannel: UpdateChannel = .installedDefault
+    @Published var sessionHistory = SessionHistory()
+    @Published var historyError: String?
+    var sessionRecorder: SessionRecorder?
+    var historyWritable = true
+    var lastHistorySave: Double = -.infinity
+    let historyWriter: SessionHistoryWriter
     @Published var music: [String] = []
     @Published var musicInspection: [MusicInspection] = []
     @Published var outputRate = 0.0
@@ -83,6 +89,7 @@ import CinderStorage
 
     init(storage: SettingsStore = SettingsStore()) {
         self.storage = storage
+        historyWriter = SessionHistoryWriter(directory: storage.directory)
         let installedBundle = Bundle.main.resourceURL?.appendingPathComponent("Cinder_CinderApp.bundle")
         let installed = installedBundle.flatMap { Bundle(url: $0)?.resourceURL }
         let directory: URL
@@ -130,6 +137,7 @@ import CinderStorage
         loadGainPresets()
         restoreMusicLibrary()
         refreshOutputInfo()
+        loadSessionHistory()
     }
     func t(_ text: String) -> String { catalog[language]?[text] ?? text }
     func selectUpdateChannel(_ channel: UpdateChannel) {
@@ -203,6 +211,7 @@ import CinderStorage
         selectedSettings.playbackPlan = nil
         do { try selectedSettings.validatePlayback() } catch { fail(error); return }
         state = .preparing; snapshot = AudioSnapshot(); error = nil
+        if sessionRecorder == nil { beginSessionRecord() }
         let selectedMusic = settings.selectedMusicSource == .preset ? [] : playbackMusic
         sessionGeneration += 1
         let ticket = sessionGeneration
@@ -216,6 +225,7 @@ import CinderStorage
                 try await audio.start(device: device, settings: selectedSettings, music: selectedMusic, presetURL: presetURL)
                 guard ticket == sessionGeneration, state == .preparing else { return }
                 state = .playing
+                updateSessionRecord(snapshot: audio.snapshot(), force: true)
                 if repeatAnchor != nil { scheduleMessage = t("Scheduled session started.") }
                 if settings.keepAwake { awake.begin() }
                 armTimer()
@@ -227,6 +237,7 @@ import CinderStorage
         if state == .playing { audio.pause(); state = .pausing }
         else if state == .paused {
             do { try audio.resume() } catch { fail(error); return }; state = .playing
+            updateSessionRecord(snapshot: audio.snapshot(), force: true)
             if settings.keepAwake { awake.begin() }
         }
         armTimer()
@@ -234,8 +245,8 @@ import CinderStorage
     func stop() {
         sessionGeneration += 1
         cancelSchedule()
-        if state == .preparing { audio.shutdown(); awake.end(); state = .idle; return }
-        if state == .paused { audio.shutdown(); awake.end(); state = .idle; armTimer(); return }
+        if state == .preparing { finishSessionRecord(.stopped); audio.shutdown(); awake.end(); state = .idle; return }
+        if state == .paused { finishSessionRecord(.stopped, snapshot: audio.snapshot()); audio.shutdown(); awake.end(); state = .idle; armTimer(); return }
         guard state.locksSettings else { return }
         audio.stop(); state = .stopping; armTimer()
     }
@@ -265,6 +276,7 @@ import CinderStorage
             try GainPolicy.validate(gain)
             settings.gainDB = gain
             audio.setGain(gain)
+            updateSessionRecord(snapshot: snapshot, force: true)
         } catch { self.error = error.localizedDescription }
     }
     func save() {
@@ -294,27 +306,38 @@ import CinderStorage
         var value = audio.snapshot()
         if value.paused { value.peakDB = -.infinity; value.rmsDB = -.infinity }
         snapshot = value
+        updateSessionRecord(snapshot: value)
         if snapshot.finished {
             let stopped = state == .stopping
             audio.shutdown(); awake.end(); state = stopped ? .idle : .completed; armTimer()
-            if !stopped {
+            if stopped { finishSessionRecord(.stopped) }
+            else {
+                sessionRecorder?.completeSession()
                 planRun?.finishSession(at: Date())
                 if let next = planRun?.nextStart {
                     snapshot = AudioSnapshot()
                     armed = next; scheduleMessage = t("Resting between sessions")
+                    updateSessionRecord(snapshot: AudioSnapshot(), force: true)
                     armScheduleTimer()
-                } else { rearmRepeat() }
+                } else { finishSessionRecord(.completed); rearmRepeat() }
             }
         } else if snapshot.paused && state == .pausing {
             audio.suspendAfterPause(); state = .paused; awake.end(); armTimer()
+            updateSessionRecord(snapshot: value, force: true)
         }
     }
     func fail(_ failure: Error) {
         sessionGeneration += 1
+        let outcome: SessionOutcome
+        if let error = failure as? CinderError, case .deviceChanged = error { outcome = .deviceChanged }
+        else { outcome = .failed }
+        finishSessionRecord(outcome, snapshot: state == .preparing ? nil : audio.snapshot())
         cancelSchedule()
         audio.shutdown(); awake.end(); state = .failed; armTimer(); error = failure.localizedDescription
     }
     func shutdown() {
+        finishSessionRecord(.appQuit, snapshot: state == .preparing ? nil : audio.snapshot())
+        historyWriter.flush()
         libraryRevision += 1; libraryTask?.cancel(); libraryTask = nil
         uiSaveTask?.cancel(); persistUI()
         themeSaveTask?.cancel(); persistTheme()

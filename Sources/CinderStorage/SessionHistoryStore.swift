@@ -21,3 +21,17 @@ public struct SessionHistoryStore: Sendable {
         try data.write(to: file, options: .atomic)
     }
 }
+
+/// FIFO writes and an explicit shutdown flush; no disk work runs in audio callbacks.
+public final class SessionHistoryWriter: Sendable {
+    private let store: SessionHistoryStore
+    private let queue = DispatchQueue(label: "local.chu.cinder.history", qos: .utility)
+    public init(directory: URL) { store = SessionHistoryStore(directory: directory) }
+    public func save(_ history: SessionHistory, completion: @escaping @Sendable (Bool) -> Void) {
+        queue.async { [store] in
+            do { try store.save(history); completion(true) }
+            catch { completion(false) }
+        }
+    }
+    public func flush() { queue.sync {} }
+}
