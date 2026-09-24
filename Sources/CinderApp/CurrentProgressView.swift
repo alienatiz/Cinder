@@ -7,24 +7,24 @@ import CinderCore
     init(model: AppModel) { self.model = model; self.display = model.playbackDisplay }
     private var runningDisplay: Bool { model.state.locksSettings }
     var body: some View {
-        Panel(title: model.t("Current Progress")) {
+        Panel(title: model.t("Current Progress"), compact: true) {
             ActionPicker(model: model)
             ZStack {
                 Circle().stroke(.secondary.opacity(0.15), lineWidth: 6)
-                Circle().trim(from: 0, to: min(1, display.snapshot.elapsed / (model.settings.durationSeconds)))
+                Circle().trim(from: 0, to: min(1, display.snapshot.elapsed / (model.sessionDurationSeconds)))
                     .stroke(.orange.opacity(0.7), style: StrokeStyle(lineWidth: 6, lineCap: .round)).rotationEffect(.degrees(-90))
                 VStack(spacing: 8) {
-                    DurationControl(model: model, seconds: PlaybackDuration.dialSeconds(configuredSeconds: model.settings.durationSeconds, elapsed: display.snapshot.elapsed, state: model.state), dial: true)
+                    DurationControl(model: model, seconds: PlaybackDuration.dialSeconds(configuredSeconds: model.sessionDurationSeconds, elapsed: display.snapshot.elapsed, state: model.state), dial: true)
                     HStack(spacing: 4) {
                         Text(model.t(runningDisplay ? "Remaining" : "Playback duration")).foregroundStyle(.secondary)
-                        if !model.isLocked { Image(systemName: "pencil").font(.caption).foregroundStyle(.secondary) }
+                        if !model.isLocked && model.settings.selectedPlan.mode == .custom { Image(systemName: "pencil").font(.caption).foregroundStyle(.secondary) }
                     }
                 }
-            }.frame(height: 200).padding(.horizontal, 30)
+            }.frame(height: 176).frame(maxWidth: .infinity).padding(.horizontal, 30)
             HStack {
                 Text(model.t("Elapsed") + " " + Cycle.time(display.snapshot.elapsed))
                 Spacer()
-                Text(model.t("Total") + " " + Cycle.time(model.settings.durationSeconds))
+                Text(model.t("Total") + " " + Cycle.time(model.sessionDurationSeconds))
             }.monospacedDigit()
             let position = model.state == .completed ? max(0, display.snapshot.elapsed - 0.001) : display.snapshot.elapsed
             if model.settings.selectedProgram == .fullCycle {
@@ -40,7 +40,7 @@ import CinderCore
                 Text("\(model.t("Cycle")) \(Int(position / 3600) + 1) · \(step + 1)/6 · \(model.t(Cycle.names[step]))")
             } else { Text(model.t(model.settings.selectedProgram.label)) }
             HStack {
-                Text(String(format: "%.1f%%", 100 * display.snapshot.elapsed / (model.settings.durationSeconds)))
+                Text(String(format: "%.1f%%", 100 * display.snapshot.elapsed / (model.sessionDurationSeconds)))
                 Spacer()
                 Text(model.t("Sound") + " " + Cycle.time(display.snapshot.sound))
             }.foregroundStyle(.secondary).monospacedDigit()

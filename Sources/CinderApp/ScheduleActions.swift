@@ -23,16 +23,25 @@ extension AppModel {
         switch ScheduleRules.due(target: target, now: Date()) {
         case "due":
             scheduleTicker.stop(); armed = nil
-            repeatRemaining = max(0, repeatRemaining - 1)
-            scheduleMessage = t("Preparing scheduled session…")
-            guard device != nil else { cancelSchedule(); error = t("Select an output device first."); return }
-            start()
+            if planRun?.nextStart != nil {
+                guard planRun?.startNextSession(at: Date()) == true else {
+                    cancelSchedule(); error = t("The scheduled time was missed. Set the schedule again."); return
+                }
+                scheduleMessage = t("Preparing scheduled session…")
+                startCurrentSession()
+            } else {
+                repeatRemaining = max(0, repeatRemaining - 1)
+                scheduleMessage = t("Preparing scheduled session…")
+                guard device != nil else { cancelSchedule(); error = t("Select an output device first."); return }
+                start()
+            }
         case "missed": cancelSchedule(); error = t("The scheduled time was missed. Set the schedule again.")
         default: break
         }
     }
     func cancelSchedule() {
         scheduleTicker.stop(); armed = nil
+        planRun?.cancel()
         repeatRemaining = 0; repeatAnchor = nil; scheduleMessage = ""
         if !state.locksSettings { awake.end() }
     }

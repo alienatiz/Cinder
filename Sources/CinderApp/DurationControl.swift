@@ -21,8 +21,8 @@ import CinderCore
                 Label(Cycle.time(seconds), systemImage: "clock").monospacedDigit()
             }
         }
-        .buttonStyle(.plain).disabled(model.isLocked)
-        .help(model.t("Click the time to set playback duration."))
+        .buttonStyle(.plain).disabled(model.isLocked || model.settings.selectedPlan.mode != .custom)
+        .help(model.t(model.settings.selectedPlan.mode == .custom ? "Click the time to set playback duration." : "Choose Custom duration in Quick Play to change this time."))
         .accessibilityLabel(Text(model.t("Playback duration")))
         .accessibilityValue(Text(Cycle.time(seconds)))
         .popover(isPresented: $editing) {
@@ -30,8 +30,8 @@ import CinderCore
                 Text(model.t("Playback duration")).font(.headline)
                 DurationFields(minutes: $draftMinutes, hoursLabel: model.t("Hours"), minutesLabel: model.t("Minutes"))
                 HStack {
-                    ForEach([30, 1200, 1800, 3000], id: \.self) { minutes in
-                        Button(minutes == 30 ? "30 min" : "\(minutes / 60) h") { draftMinutes = minutes }
+                    ForEach([60, 120, 240, 2400], id: \.self) { minutes in
+                        Button("\(minutes / 60) h") { draftMinutes = minutes }
                     }
                 }
                 Text(model.t("Choose 1 minute to 1000 hours in whole minutes.")).foregroundStyle(.secondary)
@@ -52,20 +52,21 @@ struct DurationFields: View {
     @Binding var minutes: Int
     let hoursLabel: String
     let minutesLabel: String
+    var maximumMinutes = PlaybackDuration.maximumMinutes
     private var hours: Binding<Int> {
         Binding(get: { minutes / 60 }, set: { value in
-            minutes = min(PlaybackDuration.maximumMinutes, max(0, min(1000, value)) * 60 + minutes % 60)
+            minutes = min(maximumMinutes, max(0, min(maximumMinutes / 60, value)) * 60 + minutes % 60)
         })
     }
     private var minutePart: Binding<Int> {
         Binding(get: { minutes % 60 }, set: { value in
-            minutes = min(PlaybackDuration.maximumMinutes, (minutes / 60) * 60 + max(0, min(59, value)))
+            minutes = min(maximumMinutes, (minutes / 60) * 60 + max(0, min(59, value)))
         })
     }
     var body: some View {
         HStack(spacing: 24) {
-            field(hoursLabel, value: hours, range: 0...1000)
-            field(minutesLabel, value: minutePart, range: 0...59).disabled(minutes / 60 == 1000)
+            field(hoursLabel, value: hours, range: 0...(maximumMinutes / 60))
+            field(minutesLabel, value: minutePart, range: 0...59).disabled(minutes >= maximumMinutes && maximumMinutes % 60 == 0)
         }
     }
     private func field(_ title: String, value: Binding<Int>, range: ClosedRange<Int>) -> some View {

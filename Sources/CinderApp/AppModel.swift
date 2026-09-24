@@ -8,6 +8,7 @@ import CinderStorage
 @MainActor final class AppModel: ObservableObject {
     @Published var settings = SessionSettings()
     @Published var state: PlaybackState = .idle
+    @Published var planRun: PlaybackPlanRun?
     let playbackDisplay = PlaybackDisplay()
     var snapshot: AudioSnapshot {
         get { playbackDisplay.snapshot }
@@ -62,7 +63,7 @@ import CinderStorage
     var libraryRevision = 0
     private var sessionGeneration = 0
     let modelIdentifier = AudioDevices.modelIdentifier
-    var isLocked: Bool { state.locksSettings || armed != nil || libraryBusy }
+    var isLocked: Bool { state.locksSettings || armed != nil || libraryBusy || planRun?.isActive == true }
     var selectedDAC: DACProfile? { dacProfiles.first { $0.name == dacSelection } }
     var macProfile: MacProfile? { macProfiles.first { $0.identifiers.contains(modelIdentifier) } }
     private let audio = PlaybackEngine()
@@ -75,7 +76,8 @@ import CinderStorage
     private let resourceFiles: ResourceFiles
     let releases: [Release]
     var device: OutputDevice? { devices.first { $0.uid == selectedUID } }
-    var remaining: Double { max(0, settings.durationSeconds - snapshot.elapsed) }
+    var sessionDurationSeconds: Double { Double(planRun?.currentMinutes ?? settings.durationMinutes) * 60 }
+    var remaining: Double { max(0, sessionDurationSeconds - snapshot.elapsed) }
 
     init() {
         let installedBundle = Bundle.main.resourceURL?.appendingPathComponent("Cinder_CinderApp.bundle")
@@ -132,7 +134,7 @@ import CinderStorage
     }
     func refreshOutputInfo() { outputRate = device.map { AudioDevices.sampleRate($0) } ?? 0 }
     var musicProblem: String? {
-        if settings.selectedProgram == .fullCycle && settings.hours < 1 { return t("A full cycle needs 60 minutes. Choose one function for a shorter session.") }
+        do { try settings.validatePlayback() } catch { return t(error.localizedDescription) }
         guard settings.selectedProgram.usesMusic else { return nil }
         if settings.selectedMusicSource == .preset { return nil }
         if settings.selectedProgram == .music && playbackMusic.isEmpty { return t("Choose tracks or Preset Music in Music.") }
@@ -150,8 +152,9 @@ import CinderStorage
     func applyHours(_ hours: Double) {
         guard !isLocked else { return }
         var proposed = settings; proposed.hours = hours
+        var plan = proposed.selectedPlan; plan.mode = .custom; proposed.playbackPlan = plan
         do { try proposed.validate() } catch { self.error = error.localizedDescription; return }
-        settings.hours = Double(proposed.durationMinutes) / 60; resetProgressForConfiguration()
+        settings = proposed; resetProgressForConfiguration(); savePlanPreference()
     }
     func applyMinutes(_ minutes: Int) {
         guard !isLocked else { return }
@@ -159,16 +162,29 @@ import CinderStorage
         catch { self.error = t(error.localizedDescription) }
     }
     func resetProgressForConfiguration() {
+        planRun = nil
         snapshot = AudioSnapshot()
         if state == .completed { state = .idle }
     }
     func start() {
         guard !isLocked else { return }
-        guard let device else { error = t("Select an output device first."); return }
-        do { try settings.validate() } catch { self.error = error.localizedDescription; return }
+        guard device != nil else { error = t("Select an output device first."); return }
         if let musicProblem { error = musicProblem; return }
+        do {
+            planRun = settings.selectedPlan.mode == .split40
+                ? try PlaybackPlanRun(plan: settings.selectedPlan, customMinutes: settings.customDurationMinutes, program: settings.selectedProgram)
+                : nil
+        } catch { self.error = t(error.localizedDescription); return }
+        startCurrentSession()
+    }
+    func startCurrentSession() {
+        guard !state.locksSettings, armed == nil, !libraryBusy else { return }
+        guard let device else { fail(CinderError.noDevice); return }
+        var selectedSettings = settings
+        selectedSettings.hours = sessionDurationSeconds / 3600
+        selectedSettings.playbackPlan = nil
+        do { try selectedSettings.validatePlayback() } catch { fail(error); return }
         state = .preparing; snapshot = AudioSnapshot(); error = nil
-        let selectedSettings = settings
         let selectedMusic = settings.selectedMusicSource == .preset ? [] : playbackMusic
         sessionGeneration += 1
         let ticket = sessionGeneration
@@ -262,7 +278,14 @@ import CinderStorage
         if snapshot.finished {
             let stopped = state == .stopping
             audio.shutdown(); awake.end(); state = stopped ? .idle : .completed; armTimer()
-            if !stopped { rearmRepeat() }
+            if !stopped {
+                planRun?.finishSession(at: Date())
+                if let next = planRun?.nextStart {
+                    snapshot = AudioSnapshot()
+                    armed = next; scheduleMessage = t("Resting between sessions")
+                    armScheduleTimer()
+                } else { rearmRepeat() }
+            }
         } else if snapshot.paused && state == .pausing {
             audio.suspendAfterPause(); state = .paused; awake.end(); armTimer()
         }

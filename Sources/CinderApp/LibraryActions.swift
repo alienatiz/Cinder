@@ -48,6 +48,7 @@ extension AppModel {
             settings: .init(hours: settings.hours, gain: settings.gainDB, music: settings.selectedMusicSource == .preset ? [] : playbackMusic,
                             dac: selectedDAC?.name, time: formatter.string(from: scheduleDate), days: repeatDays,
                             sessions: sessionCount, awake: settings.keepAwake))
+        preset.settings.playback_plan = settings.playbackPlan
         preset.settings.program = settings.program
         preset.settings.music_source = settings.musicSource
         preset.settings.music_preset = settings.musicPreset
@@ -87,6 +88,7 @@ extension AppModel {
                 try combined.validate()
                 let value = preset.settings
                 settings.hours = value.hours; settings.keepAwake = value.keep_awake
+                settings.playbackPlan = value.playback_plan
                 settings.program = value.program
                 settings.musicSource = value.music_source; settings.musicPreset = value.music_preset
                 dacSelection = dacProfiles.contains { $0.name == value.dac_model } ? (value.dac_model ?? "") : ""

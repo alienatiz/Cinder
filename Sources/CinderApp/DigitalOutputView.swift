@@ -6,7 +6,7 @@ import CinderCore
     @ObservedObject private var display: PlaybackDisplay
     init(model: AppModel) { self.model = model; self.display = model.playbackDisplay }
     var body: some View {
-                Panel(title: model.t("Digital Output")) {
+                Panel(title: model.t("Digital Output"), compact: true) {
                     DigitalMeter(peak: display.snapshot.peakDB, rms: display.snapshot.rmsDB, needle: model.needle)
                     HStack(spacing: 6) {
                         Text(model.t("App gain") + " " + GainPolicy.display(model.settings.gainDB)).monospacedDigit().fixedSize()

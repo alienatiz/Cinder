@@ -95,7 +95,10 @@ struct ScheduleView: View {
                             Text(model.t("Total runs includes the first run. Interval 1 means every day."))
                         }
                         Text(model.t("Output device") + " · " + (model.device?.name ?? model.t("Select output")))
-                        Text(model.t("Duration per run") + " · " + Cycle.time(model.settings.durationSeconds)).monospacedDigit()
+                        Text(model.t("Duration per run") + " · " + Cycle.time(Double(model.settings.planElapsedMinutes * 60))).monospacedDigit()
+                        if model.settings.selectedPlan.mode == .split40 {
+                            Text(model.t("Each scheduled run executes the entire 40-hour plan, including its rests."))
+                        }
                         Text(model.t(model.settings.selectedProgram.label))
                         if let target = model.armed {
                             Text(model.t("Next scheduled start") + " · " + target.formatted(date: .abbreviated, time: .shortened))
@@ -110,7 +113,7 @@ struct ScheduleView: View {
                     Button(model.t("Cancel Schedule"), action: model.cancelSchedule).disabled(model.armed == nil && model.repeatRemaining == 0)
                 }
                 if let issue = model.musicProblem { Text(issue).foregroundStyle(.orange) }
-                if model.repeatDays > 0 && model.settings.hours >= Double(model.repeatDays * 24) {
+                if model.repeatDays > 0 && model.settings.planElapsedMinutes >= model.repeatDays * 24 * 60 {
                     Text(model.t("Sessions overlap this interval; conflicting dates will be skipped.")).foregroundStyle(.orange)
                 }
                 Text(model.t("Keep the app open. Sleeping or closed Macs are not automatically awakened.")).foregroundStyle(.secondary)

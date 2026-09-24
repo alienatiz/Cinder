@@ -36,6 +36,12 @@ public struct SettingsStore {
         saved.musicSource = source; saved.musicPreset = preset
         try save(saved)
     }
+    /// Plan edits preserve unrelated gain, music and power preferences.
+    public func savePlaybackPlan(_ plan: PlaybackPlan, customHours: Double) throws {
+        var saved = try load()
+        saved.playbackPlan = plan; saved.hours = customHours
+        try save(saved)
+    }
     public func loadUI() throws -> UIPreferences? {
         let file = directory.appendingPathComponent("swift-ui-v1.json")
         guard FileManager.default.fileExists(atPath: file.path) else { return nil }

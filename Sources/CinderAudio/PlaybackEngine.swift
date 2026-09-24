@@ -81,7 +81,7 @@ final class RenderKernel: @unchecked Sendable {
         }
         let task = Task.detached(priority: .userInitiated) {
             try Task.checkCancellation()
-            let result = try RenderKernel(rate: sampleRate, hours: settings.hours, gain: settings.gainDB, program: settings.selectedProgram)
+            let result = try RenderKernel(rate: sampleRate, hours: Double(settings.durationMinutes) / 60, gain: settings.gainDB, program: settings.selectedProgram)
             try Task.checkCancellation()
             if settings.selectedProgram.usesMusic {
                 if settings.selectedMusicSource == .preset {

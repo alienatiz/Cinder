@@ -18,20 +18,30 @@ public struct SessionSettings: Codable, Equatable, Sendable {
     public var program: PlaybackProgram? = nil
     public var musicSource: MusicSource? = nil
     public var musicPreset: PresetMusic? = nil
+    public var playbackPlan: PlaybackPlan? = nil
+    public var selectedPlan: PlaybackPlan { playbackPlan ?? PlaybackPlan() }
     public var selectedProgram: PlaybackProgram { program ?? .fullCycle }
     public var selectedMusicSource: MusicSource { musicSource ?? .library }
     public var selectedMusicPreset: PresetMusic { musicPreset ?? .balanced }
-    public var durationMinutes: Int { (try? PlaybackDuration.minutes(fromHours: hours)) ?? 1800 }
+    public var customDurationMinutes: Int { (try? PlaybackDuration.minutes(fromHours: hours)) ?? 1800 }
+    public var plannedSessions: [Int] { (try? selectedPlan.sessions(customMinutes: customDurationMinutes)) ?? [customDurationMinutes] }
+    public var durationMinutes: Int {
+        switch selectedPlan.mode {
+        case .custom: return customDurationMinutes
+        case .continuous40: return PlaybackPlan.targetMinutes
+        case .split40: return selectedPlan.sessionMinutes
+        }
+    }
+    public var planElapsedMinutes: Int { (try? selectedPlan.elapsedMinutes(customMinutes: customDurationMinutes)) ?? customDurationMinutes }
     public var durationSeconds: Double { Double(durationMinutes * 60) }
     public init() {}
     public func validatePlayback() throws {
         try validate()
-        if selectedProgram == .fullCycle && hours < 1 {
-            throw CinderError.audio("A full cycle needs 60 minutes. Choose one function for a shorter session.")
-        }
+        try selectedPlan.validatePlayback(customMinutes: customDurationMinutes, program: selectedProgram)
     }
     public func validate() throws {
         _ = try PlaybackDuration.minutes(fromHours: hours)
+        try selectedPlan.validate()
         try GainPolicy.validate(gainDB)
         if let resetGainDB { try GainPolicy.validate(resetGainDB) }
     }

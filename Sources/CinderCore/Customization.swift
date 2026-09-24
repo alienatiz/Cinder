@@ -18,6 +18,7 @@ public struct PresetDocument: Codable, Identifiable, Sendable {
         public var program: PlaybackProgram? = nil
         public var music_source: MusicSource? = nil
         public var music_preset: PresetMusic? = nil
+        public var playback_plan: PlaybackPlan? = nil
         public var selectedMusicSource: MusicSource { music_source ?? .library }
         public init(hours: Double, gain: Double, music: [String], dac: String?, time: String, days: Int, sessions: Int, awake: Bool) {
             self.hours = hours; gain_db = gain; self.music = music; dac_model = dac
@@ -27,6 +28,7 @@ public struct PresetDocument: Codable, Identifiable, Sendable {
     public init(name: String, settings: Values) { self.name = name; self.settings = settings }
     public func validate() throws {
         var session = SessionSettings(); session.hours = settings.hours; session.gainDB = Double(settings.gain_db)
+        session.playbackPlan = settings.playback_plan
         try session.validate()
         guard schema_version == 1, kind == "cinder_preset", (1...80).contains((name ?? "Preset").count),
               settings.music.count <= 100, settings.music.allSatisfy({ $0.utf8.count < 4096 }),

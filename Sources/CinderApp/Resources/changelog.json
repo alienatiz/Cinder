@@ -16,7 +16,7 @@
           },
           {
             "type": "New",
-            "text": "Quick Play에서 출력 장치와 재생 기능을 선택하고 시작·일시정지·재개·중지를 제어합니다. 원형 진행 표시에서 경과 시간과 현재 단계, 예상 종료 시각을 확인합니다."
+            "text": "Quick Play에서 40시간 연속·40시간 분할·직접 시간 설정을 선택합니다. 분할 계획의 회당 시간과 휴식 간격을 직접 지정하며 마지막 회차는 남은 시간으로 조정합니다. 회차 수와 휴식 포함 예상 소요 시간을 표시하고, 휴식 뒤 다음 회차를 자동 시작합니다. 중지하거나 앱을 닫으면 남은 계획을 취소합니다. 주요 조작은 스크롤 없이 한 화면에 배치했습니다."
           },
           {
             "type": "New",
@@ -78,7 +78,7 @@
           },
           {
             "type": "New",
-            "text": "Choose an output device and playback mode in Quick Play, with Start, Pause, Resume and Stop controls. The progress display shows elapsed time, the current step and the estimated finish time."
+            "text": "Choose continuous 40 hours, split 40 hours or a custom duration in Quick Play. Set each session and the rest interval directly; the final session uses the remaining time. View the session count and estimated duration including rests. The next session starts after the rest; Stop or closing the app cancels the remaining plan. Main controls fit on one screen without scrolling."
           },
           {
             "type": "New",
@@ -140,7 +140,7 @@
           },
           {
             "type": "New",
-            "text": "Quick Play で出力機器と再生モードを選び、開始・一時停止・再開・停止を操作できます。進捗表示で経過時間、現在のステップ、終了予定時刻を確認できます。"
+            "text": "Quick Play で40時間連続・40時間分割・時間を指定から選べます。1回の時間と休憩間隔を指定し、最終回を残り時間に調整します。回数と休憩を含む予定時間を表示し、休憩後に次の回を自動開始します。停止やアプリの終了で残りの計画を解除します。主な操作をスクロールなしで1画面に配置しました。"
           },
           {
             "type": "New",
