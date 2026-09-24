@@ -15,7 +15,7 @@ let package = Package(
     targets: [
         .target(name: "CinderCore", swiftSettings: concurrency),
         .target(name: "CinderDSP", publicHeadersPath: "include", cSettings: [.unsafeFlags(["-std=c11"])]),
-        .target(name: "CinderPlatform", dependencies: ["CinderCore"], swiftSettings: concurrency, linkerSettings: [.linkedFramework("CoreAudio"), .linkedFramework("IOKit")]),
+        .target(name: "CinderPlatform", dependencies: ["CinderCore"], swiftSettings: concurrency, linkerSettings: [.linkedFramework("CoreAudio"), .linkedFramework("IOKit"), .linkedFramework("UserNotifications")]),
         .target(name: "CinderAudio", dependencies: ["CinderCore", "CinderDSP", "CinderPlatform"], swiftSettings: concurrency, linkerSettings: [.linkedFramework("AVFoundation"), .linkedFramework("AudioToolbox")]),
         .target(name: "CinderStorage", dependencies: ["CinderCore", .product(name: "Yams", package: "Yams")], swiftSettings: concurrency),
         .executableTarget(name: "CinderApp", dependencies: ["CinderCore", "CinderAudio", "CinderPlatform", "CinderStorage"], resources: [.process("Resources")], swiftSettings: concurrency),
