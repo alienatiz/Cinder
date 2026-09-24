@@ -17,6 +17,7 @@ struct AboutView: View {
             }
             Panel(title: model.t("Playback help")) {
                 Text(model.t("40 hours is an optional plan, not a universal requirement or a guarantee of sound improvement."))
+                Text(model.t("⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens"))
                 Text(model.t("Run with earphones out of your ears. Start with low system/DAC volume."))
                 Text(model.t("Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically."))
                 Text(model.t("Music supports local files readable by macOS: mono or stereo, 8–96 kHz, up to 10 minutes selected."))

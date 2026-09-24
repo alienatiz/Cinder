@@ -331,5 +331,6 @@
   "Move up": "上へ移動",
   "Move down": "下へ移動",
   "Selected music: up to 10 minutes · mono or stereo": "選択した音楽：最大10分・モノラルまたはステレオ",
-  "External music is band-limited and faded for this playback path; it is not unprocessed listening playback.": "外部音楽には帯域制限とフェードを適用するため、原音のままの鑑賞用再生とは異なります。"
+  "External music is band-limited and faded for this playback path; it is not unprocessed listening playback.": "外部音楽には帯域制限とフェードを適用するため、原音のままの鑑賞用再生とは異なります。",
+  "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return：開始・一時停止・再開 · ⌘.：停止 · ⌘1–4：画面切り替え"
 }

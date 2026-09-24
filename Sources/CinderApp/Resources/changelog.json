@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 22,
+      "change_count": 23,
       "changes": {
         "ko": [
           {
@@ -93,6 +93,10 @@
           {
             "type": "New",
             "text": "주 화면을 Quick Play·Music·실행 기록·Settings로 정리하고 음악·변경 기록 페이지 구분, 출력·예약 상세, 오프라인 도움말을 추가했습니다."
+          },
+          {
+            "type": "New",
+            "text": "주 화면과 같은 실행 제한을 지키는 앱 내부 재생·화면 전환 단축키를 추가했습니다."
           }
         ],
         "en": [
@@ -183,6 +187,10 @@
           {
             "type": "New",
             "text": "Organized the app into Quick Play, Music, Session history and Settings; added paged music and changelog views, output and schedule details, and offline help."
+          },
+          {
+            "type": "New",
+            "text": "Added app-local playback and screen-navigation keyboard shortcuts, with the same session locks as the main controls."
           }
         ],
         "ja": [
@@ -273,6 +281,10 @@
           {
             "type": "New",
             "text": "画面をQuick Play・Music・実行履歴・Settingsに整理し、音楽と変更履歴のページ切り替え、出力と予約の詳細、オフラインヘルプを追加しました。"
+          },
+          {
+            "type": "New",
+            "text": "主画面と同じ実行制限に従う、アプリ内の再生・画面切り替えショートカットを追加しました。"
           }
         ]
       }
