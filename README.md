@@ -116,3 +116,7 @@ Cinder는 **Byeongcheol Kim과 OpenAI의 공동 작업**입니다. ChatGPT/Codex
 완료·오류 알림은 Settings에서 선택적으로 켤 수 있습니다. 처음 켤 때만 macOS 알림
 허용을 요청하며, 완료·장치 변경·실패·놓친 예약을 소리 없는 알림으로 전달합니다.
 일시정지나 회차 사이 휴식마다 알리지 않습니다. 허용하지 않아도 실행 기록은 남습니다.
+
+주 화면은 Quick Play·Music·실행 기록·Settings로 구성됩니다. 예약과 출력 상세는
+Quick Play에서, 변경 기록과 도움말은 Settings의 Cinder 정보에서 열 수 있습니다.
+긴 음악 목록과 변경 기록은 검색 또는 페이지 이동으로 확인합니다.

@@ -3,9 +3,11 @@ import CinderCore
 
 struct MusicView: View {
     @ObservedObject var model: AppModel
+    @State private var playlistPage = 0
+    private var playlistPages: Int { max(1, (model.playbackMusic.count + 4) / 5) }
     var body: some View {
-        VStack(spacing: 16) {
-            Panel(title: model.t("Music source")) {
+        VStack(spacing: 12) {
+            Panel(title: model.t("Music source"), compact: true) {
                 Picker(model.t("Music source"), selection: Binding(get: { model.settings.selectedMusicSource }, set: { model.selectMusicSource($0) })) {
                     ForEach(MusicSource.allCases, id: \.self) { source in Text(model.t(source.label)).tag(source) }
                 }.pickerStyle(.segmented).disabled(model.isLocked)
@@ -16,7 +18,7 @@ struct MusicView: View {
     }
     private var library: some View {
         HStack(alignment: .top, spacing: 20) {
-            Panel(title: model.t("Music library")) {
+            Panel(title: model.t("Music library"), compact: true) {
                 HStack {
                     Button(model.t("Add music…"), action: model.chooseMusic)
                     Button(model.t("Clear")) { model.replaceMusic([]) }
@@ -28,29 +30,32 @@ struct MusicView: View {
                 MusicFileList(model: model)
                 if model.music.isEmpty { Text(model.t("Add music to build your library.")) }
             }
-            Panel(title: model.t("Burn-in playlist")) {
+            Panel(title: model.t("Burn-in playlist"), compact: true) {
                 Text("\(model.playbackMusic.count) · \(Cycle.time(model.musicSeconds))").font(.title3).monospacedDigit()
                 HStack {
                     Button(model.t("Select playable")) { model.selectPlayableMusic() }
                     Button(model.t("Deselect all")) { model.selectedMusic = []; model.saveMusicLibrary() }
                 }.disabled(model.isLocked)
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(Array(model.playbackMusic.enumerated()), id: \.offset) { index, path in
+                VStack(alignment: .leading, spacing: 10) {
+                        ForEach(Array(model.playbackMusic.enumerated()).dropFirst(min(playlistPage, playlistPages - 1) * 5).prefix(5), id: \.offset) { index, path in
                             HStack {
                                 Text("\(index + 1). " + URL(fileURLWithPath: path).lastPathComponent).lineLimit(2)
                                 Spacer()
-                                Button("↑") { model.moveMusic(path, offset: -1) }.disabled(model.isLocked || index == 0)
-                                Button("↓") { model.moveMusic(path, offset: 1) }.disabled(model.isLocked || index == model.playbackMusic.count - 1)
+                                Button { model.moveMusic(path, offset: -1) } label: { Image(systemName: "arrow.up").accessibilityLabel(model.t("Move up")) }.disabled(model.isLocked || index == 0)
+                                Button { model.moveMusic(path, offset: 1) } label: { Image(systemName: "arrow.down").accessibilityLabel(model.t("Move down")) }.disabled(model.isLocked || index == model.playbackMusic.count - 1)
                             }
                         }
-                    }
-                }.frame(height: 220)
+                }.frame(height: 160, alignment: .top)
+                PageControls(model: model, page: $playlistPage, count: playlistPages)
+                    .onChange(of: playlistPages) { _, count in playlistPage = min(playlistPage, count - 1) }
                 Text(model.t("Selected tracks play in this order and repeat during cycle step 4."))
                 if model.playbackMusic.isEmpty { Text(model.t("No tracks selected: step 4 uses pink noise.")) }
                 if let issue = model.musicProblem { Text(issue).foregroundStyle(.orange) }
-                Text(model.t("Limits apply to selected tracks only: 10 minutes and 256 MB decoded PCM."))
-                Text(model.t("Library and selection are saved automatically. Files stay in their original locations."))
+                HStack(spacing: 4) {
+                    Text(model.t("Selected music: up to 10 minutes · mono or stereo"))
+                    InfoHint(text: model.t("Music supports local files readable by macOS: mono or stereo, 8–96 kHz, up to 10 minutes selected.") + "\n" + model.t("Limits apply to selected tracks only: 10 minutes and 256 MB decoded PCM.") + "\n" + model.t("Library and selection are saved automatically. Files stay in their original locations."))
+                }
+                Text(model.t("External music is band-limited and faded for this playback path; it is not unprocessed listening playback.")).font(.caption).foregroundStyle(.secondary)
             }
         }
     }

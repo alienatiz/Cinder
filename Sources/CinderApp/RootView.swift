@@ -5,35 +5,27 @@ import CinderPlatform
 struct RootView: View {
     @ObservedObject var model: AppModel
     @Environment(\.colorScheme) private var systemColorScheme
-    private let tabs = ["Quick Play", "Music", "Device & Profile", "Schedule", "Settings", "Changelog", "Session history"]
+    private let tabs = ["Quick Play", "Music", "Session history", "Settings"]
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
                 Text(Identity.name).font(.title3.weight(.semibold))
-                Picker("", selection: $model.tab) {
+                Picker(model.t("Navigation"), selection: $model.tab) {
                     ForEach(Array(tabs.enumerated()), id: \.offset) { index, name in Text(model.t(name)).tag(index) }
-                }.pickerStyle(.segmented)
+                }.pickerStyle(.segmented).labelsHidden()
                 HStack(spacing: 3) {
                     Text("v\(Identity.version)").foregroundStyle(.secondary).fixedSize()
                     InfoHint(text: model.t("Development help"))
                 }
             }.fixedSize(horizontal: false, vertical: true).layoutPriority(1)
-            if model.tab == 0 {
-                QuickPlayView(model: model).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            } else { ScrollView {
-                Group {
+            Group {
                 switch model.tab {
                 case 1: MusicView(model: model)
-                case 2: DeviceView(model: model)
-                case 3: ScheduleView(model: model)
-                case 4: SettingsView(model: model)
-                case 6: SessionHistoryView(model: model)
-                default: HistoryView(model: model)
+                case 2: SessionHistoryView(model: model)
+                case 3: SettingsView(model: model)
+                default: QuickPlayView(model: model)
                 }
-                }.frame(maxWidth: .infinity, alignment: .top)
-                .padding(.bottom, 4)
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .layoutPriority(0) }
             if let error = model.error {
                 HStack { Image(systemName: "exclamationmark.triangle"); Text(error).textSelection(.enabled); Spacer(); Button(model.t("Dismiss")) { model.error = nil } }
                     .lineLimit(3).help(error)
@@ -92,10 +84,14 @@ struct Panel<Content: View>: View {
 
 @MainActor struct QuickPlayView: View {
     @ObservedObject var model: AppModel
+    @State private var outputDetails = false
+    @State private var scheduling = false
     var body: some View {
         VStack(spacing: 10) {
             HStack {
                 DevicePicker(model: model)
+                Button(model.t("Output details")) { outputDetails = true }
+                Button(model.t("Schedule")) { scheduling = true }
                 if model.armed != nil { Button(model.t("Cancel Schedule"), action: model.cancelSchedule) }
                 Spacer()
                 if model.settings.selectedProgram.usesMusic {
@@ -113,6 +109,12 @@ struct Panel<Content: View>: View {
                 }
             }
             Text(model.t("Run with earphones out of your ears. Start with low system/DAC volume.")).foregroundStyle(.secondary)
+        }
+        .sheet(isPresented: $outputDetails) {
+            DetailSheet(title: model.t("Output details"), done: model.t("Done")) { DeviceView(model: model) }
+        }
+        .sheet(isPresented: $scheduling) {
+            DetailSheet(title: model.t("Schedule"), done: model.t("Done")) { ScheduleView(model: model) }
         }
     }
 }

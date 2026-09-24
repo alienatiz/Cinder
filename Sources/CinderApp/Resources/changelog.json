@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 21,
+      "change_count": 22,
       "changes": {
         "ko": [
           {
@@ -89,6 +89,10 @@
           {
             "type": "New",
             "text": "선택적 macOS 무음 알림으로 계획 완료·재생 오류·출력 변경·예약 지연을 알립니다. 기능을 켤 때만 권한을 요청하며 알림 없이도 실행 기록을 확인할 수 있습니다."
+          },
+          {
+            "type": "New",
+            "text": "주 화면을 Quick Play·Music·실행 기록·Settings로 정리하고 음악·변경 기록 페이지 구분, 출력·예약 상세, 오프라인 도움말을 추가했습니다."
           }
         ],
         "en": [
@@ -175,6 +179,10 @@
           {
             "type": "New",
             "text": "Optional silent macOS notifications report plan completion, playback errors, output changes and missed schedules. Permission is requested only when enabled; session history remains available without notifications."
+          },
+          {
+            "type": "New",
+            "text": "Organized the app into Quick Play, Music, Session history and Settings; added paged music and changelog views, output and schedule details, and offline help."
           }
         ],
         "ja": [
@@ -261,6 +269,10 @@
           {
             "type": "New",
             "text": "任意のmacOS無音通知で計画完了・再生エラー・出力変更・予約遅延を知らせます。有効にするときだけ許可を求め、通知がなくても実行履歴を確認できます。"
+          },
+          {
+            "type": "New",
+            "text": "画面をQuick Play・Music・実行履歴・Settingsに整理し、音楽と変更履歴のページ切り替え、出力と予約の詳細、オフラインヘルプを追加しました。"
           }
         ]
       }
