@@ -73,3 +73,7 @@ Check-Release는 커밋된 Git 체크아웃에서 실행합니다. 소스 검사
 앱 식별자와 `Swinder` 설정 폴더를 유지하고, 실행이나 프리셋 적용만으로
 재생·예약을 시작하지 않습니다. ChatGPT/Codex 커밋의 작성자와 공동 작성 표기는
 [AUTHORS.md](AUTHORS.md)를 따릅니다.
+
+Live Activities 도입 전 SDK 지원 여부는 `bash Check-LiveActivities.command`로
+별도 확인합니다. 실제 기능 통합에는 `--require-supported` 검사를 사용하세요.
+현재 macOS SDK의 제약과 기능 커밋 분리 범위는 [SDK 도입 안내](Docs/LIVE-ACTIVITIES.md)에 있습니다.
