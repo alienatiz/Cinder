@@ -19,7 +19,8 @@ let package = Package(
         .target(name: "CinderAudio", dependencies: ["CinderCore", "CinderDSP", "CinderPlatform"], swiftSettings: concurrency, linkerSettings: [.linkedFramework("AVFoundation"), .linkedFramework("AudioToolbox")]),
         .target(name: "CinderStorage", dependencies: ["CinderCore", .product(name: "Yams", package: "Yams")], swiftSettings: concurrency),
         .executableTarget(name: "CinderApp", dependencies: ["CinderCore", "CinderAudio", "CinderPlatform", "CinderStorage"], resources: [.process("Resources")], swiftSettings: concurrency),
-        .testTarget(name: "CinderCoreTests", dependencies: ["CinderCore", "CinderDSP", "CinderStorage", "CinderAudio", "CinderPlatform"], resources: [.copy("Fixtures")], swiftSettings: concurrency)
+        .testTarget(name: "CinderCoreTests", dependencies: ["CinderCore", "CinderDSP", "CinderStorage", "CinderAudio", "CinderPlatform"], resources: [.copy("Fixtures")], swiftSettings: concurrency),
+        .testTarget(name: "CinderAppTests", dependencies: ["CinderApp", "CinderCore", "CinderStorage", "CinderPlatform"], swiftSettings: concurrency)
     ],
     swiftLanguageModes: checkSwift6 ? [.v6] : [.v5]
 )

@@ -7,6 +7,7 @@ import CinderCore
     @ObservedObject var model: AppModel
     @ObservedObject private var display: PlaybackDisplay
     @Environment(\.openWindow) private var openWindow
+    @State private var editingDuration = false
 
     init(model: AppModel) { self.model = model; self.display = model.playbackDisplay }
 
@@ -32,10 +33,11 @@ import CinderCore
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: symbol).font(.title2).frame(width: 28)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Cinder").font(.headline)
+                    Text("Cinder · Quick Play Lite").font(.headline)
                     Text(status).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 }
             }
+            MenuQuickPlaySettings(model: model, editingDuration: $editingDuration)
             if let target = model.armed {
                 TimelineView(.periodic(from: .now, by: 1)) { context in
                     timeRow("Starts in", seconds: max(0, target.timeIntervalSince(context.date)))
@@ -54,31 +56,21 @@ import CinderCore
                 Text(String(format: model.t("%d of %d sessions completed"), run.completedSessions, run.sessions.count))
                     .font(.callout).foregroundStyle(.secondary)
             }
-            if let device = model.device {
-                Label(device.name, systemImage: "speaker.wave.2")
-                    .font(.callout).lineLimit(2)
-                    .accessibilityLabel(Text(model.t("Output device") + ": " + device.name))
+            if !model.state.locksSettings {
+                Text(model.t(model.settings.selectedProgram.label)).font(.callout).foregroundStyle(.secondary)
+            }
+            Text(model.t("App gain") + " · " + GainPolicy.display(model.settings.gainDB))
+                .font(.callout).foregroundStyle(.secondary)
+            if !model.state.locksSettings, model.settings.selectedProgram.usesMusic {
+                Text(model.musicSummary).font(.caption).foregroundStyle(.secondary).lineLimit(2).help(model.musicSummary)
+            }
+            if !model.state.locksSettings, let issue = model.musicProblem {
+                Text(issue).font(.callout).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)
             }
             if let error = model.error {
                 Text(model.t(error)).font(.callout).foregroundStyle(.red).lineLimit(3)
             }
-            if model.state.locksSettings || model.armed != nil {
-                HStack {
-                    if model.armed == nil {
-                        Button(action: model.togglePause) {
-                            Label(model.t(model.state == .paused ? "Resume" : "Pause"),
-                                  systemImage: model.state == .paused ? "play.fill" : "pause.fill")
-                                .frame(maxWidth: .infinity)
-                        }
-                        .disabled(![.playing, .paused].contains(model.state))
-                    }
-                    Button(action: model.stop) {
-                        Label(model.t(model.armed != nil ? "Cancel Schedule" : "Stop"), systemImage: "stop.fill")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .disabled(model.state == .stopping)
-                }.controlSize(.large)
-            }
+            playbackControls
             Divider()
             HStack {
                 Button(model.t("Open Cinder")) {
@@ -93,7 +85,36 @@ import CinderCore
                 .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
         }
         .padding(18)
-        .frame(width: 320)
+        .frame(width: 340)
+        .onDisappear { editingDuration = false }
+    }
+
+    private var playbackControls: some View {
+        HStack(spacing: 12) {
+            Spacer()
+            Button {
+                if model.state == .paused { model.togglePause() }
+                else { model.start() }
+            } label: {
+                Label(model.t(model.state == .paused ? "Resume" : "Start"), systemImage: "play.fill")
+                    .frame(width: 42, height: 24)
+            }
+            .buttonStyle(.borderedProminent)
+            .disabled(editingDuration || (model.state != .paused && !model.canStart))
+            .help(model.t(model.state == .paused ? "Resume" : "Start"))
+            Button(action: model.togglePause) {
+                Label(model.t("Pause"), systemImage: "pause.fill").frame(width: 42, height: 24)
+            }
+            .disabled(model.state != .playing)
+            .help(model.t("Pause"))
+            Button(action: model.stop) {
+                Label(model.t("Stop"), systemImage: "stop.fill").frame(width: 42, height: 24)
+            }
+            .disabled((!model.state.locksSettings && model.armed == nil) || model.state == .stopping)
+            .help(model.t(model.armed != nil ? "Cancel Schedule" : "Stop"))
+            Spacer()
+        }
+        .labelStyle(.iconOnly).buttonStyle(.bordered).controlSize(.large)
     }
 
     private func timeRow(_ title: String, seconds: Double) -> some View {

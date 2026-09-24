@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 16,
+      "change_count": 17,
       "changes": {
         "ko": [
           {
@@ -21,6 +21,10 @@
           {
             "type": "New",
             "text": "macOS 메뉴 막대에서 Burn In 상태·남은 시간·출력 장치·다음 예약을 확인하고 일시정지·재개·중지·예약 취소를 제어합니다. 창을 닫아도 재생과 예약은 계속되며, Cinder 열기로 같은 세션에 돌아옵니다. Cinder 종료 또는 ⌘Q는 재생을 끝내고 남은 예약과 실행 계획을 취소합니다."
+          },
+          {
+            "type": "New",
+            "text": "메뉴 막대 팝업을 Quick Play Lite로 확장했습니다. 출력 장치와 1·2·4·8·40시간 또는 직접 입력 시간을 선택하고 재생·일시정지·재개·정지를 조작합니다. 기존 분할 계획도 실행할 수 있으며, 현재 신호·음악·게인을 확인합니다. 팝업을 여는 것만으로 계획이 바뀌거나 재생이 시작되지 않습니다. 재생·예약 중에는 설정을 잠급니다."
           },
           {
             "type": "New",
@@ -90,6 +94,10 @@
           },
           {
             "type": "New",
+            "text": "Quick Play Lite in the menu bar lets you select an output and a 1-, 2-, 4-, 8- or 40-hour session, or enter a custom duration. Start, pause, resume and stop without opening the main window. Existing split plans remain available, with the current signal, music and gain shown. Opening the popup does not change the plan or start playback. Settings stay locked during playback or a pending schedule."
+          },
+          {
+            "type": "New",
             "text": "Select and reorder tracks in the music library. View each file’s format, bit depth, sample rate and duration, with a green check or red error indicator for the initial read check. Problems in selected files block playback and scheduling."
           },
           {
@@ -153,6 +161,10 @@
           {
             "type": "New",
             "text": "macOS のメニューバーでバーンインの状態・残り時間・出力機器・次の予約を確認し、一時停止・再開・停止・予約解除を操作できます。ウインドウを閉じても再生と予約は継続し、Cinder を開くと同じセッションに戻ります。Cinder を終了または ⌘Q で再生を停止し、残りの予約と実行計画を解除します。"
+          },
+          {
+            "type": "New",
+            "text": "メニューバーに Quick Play Lite を追加しました。出力機器と1・2・4・8・40時間、または任意の時間を選び、メインウインドウを開かずに再生・一時停止・再開・停止を操作できます。既存の分割計画も実行でき、信号・音楽・ゲインを確認できます。ポップアップを開くだけでは計画の変更や再生は行いません。再生・予約中は設定をロックします。"
           },
           {
             "type": "New",

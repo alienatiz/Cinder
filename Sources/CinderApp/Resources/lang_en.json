@@ -254,5 +254,6 @@
   "Open Cinder": "Open Cinder",
   "Quit Cinder": "Quit Cinder",
   "Quit stops playback and cancels pending sessions.": "Quit stops playback and cancels pending sessions.",
-  "Closing the window keeps playback and schedules running.": "Closing the window keeps playback and schedules running."
+  "Closing the window keeps playback and schedules running.": "Closing the window keeps playback and schedules running.",
+  "%d-hour session": "%d-hour session"
 }

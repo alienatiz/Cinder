@@ -39,7 +39,7 @@ struct RootView: View {
                     .foregroundStyle(.orange)
             }
             HStack(spacing: 14) {
-                Button(model.t("Start"), action: model.start).buttonStyle(CinderButtonStyle(prominent: true)).disabled(model.isLocked || model.device == nil || model.musicProblem != nil)
+                Button(model.t("Start"), action: model.start).buttonStyle(CinderButtonStyle(prominent: true)).disabled(!model.canStart)
                 Button(model.t(model.state == .paused ? "Resume" : "Pause"), action: model.togglePause).disabled(![.playing, .paused].contains(model.state))
                 Button(model.t("Stop"), action: model.stop).disabled((!model.state.locksSettings && model.armed == nil) || model.state == .stopping)
             }.controlSize(.large).fixedSize(horizontal: false, vertical: true).layoutPriority(1)
@@ -59,7 +59,7 @@ struct DevicePicker: View {
     @ObservedObject var model: AppModel
     var body: some View {
         HStack {
-            Picker(model.t("Output device"), selection: $model.selectedUID) {
+            Picker(model.t("Output device"), selection: Binding(get: { model.selectedUID }, set: { model.selectOutput($0) })) {
                 Text(model.t("Select output")).tag("")
                 ForEach(model.devices) { device in Text(device.name).tag(device.uid) }
             }

@@ -69,7 +69,7 @@ import CinderStorage
     private let audio = PlaybackEngine()
     private let monitor = DeviceMonitor()
     let awake = SleepPrevention()
-    let storage = SettingsStore()
+    let storage: SettingsStore
     private let ticker = MainRunLoopTicker()
     private var foreground = true
     private var mainWindowIsVisible = false
@@ -80,7 +80,8 @@ import CinderStorage
     var sessionDurationSeconds: Double { Double(planRun?.currentMinutes ?? settings.durationMinutes) * 60 }
     var remaining: Double { max(0, sessionDurationSeconds - snapshot.elapsed) }
 
-    init() {
+    init(storage: SettingsStore = SettingsStore()) {
+        self.storage = storage
         let installedBundle = Bundle.main.resourceURL?.appendingPathComponent("Cinder_CinderApp.bundle")
         let installed = installedBundle.flatMap { Bundle(url: $0)?.resourceURL }
         let directory: URL
@@ -128,6 +129,13 @@ import CinderStorage
         refreshOutputInfo()
     }
     func t(_ text: String) -> String { catalog[language]?[text] ?? text }
+    /// Selection must refresh validation and persist even when the main window is closed.
+    func selectOutput(_ uid: String) {
+        guard !isLocked, uid.isEmpty || devices.contains(where: { $0.uid == uid }) else { return }
+        selectedUID = uid
+        refreshOutputInfo(); saveUI()
+    }
+    var canStart: Bool { !isLocked && device != nil && musicProblem == nil }
     func refreshDevices() {
         do { devices = try AudioDevices.outputs() }
         catch { devices = []; self.error = error.localizedDescription }
@@ -148,7 +156,7 @@ import CinderStorage
         let previous = device
         refreshDevices()
         if state.locksSettings || armed != nil, let previous, !devices.contains(previous) { fail(CinderError.deviceChanged) }
-        if device == nil { selectedUID = "" }
+        if device == nil { selectedUID = ""; saveUI() }
     }
     func applyHours(_ hours: Double) {
         guard !isLocked else { return }

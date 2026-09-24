@@ -254,5 +254,6 @@
   "Open Cinder": "Cinder を開く",
   "Quit Cinder": "Cinder を終了",
   "Quit stops playback and cancels pending sessions.": "終了すると再生を停止し、残りの予約と実行計画を解除します。",
-  "Closing the window keeps playback and schedules running.": "ウインドウを閉じても再生と予約は継続します。"
+  "Closing the window keeps playback and schedules running.": "ウインドウを閉じても再生と予約は継続します。",
+  "%d-hour session": "%d時間の再生"
 }

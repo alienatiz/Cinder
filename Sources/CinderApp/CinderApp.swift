@@ -28,7 +28,6 @@ import CinderCore
                 .onChange(of: model.language) { _, _ in model.saveUI() }
                 .onChange(of: model.appearance) { _, _ in model.saveUI() }
                 .onChange(of: model.needle) { _, _ in model.saveUI() }
-                .onChange(of: model.selectedUID) { _, _ in model.refreshOutputInfo(); model.saveUI() }
         }
         .defaultSize(width: 1280, height: 800)
 
