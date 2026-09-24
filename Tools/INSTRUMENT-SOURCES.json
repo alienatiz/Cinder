@@ -8,5 +8,12 @@
     "url": "https://raw.githubusercontent.com/mrbumpy409/GeneralUser-GS/main/GeneralUser-GS.sf2",
     "git_blob": "298b552d2e9d1307e03e5c5c99d2c046aaed9ec3",
     "sha256": "9575028c7a1f589f5770fccc8cff2734566af40cd26ed836944e9a5152688cfe"
+  },
+  "fluidsynth_macos": {
+    "version": "2.6.1",
+    "formula": "fluid-synth",
+    "bottle_url": "https://ghcr.io/v2/homebrew/core/fluid-synth/blobs/sha256:094ebbed50819c923aa5844bdf6d54f8d64515bd8230468e48655baa5657ea3c",
+    "bottle_sha256": "094ebbed50819c923aa5844bdf6d54f8d64515bd8230468e48655baa5657ea3c",
+    "library_sha256": "f727cd92b2ff2ea9eb85bb26fd4fd1c776ede7cd53cc0c76f9ee089b4f74f91c"
   }
 }

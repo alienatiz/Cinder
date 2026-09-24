@@ -44,3 +44,10 @@ Classic은 56초를 각 8초씩 나누어 20–60Hz, 60–250Hz, 250–500Hz,
 `--library`, `--bank`, `--output`, `--previews` 경로를 지정합니다.
 [의존성](../../Tools/requirements-music.txt), [도구 해시](../../Tools/INSTRUMENT-SOURCES.json),
 [크레딧·라이선스](../../Sources/CinderApp/Resources/preset-music-credits.txt)를 함께 확인하세요.
+
+macOS에서 재생성 도구를 준비하려면 Homebrew의 `fluid-synth`와 프로젝트 내부
+가상환경에 `Tools/requirements-music.txt`를 설치합니다. 악기 뱅크는 생성 전에
+`Tools/INSTRUMENT-SOURCES.json`의 SHA-256과 일치하는지 확인해야 합니다.
+macOS 27 arm64의 FluidSynth 2.6.1에서 기존 Balanced 악보의 오프라인 렌더링을
+검증했습니다. 해당 도구는 앱 타깃의 의존성이 아니며, 일반 빌드와 설치된 앱은
+제공된 FLAC만 사용합니다. 새 편곡 리소스는 생성 도구 준비와 별도로 관리합니다.
