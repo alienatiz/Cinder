@@ -13,6 +13,7 @@ struct SettingsView: View {
                 Text(model.t("Language & Appearance")).tag(1)
                 Text(model.t("Theme Editor")).tag(2)
                 Text(model.t("Updates")).tag(3)
+                Text(model.t("Notifications")).tag(4)
             }.pickerStyle(.segmented).frame(maxWidth: 800)
             if category == 0 { PlaybackSettingsView(model: model) }
             else if category == 1 {
@@ -35,7 +36,8 @@ struct SettingsView: View {
                     }
                 }
             } else if category == 2 { ThemeEditorView(model: model) }
-            else { UpdateSettingsView(model: model) }
+            else if category == 3 { UpdateSettingsView(model: model) }
+            else { NotificationSettingsView(model: model) }
         }
     }
 }

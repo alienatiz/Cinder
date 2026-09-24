@@ -29,6 +29,12 @@ import CinderStorage
     var historyWritable = true
     var lastHistorySave: Double = -.infinity
     let historyWriter: SessionHistoryWriter
+    @Published var notificationsEnabled = false
+    @Published var notificationPermission: NotificationPermission = .notRequested
+    @Published var notificationBusy = false
+    @Published var notificationMessage = ""
+    let notifications: any SessionNotifying
+    var notificationTask: Task<Void, Never>?
     @Published var music: [String] = []
     @Published var musicInspection: [MusicInspection] = []
     @Published var outputRate = 0.0
@@ -87,8 +93,9 @@ import CinderStorage
     var sessionDurationSeconds: Double { Double(planRun?.currentMinutes ?? settings.durationMinutes) * 60 }
     var remaining: Double { max(0, sessionDurationSeconds - snapshot.elapsed) }
 
-    init(storage: SettingsStore = SettingsStore()) {
+    init(storage: SettingsStore = SettingsStore(), notifications: (any SessionNotifying)? = nil) {
         self.storage = storage
+        self.notifications = notifications ?? SessionNotifications()
         historyWriter = SessionHistoryWriter(directory: storage.directory)
         let installedBundle = Bundle.main.resourceURL?.appendingPathComponent("Cinder_CinderApp.bundle")
         let installed = installedBundle.flatMap { Bundle(url: $0)?.resourceURL }
@@ -138,6 +145,8 @@ import CinderStorage
         restoreMusicLibrary()
         refreshOutputInfo()
         loadSessionHistory()
+        do { notificationsEnabled = try storage.loadNotificationPreferences().enabled }
+        catch { notificationMessage = t("Notification settings could not be loaded.") }
     }
     func t(_ text: String) -> String { catalog[language]?[text] ?? text }
     func selectUpdateChannel(_ channel: UpdateChannel) {

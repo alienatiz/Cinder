@@ -302,5 +302,15 @@
   "Previous": "이전",
   "Next": "다음",
   "Copy summary": "요약 복사",
-  "Export summary…": "요약 내보내기…"
+  "Export summary…": "요약 내보내기…",
+  "Notifications": "알림",
+  "Notify when a plan finishes or needs attention": "계획 완료·문제 발생 시 알림",
+  "Silent banners for completion, playback failure, output changes and missed schedules. No notifications for routine pauses or each split session.": "완료·재생 실패·출력 변경·예약 지연을 무음 배너로 알립니다. 일시정지나 분할 회차마다 알리지 않습니다.",
+  "Allow Cinder in System Settings → Notifications to receive banners. Results remain in Session history.": "배너를 받으려면 시스템 설정 → 알림에서 Cinder를 허용해 주세요. 결과는 실행 기록에 남습니다.",
+  "Notifications are available in the built Cinder app.": "알림은 빌드된 Cinder 앱에서 사용할 수 있습니다.",
+  "Session history works even when notifications are off or denied.": "알림을 끄거나 허용하지 않아도 실행 기록은 유지됩니다.",
+  "Refresh permission status": "권한 상태 새로고침",
+  "Notification settings could not be loaded.": "알림 설정을 불러오지 못했습니다.",
+  "Notification settings could not be saved.": "알림 설정을 저장하지 못했습니다.",
+  "The notification could not be delivered. The result is saved in Session history.": "알림을 전달하지 못했습니다. 결과는 실행 기록에 저장됩니다."
 }

@@ -112,3 +112,7 @@ LTS는 첫 정식판 이후 유지보수 필요에 따라 결정합니다. [출�
 Cinder는 **Byeongcheol Kim과 OpenAI의 공동 작업**입니다. ChatGPT/Codex에서
 작성한 커밋에 공동 작성 정보를 기록합니다. [AUTHORS.md](AUTHORS.md)와
 [음원·도구 크레딧](Sources/CinderApp/Resources/preset-music-credits.txt)을 참조하세요.
+
+완료·오류 알림은 Settings에서 선택적으로 켤 수 있습니다. 처음 켤 때만 macOS 알림
+허용을 요청하며, 완료·장치 변경·실패·놓친 예약을 소리 없는 알림으로 전달합니다.
+일시정지나 회차 사이 휴식마다 알리지 않습니다. 허용하지 않아도 실행 기록은 남습니다.

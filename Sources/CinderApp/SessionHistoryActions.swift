@@ -35,7 +35,10 @@ extension AppModel {
         guard sessionRecorder != nil else { return }
         updateSessionRecord(snapshot: snapshot ?? AudioSnapshot(), now: now, uptime: uptime)
         sessionRecorder?.finish(outcome, at: now)
-        if let record = sessionRecorder?.record { sessionHistory.upsert(record) }
+        if let record = sessionRecorder?.record {
+            sessionHistory.upsert(record)
+            notificationTask = Task { [weak self] in await self?.deliverSessionNotification(record) }
+        }
         sessionRecorder = nil; saveSessionHistory()
     }
     func saveSessionHistory() {

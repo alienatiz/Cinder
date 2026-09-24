@@ -302,5 +302,15 @@
   "Previous": "Previous",
   "Next": "Next",
   "Copy summary": "Copy summary",
-  "Export summary…": "Export summary…"
+  "Export summary…": "Export summary…",
+  "Notifications": "Notifications",
+  "Notify when a plan finishes or needs attention": "Notify when a plan finishes or needs attention",
+  "Silent banners for completion, playback failure, output changes and missed schedules. No notifications for routine pauses or each split session.": "Silent banners for completion, playback failure, output changes and missed schedules. No notifications for routine pauses or each split session.",
+  "Allow Cinder in System Settings → Notifications to receive banners. Results remain in Session history.": "Allow Cinder in System Settings → Notifications to receive banners. Results remain in Session history.",
+  "Notifications are available in the built Cinder app.": "Notifications are available in the built Cinder app.",
+  "Session history works even when notifications are off or denied.": "Session history works even when notifications are off or denied.",
+  "Refresh permission status": "Refresh permission status",
+  "Notification settings could not be loaded.": "Notification settings could not be loaded.",
+  "Notification settings could not be saved.": "Notification settings could not be saved.",
+  "The notification could not be delivered. The result is saved in Session history.": "The notification could not be delivered. The result is saved in Session history."
 }

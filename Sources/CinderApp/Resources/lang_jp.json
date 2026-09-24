@@ -302,5 +302,15 @@
   "Previous": "前へ",
   "Next": "次へ",
   "Copy summary": "概要をコピー",
-  "Export summary…": "概要を書き出す…"
+  "Export summary…": "概要を書き出す…",
+  "Notifications": "通知",
+  "Notify when a plan finishes or needs attention": "計画完了・問題発生時に通知",
+  "Silent banners for completion, playback failure, output changes and missed schedules. No notifications for routine pauses or each split session.": "完了・再生失敗・出力変更・予約遅延を無音バナーで通知します。一時停止や分割セッションごとには通知しません。",
+  "Allow Cinder in System Settings → Notifications to receive banners. Results remain in Session history.": "バナーを受け取るにはシステム設定 → 通知でCinderを許可してください。結果は実行履歴に残ります。",
+  "Notifications are available in the built Cinder app.": "通知はビルド済みのCinderアプリで利用できます。",
+  "Session history works even when notifications are off or denied.": "通知をオフにした場合や許可しなくても実行履歴は残ります。",
+  "Refresh permission status": "許可状態を更新",
+  "Notification settings could not be loaded.": "通知設定を読み込めませんでした。",
+  "Notification settings could not be saved.": "通知設定を保存できませんでした。",
+  "The notification could not be delivered. The result is saved in Session history.": "通知を送信できませんでした。結果は実行履歴に保存されます。"
 }

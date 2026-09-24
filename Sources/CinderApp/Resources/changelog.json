@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 20,
+      "change_count": 21,
       "changes": {
         "ko": [
           {
@@ -85,6 +85,10 @@
           {
             "type": "New",
             "text": "최근 500개 실행의 신호·휴식·준비·일시정지 시간과 게인 범위를 로컬에 기록합니다. 완료·중지·실패·중단 결과를 다시 확인하고 요약을 복사·내보낼 수 있으며 자동 재생하지 않습니다."
+          },
+          {
+            "type": "New",
+            "text": "선택적 macOS 무음 알림으로 계획 완료·재생 오류·출력 변경·예약 지연을 알립니다. 기능을 켤 때만 권한을 요청하며 알림 없이도 실행 기록을 확인할 수 있습니다."
           }
         ],
         "en": [
@@ -167,6 +171,10 @@
           {
             "type": "New",
             "text": "Session history keeps the latest 500 runs locally with signal, rest, preparation, pause and gain details. Completed, stopped, failed and interrupted outcomes survive reopening; copy or export a summary without auto-resuming playback."
+          },
+          {
+            "type": "New",
+            "text": "Optional silent macOS notifications report plan completion, playback errors, output changes and missed schedules. Permission is requested only when enabled; session history remains available without notifications."
           }
         ],
         "ja": [
@@ -249,6 +257,10 @@
           {
             "type": "New",
             "text": "最新500件の信号・休憩・準備・一時停止時間とゲイン範囲をローカルに記録します。完了・停止・失敗・中断結果を再確認し概要をコピー・書き出せます。自動再生はしません。"
+          },
+          {
+            "type": "New",
+            "text": "任意のmacOS無音通知で計画完了・再生エラー・出力変更・予約遅延を知らせます。有効にするときだけ許可を求め、通知がなくても実行履歴を確認できます。"
           }
         ]
       }
