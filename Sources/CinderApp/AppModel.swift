@@ -72,6 +72,7 @@ import CinderStorage
     let storage = SettingsStore()
     private let ticker = MainRunLoopTicker()
     private var foreground = true
+    private var mainWindowIsVisible = false
     private let catalog: [String: [String: String]]
     private let resourceFiles: ResourceFiles
     let releases: [Release]
@@ -266,9 +267,10 @@ import CinderStorage
         catch { self.error = error.localizedDescription }
     }
     func active(_ value: Bool) { foreground = value; armTimer() }
+    func mainWindowVisible(_ value: Bool) { mainWindowIsVisible = value; armTimer() }
     private func armTimer() {
         guard state.locksSettings, state != .preparing, state != .paused else { ticker.stop(); return }
-        let interval = state == .stopping || state == .pausing || (foreground && tab == 0 && state == .playing) ? 0.1 : 1.0
+        let interval = state == .stopping || state == .pausing || (foreground && mainWindowIsVisible && tab == 0 && state == .playing) ? 0.1 : 1.0
         ticker.start(interval: interval) { [weak self] in self?.tick() }
     }
     private func tick() {

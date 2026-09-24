@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 15,
+      "change_count": 16,
       "changes": {
         "ko": [
           {
@@ -16,7 +16,11 @@
           },
           {
             "type": "New",
-            "text": "Quick Play에서 40시간 연속·40시간 분할·직접 시간 설정을 선택합니다. 분할 계획의 회당 시간과 휴식 간격을 직접 지정하며 마지막 회차는 남은 시간으로 조정합니다. 회차 수와 휴식 포함 예상 소요 시간을 표시하고, 휴식 뒤 다음 회차를 자동 시작합니다. 중지하거나 앱을 닫으면 남은 계획을 취소합니다. 주요 조작은 스크롤 없이 한 화면에 배치했습니다."
+            "text": "Quick Play에서 40시간 연속·40시간 분할·직접 시간 설정을 선택합니다. 분할 계획의 회당 시간과 휴식 간격을 직접 지정하며 마지막 회차는 남은 시간으로 조정합니다. 회차 수와 휴식 포함 예상 소요 시간을 표시하고, 휴식 뒤 다음 회차를 자동 시작합니다. 중지하거나 앱을 완전히 종료하면 남은 계획을 취소합니다. 주요 조작은 스크롤 없이 한 화면에 배치했습니다."
+          },
+          {
+            "type": "New",
+            "text": "macOS 메뉴 막대에서 Burn In 상태·남은 시간·출력 장치·다음 예약을 확인하고 일시정지·재개·중지·예약 취소를 제어합니다. 창을 닫아도 재생과 예약은 계속되며, Cinder 열기로 같은 세션에 돌아옵니다. Cinder 종료 또는 ⌘Q는 재생을 끝내고 남은 예약과 실행 계획을 취소합니다."
           },
           {
             "type": "New",
@@ -78,7 +82,11 @@
           },
           {
             "type": "New",
-            "text": "Choose continuous 40 hours, split 40 hours or a custom duration in Quick Play. Set each session and the rest interval directly; the final session uses the remaining time. View the session count and estimated duration including rests. The next session starts after the rest; Stop or closing the app cancels the remaining plan. Main controls fit on one screen without scrolling."
+            "text": "Choose continuous 40 hours, split 40 hours or a custom duration in Quick Play. Set each session and the rest interval directly; the final session uses the remaining time. View the session count and estimated duration including rests. The next session starts after the rest; Stop or quitting the app cancels the remaining plan. Main controls fit on one screen without scrolling."
+          },
+          {
+            "type": "New",
+            "text": "Control Burn In from the macOS menu bar: view status, remaining time, output device and upcoming sessions; pause, resume, stop or cancel a schedule. Closing the window keeps playback and schedules running. Open Cinder restores the same session; Quit Cinder or Command-Q ends playback and cancels pending sessions."
           },
           {
             "type": "New",
@@ -98,7 +106,7 @@
           },
           {
             "type": "New",
-            "text": "Schedule a single session by date and time, or repeat it at a daily interval for a chosen total number of runs. Save playback and scheduling presets and import or export them as JSON/YAML. Schedules require explicit confirmation and are cancelled when the app closes."
+            "text": "Schedule a single session by date and time, or repeat it at a daily interval for a chosen total number of runs. Save playback and scheduling presets and import or export them as JSON/YAML. Schedules require explicit confirmation and are cancelled when the app quits."
           },
           {
             "type": "New",
@@ -141,6 +149,10 @@
           {
             "type": "New",
             "text": "Quick Play で40時間連続・40時間分割・時間を指定から選べます。1回の時間と休憩間隔を指定し、最終回を残り時間に調整します。回数と休憩を含む予定時間を表示し、休憩後に次の回を自動開始します。停止やアプリの終了で残りの計画を解除します。主な操作をスクロールなしで1画面に配置しました。"
+          },
+          {
+            "type": "New",
+            "text": "macOS のメニューバーでバーンインの状態・残り時間・出力機器・次の予約を確認し、一時停止・再開・停止・予約解除を操作できます。ウインドウを閉じても再生と予約は継続し、Cinder を開くと同じセッションに戻ります。Cinder を終了または ⌘Q で再生を停止し、残りの予約と実行計画を解除します。"
           },
           {
             "type": "New",

@@ -72,7 +72,7 @@
   "Expected end": "終了予定",
   "Export…": "書き出す…",
   "Import…": "読み込む…",
-  "Keep the app open. Sleeping or closed Macs are not automatically awakened.": "アプリを開いたままにしてください。スリープ中や電源オフのMacは自動起動しません。",
+  "Keep the app open. Sleeping or closed Macs are not automatically awakened.": "ウインドウを閉じても予約は継続し、アプリの終了で解除されます。スリープ中や蓋を閉じた Mac を自動で起こすことはできません。",
   "Language & Appearance": "言語と外観",
   "Late starts over 60 seconds are cancelled. Repeats skip overlapping sessions.": "60秒を超える遅延は取り消します。繰り返しでは重なる再生時刻を飛ばします。",
   "Music": "音楽",
@@ -248,5 +248,11 @@
   "Plan cancelled": "プラン取消済み",
   "Resting between sessions": "セッション間の休憩中",
   "Each scheduled run executes the entire 40-hour plan, including its rests.": "予約1回につき、休憩を含む40時間の分割プラン全体を実行します。",
-  "Choose Custom duration in Quick Play to change this time.": "Quick Play で時間を指定を選ぶと、時間を変更できます。"
+  "Choose Custom duration in Quick Play to change this time.": "Quick Play で時間を指定を選ぶと、時間を変更できます。",
+  "Cinder status and controls": "Cinder の状態と操作",
+  "Starts in": "開始まで",
+  "Open Cinder": "Cinder を開く",
+  "Quit Cinder": "Cinder を終了",
+  "Quit stops playback and cancels pending sessions.": "終了すると再生を停止し、残りの予約と実行計画を解除します。",
+  "Closing the window keeps playback and schedules running.": "ウインドウを閉じても再生と予約は継続します。"
 }

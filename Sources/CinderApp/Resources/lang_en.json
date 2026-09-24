@@ -72,7 +72,7 @@
   "Expected end": "Expected end",
   "Export…": "Export…",
   "Import…": "Import…",
-  "Keep the app open. Sleeping or closed Macs are not automatically awakened.": "Keep the app open. Sleeping or closed Macs are not automatically awakened.",
+  "Keep the app open. Sleeping or closed Macs are not automatically awakened.": "Closing the window keeps schedules running. Quit cancels them. Sleeping or closed Macs are not automatically awakened.",
   "Language & Appearance": "Language & Appearance",
   "Late starts over 60 seconds are cancelled. Repeats skip overlapping sessions.": "Late starts over 60 seconds are cancelled. Repeats skip overlapping sessions.",
   "Music": "Music",
@@ -248,5 +248,11 @@
   "Plan cancelled": "Plan cancelled",
   "Resting between sessions": "Resting between sessions",
   "Each scheduled run executes the entire 40-hour plan, including its rests.": "Each scheduled run executes the entire 40-hour plan, including its rests.",
-  "Choose Custom duration in Quick Play to change this time.": "Choose Custom duration in Quick Play to change this time."
+  "Choose Custom duration in Quick Play to change this time.": "Choose Custom duration in Quick Play to change this time.",
+  "Cinder status and controls": "Cinder status and controls",
+  "Starts in": "Starts in",
+  "Open Cinder": "Open Cinder",
+  "Quit Cinder": "Quit Cinder",
+  "Quit stops playback and cancels pending sessions.": "Quit stops playback and cancels pending sessions.",
+  "Closing the window keeps playback and schedules running.": "Closing the window keeps playback and schedules running."
 }
