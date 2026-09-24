@@ -42,6 +42,17 @@ import CinderCore
                         .foregroundStyle(.secondary).monospacedDigit()
                 }
             }.font(.system(size: 13))
+            if let timing = model.plannedTiming {
+                HStack(spacing: 12) {
+                    Text(model.t("Session time") + " · " + Cycle.time(timing.sessionSeconds))
+                    Text(model.t("Signal stages") + " · " + Cycle.time(timing.signalSeconds))
+                    Text(model.t("Cycle rests") + " · " + Cycle.time(timing.cycleRestSeconds))
+                    if timing.betweenSessionRestSeconds > 0 {
+                        Text(model.t("Between sessions") + " · " + Cycle.time(timing.betweenSessionRestSeconds))
+                    }
+                    InfoHint(text: model.t("Session time includes cycle rests. Signal stages exclude those rests, but may contain silence in music. Pauses and preparation delay the estimated finish."))
+                }.font(.caption).foregroundStyle(.secondary).monospacedDigit()
+            }
             if let progress = model.planProgress { Text(progress).font(.system(size: 13)).foregroundStyle(.secondary) }
         }
         .popover(isPresented: $editingSplit) {

@@ -268,5 +268,11 @@
   "Updates are not available yet": "아직 업데이트를 제공하지 않습니다",
   "No stable release has been published. This version saves your channel choice; downloading and installing updates will be added later.": "정식판은 아직 출시되지 않았습니다. 현재는 채널 선택을 저장하며, 업데이트 다운로드와 설치는 추후 지원합니다.",
   "Update channel could not be loaded. Choose a channel to save it again.": "업데이트 채널을 불러오지 못했습니다. 채널을 선택해 다시 저장해 주세요.",
-  "Update channel could not be saved. Your previous choice is unchanged.": "업데이트 채널을 저장하지 못했습니다. 이전 선택을 유지합니다."
+  "Update channel could not be saved. Your previous choice is unchanged.": "업데이트 채널을 저장하지 못했습니다. 이전 선택을 유지합니다.",
+  "Session time": "세션 시간",
+  "Signal stages": "신호 구간",
+  "Cycle rests": "사이클 휴식",
+  "Between sessions": "회차 사이 휴식",
+  "Estimated plan finish": "계획 완료 예상",
+  "Session time includes cycle rests. Signal stages exclude those rests, but may contain silence in music. Pauses and preparation delay the estimated finish.": "세션 시간에는 사이클 휴식이 포함됩니다. 신호 구간은 이 휴식을 제외하며 음악 자체의 무음은 포함할 수 있습니다. 일시정지와 준비 시간만큼 완료 예상이 늦어집니다."
 }

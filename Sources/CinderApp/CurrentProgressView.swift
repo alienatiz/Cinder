@@ -42,9 +42,11 @@ import CinderCore
             HStack {
                 Text(String(format: "%.1f%%", 100 * display.snapshot.elapsed / (model.sessionDurationSeconds)))
                 Spacer()
-                Text(model.t("Sound") + " " + Cycle.time(display.snapshot.sound))
+                Text(model.t("Signal stages") + " " + Cycle.time(display.snapshot.sound))
             }.foregroundStyle(.secondary).monospacedDigit()
-            if model.state == .playing { Text(model.t("Expected end") + " · " + Date().addingTimeInterval(model.remaining).formatted(date: .abbreviated, time: .shortened)).foregroundStyle(.secondary) }
+            if let end = model.estimatedPlanEnd(at: Date()) {
+                Text(model.t("Estimated plan finish") + " · " + end.formatted(date: .abbreviated, time: .shortened)).foregroundStyle(.secondary)
+            }
         }
     }
 }

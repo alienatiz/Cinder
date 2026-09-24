@@ -268,5 +268,11 @@
   "Updates are not available yet": "Updates are not available yet",
   "No stable release has been published. This version saves your channel choice; downloading and installing updates will be added later.": "No stable release has been published. This version saves your channel choice; downloading and installing updates will be added later.",
   "Update channel could not be loaded. Choose a channel to save it again.": "Update channel could not be loaded. Choose a channel to save it again.",
-  "Update channel could not be saved. Your previous choice is unchanged.": "Update channel could not be saved. Your previous choice is unchanged."
+  "Update channel could not be saved. Your previous choice is unchanged.": "Update channel could not be saved. Your previous choice is unchanged.",
+  "Session time": "Session time",
+  "Signal stages": "Signal stages",
+  "Cycle rests": "Cycle rests",
+  "Between sessions": "Between sessions",
+  "Estimated plan finish": "Estimated plan finish",
+  "Session time includes cycle rests. Signal stages exclude those rests, but may contain silence in music. Pauses and preparation delay the estimated finish.": "Session time includes cycle rests. Signal stages exclude those rests, but may contain silence in music. Pauses and preparation delay the estimated finish."
 }

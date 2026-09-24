@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 18,
+      "change_count": 19,
       "changes": {
         "ko": [
           {
@@ -77,6 +77,10 @@
           {
             "type": "Fixed",
             "text": "기존 시간·게인·테마·음악 선택과 프리셋을 유지하고, 연결된 출력 장치의 선택을 복원합니다. 앱을 열거나 프리셋을 불러오는 것만으로 재생이나 예약을 시작하지 않습니다."
+          },
+          {
+            "type": "New",
+            "text": "Quick Play에서 세션 시간·신호 구간·사이클 휴식·회차 사이 휴식을 구분하고 분할 계획 전체의 완료 예상 시각을 표시합니다."
           }
         ],
         "en": [
@@ -151,6 +155,10 @@
           {
             "type": "Fixed",
             "text": "Preserve existing duration, gain, theme, music selections and presets, and restore the selected output when it is connected. Opening the app or loading a preset does not start playback or arm a schedule."
+          },
+          {
+            "type": "New",
+            "text": "Quick Play separates session time, signal stages, cycle rests and rests between sessions. Estimated finish covers the entire split plan."
           }
         ],
         "ja": [
@@ -225,6 +233,10 @@
           {
             "type": "Fixed",
             "text": "既存の時間・ゲイン・テーマ・音楽選択・プリセットを保持し、接続中であれば出力機器の選択を復元します。アプリの起動やプリセットの読み込みだけで再生や予約が始まることはありません。"
+          },
+          {
+            "type": "New",
+            "text": "Quick Playでセッション時間・信号区間・サイクル内休憩・セッション間休憩を区別し、分割計画全体の終了目安を表示します。"
           }
         ]
       }

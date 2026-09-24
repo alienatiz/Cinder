@@ -2,6 +2,22 @@ import Foundation
 import CinderCore
 
 extension AppModel {
+    var plannedTiming: PlaybackTiming? {
+        try? PlaybackTiming(plan: settings.selectedPlan, customMinutes: settings.customDurationMinutes, program: settings.selectedProgram)
+    }
+    func estimatedPlanEnd(at now: Date) -> Date? {
+        guard state == .playing || planRun?.nextStart != nil else { return nil }
+        guard let run = planRun else { return now.addingTimeInterval(remaining) }
+        let remainingRuns = run.sessions.dropFirst(run.completedSessions)
+        let restCount = max(0, remainingRuns.count - 1)
+        let seconds: Double
+        if let next = run.nextStart {
+            seconds = max(0, next.timeIntervalSince(now)) + Double(remainingRuns.reduce(0, +) * 60 + restCount * run.restMinutes * 60)
+        } else {
+            seconds = remaining + Double(remainingRuns.dropFirst().reduce(0, +) * 60 + restCount * run.restMinutes * 60)
+        }
+        return now.addingTimeInterval(seconds)
+    }
     func selectPlanMode(_ mode: PlaybackPlan.Mode) {
         guard !isLocked else { return }
         var plan = settings.selectedPlan; plan.mode = mode
