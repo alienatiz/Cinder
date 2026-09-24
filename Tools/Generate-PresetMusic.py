@@ -1,5 +1,6 @@
 """Reproducible offline instrument-sample arrangements; runtime needs only FLAC assets.
 Requires numpy, scipy, soundfile, a FluidSynth shared library and GeneralUser GS 2.0.3.
+Revision 5 develops each score through orchestration, phrase variation and returns.
 No audio device is opened. See PRESET-MUSIC.md for provenance and limitations.
 """
 from pathlib import Path
@@ -96,32 +97,42 @@ def score(preset):
         thirds=[3,3,4,4,3,4,4]
         for section,(root,third) in enumerate(zip(roots,thirds)):
             start=section*12;strength=[93,79,65,77,100,85,94][section]
-            chord(start,2,[root+12,root+19,root+24+third,root+31],10.8,strength-17)
-            chord(start+.12,5,[root+12,root+19,root+24],6.7,strength-12)
+            # Begin with exposed piano/cello; strings enter, brass answers, then
+            # the chamber passage yields to a full-orchestra return.
+            if section not in [0,3]:chord(start,2,[root+12,root+19,root+24+third,root+31],10.8,strength-17)
+            if section in [2,4,5]:chord(start+.12,5,[root+12,root+19,root+24],6.7,strength-12)
             for at,length in [(0,3.6),(4,3.4),(8,3.8)]:
                 note(start+at,4,root-12 if section==0 else root,length,strength)
                 note(start+at,3,root+12,length,strength-10)
             # A measured dotted motif, answered by a longer line; no high arpeggio loop.
-            motif=[(0,0,.65),(1,3,.40),(1.75,7,2.1),(4.5,5,1.15),(6,3,2.1),(9,2,1),(10.5,0,1.25)]
+            motifs=[
+                [(0,0,1.3),(2,third,.8),(3.5,7,2.5),(7,5,1.4),(9,2,1),(10.5,0,1.25)],
+                [(0,7,.65),(1,5,.4),(1.75,third,2.1),(4.5,2,1.15),(6,0,2.1),(9,2,1),(10.5,7,1.25)],
+                [(0,12,2.5),(3,7,1.2),(5,third,2.8),(9,5,1),(10.5,7,1.25)],
+            ]
+            motif=motifs[section%3]
             register=[12,12,24,24,24,36,36][section]
             for at,interval,length in motif:
                 key=root+register+interval
-                note(start+at,0,key,length,strength-4)
+                note(start+at,6 if section==3 else 0,key,length,strength-4)
                 if section in [0,1,4]:note(start+at,3,root+12+interval,length,strength-18)
                 if section in [3,5,6]:note(start+at,6,min(96,key+12),length,strength-25)
             for at,keys in [(0,[root+12,root+19,root+24+third]),(6,[root+19,root+24+third,root+31])]:
                 chord(start+at+.2,0,keys,4.7,62,.012)
-            for j,interval in enumerate([12,19,24+third,31,36,31]):
+            for j,interval in enumerate([12,19,24+third,31,36,31] if section not in [0,3] else [12,19,24+third]):
                 note(start+j*1.5+.5,1,root+interval+(12 if section>4 else 0),2.8,68 if section<4 else 82)
             if section in [0,3,4,6]:
                 note(start,8,root,2.4,strength);note(start+8,8,root,2.8,strength-8)
-            if section>=4:
+            if section in [4,5]:
                 for at,interval in [(1.75,0),(6,7),(10.5,3)]:note(start+at,7,root+48+interval,2.5,65)
-            if section>=5:
+            if section==5:
                 for at,interval in [(0,7),(4.5,5),(9,2)]:note(start+at,10,root+48+interval,2.4,61)
-            if section==6:
-                drum(start,49,61);drum(start+8,55,52)
+            if section==5:
+                drum(start,49,61)
                 for at in [1,3,5,7,9,11]:drum(start+at,51,47)
+            if section==6:
+                # An unresolved dominant thins back to the opening chamber texture.
+                note(start+9,3,root+19,2.7,55)
         return events,inst
 
     if preset==3:
@@ -131,14 +142,19 @@ def score(preset):
         for bar in range(BARS[preset]):
             at=bar*4;keys=voicings[progression[bar//2]]
             # Let notes ring; alternate bass and inner strings support a top line.
-            for offset,string,length in [(0,0,2.5),(.75,2,1.8),(1.5,3,1.7),(2,1,2),(2.75,4,1.3)]:
-                note(at+offset,0,keys[string],length,78 if string<2 else 65)
-            if bar%2==0:note(at+1,1,keys[-1],2.1,79)
+            exposed=bar<4 or 12<=bar<16 or bar>=22
+            pattern=([(0,0,3), (1.5,3,2), (3,4,1.8)] if exposed else
+                     [(0,0,2.5),(.75,2,1.8),(1.5,3,1.7),(2,1,2),(2.75,4,1.3)])
+            for offset,string,length in pattern:
+                note(at+offset,0,keys[string],length,(68 if exposed else 84) if string<2 else (55 if exposed else 70))
+            if bar<2:continue
+            if bar%2==0:note(at+1,1,keys[-1]+(12 if 18<=bar<22 else 0),2.1,63 if exposed else 82)
             else:
                 note(at+.5,1,keys[-1]-2,1.3,73);note(at+2.5,1,keys[-2],1.9,67)
             if bar in [7,15,23]:chord(at+3,0,keys[1:],2.4,55,.023)
-            note(at,3,keys[0]-12,3.2,63)
-            if 8<=bar<16 and bar%2==0:chord(at+.2,4,[keys[2],keys[4]],5.6,46)
+            if not exposed:note(at,3,keys[0]-12,3.2,70)
+            if 16<=bar<22 and bar%2==0:chord(at+.2,4,[keys[2],keys[4],keys[-1]+12],5.6,55)
+            if 18<=bar<22:chord(at+3.25,0,keys[1:5],.65,71,.018)
             if bar in [3,11,19]:note(at+3,2,keys[-1]+12,3.2,53)
         return events,inst
 
@@ -148,11 +164,12 @@ def score(preset):
         roots=([38,38,34,36,38,34,31,33,38,33] if metal else [40,36,43,38,40,36,45,35])
         for bar in range(BARS[preset]):
             at=bar*4;root=roots[bar//4];minor=root in ([38,31] if metal else [40,45])
-            quiet=(12<=bar<16) or (metal and 28<=bar<32)
-            climax=(32<=bar if metal else 24<=bar)
+            quiet=(12<=bar<16) or (metal and 28<=bar<32) or bar>=BARS[preset]-2
+            intro=bar<4
+            climax=(32<=bar<38 if metal else 24<=bar<30)
             # Intro and breakdown expose the harmony before the full riff returns.
             if bar%4==0:chord(at,3,[root+12,root+19,root+24+(3 if minor else 4)],14.4,62 if quiet else 53)
-            if quiet or (not metal and bar<4):
+            if quiet or intro:
                 for offset,interval,length in [(0,12,1.7),(2,19,1.3),(3,24,1.8)]:
                     note(at+offset,4,root+interval,length,74 if quiet else 66)
                 chord(at,0,[root,root+7],3.4,61)
@@ -168,12 +185,14 @@ def score(preset):
                     chord(at+offset,0,[root+shift,root+7+shift],length,velocity)
                     chord(at+offset+.012,1,[root+shift,root+12+shift],length,velocity-6)
                     note(at+offset,2,root-12+shift,length+.08,109)
-                if climax and bar%2==0:
-                    for offset,interval,length in [(0,24,1.7),(2,27 if minor else 28,1.5)]:
-                        note(at+offset,4,root+interval,length,70)
-            if quiet:
-                drum(at,36,92);drum(at+2,38,73)
-                for j in [0,2]:drum(at+j,42,45)
+                if climax:
+                    lead=[(0,24,1.2),(1.5,27 if minor else 28,.8),(2.5,31,1.2)] if bar%2==0 else [(0,29,1.7),(2,27 if minor else 28,.7),(3,26,.7)]
+                    for offset,interval,length in lead:note(at+offset,4,root+interval,length,84)
+            if quiet or intro:
+                drum(at,36,74 if intro else 86)
+                if bar>=2:drum(at+2,38,65)
+                if bar>=3:
+                    for j in [0,2]:drum(at+j,42,42)
             else:
                 kicks=([0,.5,1.5,2,2.5,3.5] if metal else [0,1.5,2,3.5])
                 for j,offset in enumerate(kicks):drum(at+offset,36,117 if j%2==0 else 102)
@@ -192,23 +211,29 @@ def score(preset):
     roots=[48,43,45,41,38,43,48] if pop else [45,41,48,43]
     for bar in range(BARS[preset]):
         at=bar*4;section=bar//4;root=roots[section];minor=root in [45,38]
-        third=3 if minor else 4;bridge=pop and 16<=bar<20;full=pop and bar>=20
+        third=3 if minor else 4
+        intro=bar<4;bridge=(16<=bar<20 if pop else 8<=bar<12)
+        full=(20<=bar<26 if pop else 12<=bar<15);outro=bar>=BARS[preset]-2
         voicing=[root,root+7,root+12+third,root+23 if not minor else root+22]
         chord(at,0,voicing,3.65,64 if bridge else 74,.008)
-        if bar%2==0:chord(at+.12,3,[root+12,root+19,root+24+third],7.4,52 if full else 43)
-        for offset in ([1.5,3] if pop else [2.5]):chord(at+offset,1,[root+12,root+19,root+24+third],1.3,58,.012)
-        for offset,length in [(0,1.8),(2.5,1.1)]:note(at+offset,2,root-24,length,87)
+        if not intro and not outro and bar%2==0:chord(at+.12,3,[root+12,root+19,root+24+third],7.4,61 if full else 39)
+        if not intro and not bridge:
+            for offset in ([1.5,3] if pop else [2.5]):chord(at+offset,1,[root+12,root+19,root+24+third],1.3,70 if full else 53,.012)
+        if not intro or bar>=2:
+            for offset,length in ([(0,3.5)] if bridge or outro else [(0,1.8),(2.5,1.1)]):note(at+offset,2,root-24,length,90 if full else 72)
         # Each four-bar phrase asks and answers; longer notes leave room to breathe.
         shape=[[(.5,12+third,1.4),(2.5,19,1.15)],[(0,21 if minor else 23,2),(2.5,19,1.25)],[(.5,17,1.2),(2,12+third,1.7)],[(0,14,1.5),(2,12,2.2)]][bar%4]
-        for offset,interval,length in shape:
-            note(at+offset,4,root+interval,length,75 if pop else 57)
-            if full:note(at+offset,0,root+interval,length,64)
-        if not bridge:
+        for offset,interval,length in (shape[:1] if intro or outro else shape):
+            note(at+offset,4,root+interval,length*(1.3 if bridge else 1),81 if full else 59)
+            if full:note(at+offset+.08,0,root+interval+12,length,61)
+        if full and bar%2:
+            note(at+3.5,4,root+19,.4,67)
+        if not bridge and not intro and not outro:
             for offset in [0,2,3.5]:drum(at+offset,36,91 if pop else 76)
             for offset in [1,3]:drum(at+offset,38 if pop else 37,87 if pop else 58)
             for j in range(8 if full else 4):drum(at+j*(.5 if full else 1)+(.25 if full else .5),42,49+j%2*7)
             if full and bar%4==0:drum(at,49,67)
-        else:drum(at,36,68)
+        elif not intro:drum(at,36,60)
     return events,inst
 
 
@@ -286,10 +311,11 @@ def electronic_edm():
             add(pads,start+j*.055,voice(key,14.2,'pad'),[.20,.16,.14,.115,.08][j])
         for bar in range(4):
             at=start+bar*4;quiet=phrase==3 or (phrase==6 and bar>=2)
-            for offset,length,level in [(0,.85,.55),(1.25,.40,.38),(2,.60,.47),(3.25,.45,.40)]:
+            rhythm=([(0,2.8,.35)] if quiet or phrase==0 else [(0,.85,.55),(1.25,.40,.38),(2,.60,.47),(3.25,.45,.40)])
+            for offset,length,level in rhythm:
                 add(bass,at+offset,voice(root-12 if root==38 else root,length,'bass'),level*(.72 if quiet else 1))
-            if not quiet:
-                for offset in [.75,2.5]:
+            if not quiet and phrase>0:
+                for offset in ([.75,1.75,2.5] if phrase in [4,5] else [.75,2.5]):
                     for key in keys[1:4]:add(melody,at+offset,voice(key,.40,'chord'),.085)
     # Sparse, related phrases leave several beats for the previous note to decay.
     phrases=[
@@ -298,7 +324,7 @@ def electronic_edm():
         [(4,62,2.6),(10,57,3.4)],
         [(6,64,4.0)],
         [(2,69,3.1),(8,72,2.6),(12,69,2.4)],
-        [(3,65,3.1),(10,62,3.2)],
+        [(1,77,1.1),(3,74,1.1),(5,72,2.5),(9,65,2.1),(12,62,2.8)],
         [(2,64,3.0),(9,61,3.6)],
     ]
     for phrase,notes in enumerate(phrases):
@@ -321,8 +347,8 @@ def electronic_edm():
         return noise*env[:,None]
     closed,opened=hat(False),hat(True)
     for bar in range(BARS[2]):
-        at=bar*4;quiet=12<=bar<16 or bar>=26
-        for offset in ([0,2] if quiet else [0,1,2,3]):add(drums,at+offset,kick,.48 if quiet else .63)
+        at=bar*4;quiet=bar<4 or 12<=bar<16 or bar>=26
+        for offset in ([0] if quiet else [0,1,2,3]):add(drums,at+offset,kick,.33 if quiet else .63)
         if not quiet:
             add(drums,at+2,snare,.72)
             for j in range(4):add(drums,at+j+.5,opened if j==3 and bar%4==3 else closed,.065+(j%2)*.012)
@@ -422,11 +448,15 @@ def main():
              'peak':float(np.max(np.abs(decoded))),'rms_db':20*math.log10(rms(decoded)),
              'seam_step':float(np.max(np.abs(decoded[0]-decoded[-1]))),'band_energy_percent':(spectrum(decoded)*100).tolist(),
              'sha256':hashlib.sha256(file.read_bytes()).hexdigest(),'note_events':event_count}
-        row['arrangement_revision']=4
-        if preset==2:row['arrangement']='Warm electronic groove: syncopated bass, filtered chord stabs, sustained minor-ninth pads, restrained lead and long tails'
+        row['arrangement_revision']=5
+        if preset==2:row['arrangement']='Pad-led opening, layered syncopated groove, sparse bridge, octave lead return and a thinning dominant turnaround'
         if preset==0:row['balance_policy']='Equal eight-second focus windows; natural source energy, no equal-energy normalization'
         if preset==0:
             row['sections']=[{'start':i*8,'end':(i+1)*8,'focus_hz':list(band),'measured_band_percent':(spectrum(decoded[i*8*RATE:(i+1)*8*RATE])*100).tolist()} for i,band in enumerate(BANDS)]
+        levels=[20*math.log10(max(1e-12,rms(part))) for part in np.array_split(decoded,8)]
+        evidence={'preset':name,'revision':5,'eighth_rms_db':levels,'section_range_db':max(levels)-min(levels),
+                  'seam_step':row['seam_step'],'peak':row['peak'],'listening_verified':False}
+        (args.previews/f'{name}-validation.json').write_text(json.dumps(evidence,indent=2)+'\n')
         report=[r for r in report if r['preset']!=name]+[row];print(json.dumps(row),flush=True)
     report.sort(key=lambda row:NAMES.index(row['preset']))
     manifest.write_text(json.dumps({'sample_rate':RATE,'channels':2,'bits':24,'bands_hz':BANDS,'presets':report},indent=2)+'\n')

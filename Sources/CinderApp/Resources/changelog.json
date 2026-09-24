@@ -3,7 +3,7 @@
   "releases": [
     {
       "version": "1.0.0-dev",
-      "change_count": 23,
+      "change_count": 24,
       "changes": {
         "ko": [
           {
@@ -97,6 +97,10 @@
           {
             "type": "New",
             "text": "주 화면과 같은 실행 제한을 지키는 앱 내부 재생·화면 전환 단축키를 추가했습니다."
+          },
+          {
+            "type": "New",
+            "text": "내장 7곡의 도입·악기 진입·브리지·선율 재현·마무리를 다시 편곡했습니다. 기존 템포와 반복 길이를 유지하며 실제 청취 평가는 계속 진행합니다."
           }
         ],
         "en": [
@@ -191,6 +195,10 @@
           {
             "type": "New",
             "text": "Added app-local playback and screen-navigation keyboard shortcuts, with the same session locks as the main controls."
+          },
+          {
+            "type": "New",
+            "text": "Reworked all seven built-in arrangements with sparser openings, changing instrumentation, bridges, stronger melodic returns and quieter turnarounds while preserving tempos and loop lengths. Listening review remains open."
           }
         ],
         "ja": [
@@ -285,6 +293,10 @@
           {
             "type": "New",
             "text": "主画面と同じ実行制限に従う、アプリ内の再生・画面切り替えショートカットを追加しました。"
+          },
+          {
+            "type": "New",
+            "text": "内蔵7曲の導入・楽器の参加・ブリッジ・旋律の再現・終結を再編曲しました。テンポとループ長を保ち、試聴評価は引き続き行います。"
           }
         ]
       }

@@ -1,13 +1,13 @@
-Cinder Preset Music — arrangement revision 4
+Cinder Preset Music — arrangement revision 5
 
 Original programmatic instrumental arrangements for Cinder.
 Electronic: custom harmonic/FM synthesizers, filtered chord stabs, warm pads,
 syncopated bass, synthesized percussion and diffuse circular room/delay tails.
 Electronic uses no SoundFont instruments. The other six arrangements use
-GeneralUser GS 2.0.3 by S. Christian Collins, rendered offline with FluidSynth 2.6.0.
+GeneralUser GS 2.0.3 by S. Christian Collins, rendered offline with FluidSynth 2.6.1 on macOS.
 https://schristiancollins.com/generaluser.php
 https://github.com/mrbumpy409/GeneralUser-GS
-https://github.com/FluidSynth/fluidsynth/releases/tag/v2.6.0
+https://github.com/FluidSynth/fluidsynth/releases/tag/v2.6.1
 
 The app includes rendered FLAC files, not the SoundFont or FluidSynth runtime.
 Tool and bank hashes: Tools/INSTRUMENT-SOURCES.json in the source package.
