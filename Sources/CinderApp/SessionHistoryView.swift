@@ -6,7 +6,7 @@ struct SessionHistoryView: View {
     @State private var page = 0
     @State private var query = ""
     @State private var selectedID: UUID?
-    private let pageSize = 4
+    private let pageSize = 3
     private var records: [SessionRecord] {
         model.sessionHistory.records.filter { query.isEmpty || $0.outputName.localizedCaseInsensitiveContains(query) || model.t($0.outcome.label).localizedCaseInsensitiveContains(query) }
     }

@@ -324,7 +324,7 @@
   "Report an issue": "問題を報告",
   "Playback help": "再生のヘルプ",
   "40 hours is an optional plan, not a universal requirement or a guarantee of sound improvement.": "40時間は選択できる計画です。すべての機器に必要な時間や音質改善を保証する基準ではありません。",
-  "Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically.": "問題を報告する際は実行履歴から結果をコピーできます。情報が自動的にアップロードされることはありません。",
+  "Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically.": "問題を報告する際は設定 → 実行履歴から結果をコピーできます。情報が自動的にアップロードされることはありません。",
   "Music supports local files readable by macOS: mono or stereo, 8–96 kHz, up to 10 minutes selected.": "macOSで読み込めるローカル音楽ファイルに対応します。モノラル・ステレオ、8–96 kHzで、選択した曲の合計は最大10分です。",
   "Search music": "音楽を検索",
   "No matching music.": "一致する音楽はありません。",
@@ -332,5 +332,7 @@
   "Move down": "下へ移動",
   "Selected music: up to 10 minutes · mono or stereo": "選択した音楽：最大10分・モノラルまたはステレオ",
   "External music is band-limited and faded for this playback path; it is not unprocessed listening playback.": "外部音楽には帯域制限とフェードを適用するため、原音のままの鑑賞用再生とは異なります。",
-  "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return：開始・一時停止・再開 · ⌘.：停止 · ⌘1–4：画面切り替え"
+  "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return：開始・一時停止・再開 · ⌘.：停止 · ⌘1–4：画面切り替え",
+  "Output": "出力",
+  "Mac information": "Mac情報"
 }

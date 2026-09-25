@@ -44,7 +44,7 @@
           },
           {
             "type": "New",
-            "text": "Device & Profile에서 연결된 출력 장치와 앱의 PCM 출력 정보, Mac·DAC의 참고 사양을 확인합니다. 장치나 참고 프로파일을 선택해도 게인은 자동으로 바뀌지 않습니다."
+            "text": "출력 탭에서 연결된 출력 장치와 앱의 PCM 출력 정보, Mac·DAC의 참고 사양을 확인합니다. 장치나 참고 프로파일을 선택해도 게인은 자동으로 바뀌지 않습니다."
           },
           {
             "type": "New",
@@ -92,7 +92,7 @@
           },
           {
             "type": "New",
-            "text": "주 화면을 Quick Play·Music·실행 기록·Settings로 정리하고 음악·변경 기록 페이지 구분, 출력·예약 상세, 오프라인 도움말을 추가했습니다."
+            "text": "주 화면을 Quick Play·Music·출력·Settings로 정리했습니다. 출력 장치·게인·Mac 정보는 출력 탭에서, 실행 기록은 설정에서 확인합니다. 긴 음악 목록과 기록·변경 이력은 페이지로 나누어 표시합니다."
           },
           {
             "type": "New",
@@ -142,7 +142,7 @@
           },
           {
             "type": "New",
-            "text": "Device & Profile shows connected outputs, app PCM output details and reference specifications for Macs and DACs. Selecting a device or reference profile does not automatically change gain."
+            "text": "The Output tab shows connected outputs, app PCM output details and Mac/DAC reference specifications. Selecting a device or reference profile does not automatically change gain."
           },
           {
             "type": "New",
@@ -190,7 +190,7 @@
           },
           {
             "type": "New",
-            "text": "Organized the app into Quick Play, Music, Session history and Settings; added paged music and changelog views, output and schedule details, and offline help."
+            "text": "Organized the main screens as Quick Play, Music, Output and Settings. Output contains device selection, gain and Mac information; session history is in Settings. Long music lists, records and changelogs use pagination."
           },
           {
             "type": "New",
@@ -240,7 +240,7 @@
           },
           {
             "type": "New",
-            "text": "Device & Profile で接続中の出力機器、アプリの PCM 出力情報、Mac・DAC の参考仕様を確認できます。機器や参考プロファイルの選択によってゲインが自動で変わることはありません。"
+            "text": "出力タブで接続中の出力デバイス、アプリのPCM出力情報、Mac・DACの参考仕様を確認できます。デバイスや参考プロファイルを選んでもゲインは自動で変わりません。"
           },
           {
             "type": "New",
@@ -288,7 +288,7 @@
           },
           {
             "type": "New",
-            "text": "画面をQuick Play・Music・実行履歴・Settingsに整理し、音楽と変更履歴のページ切り替え、出力と予約の詳細、オフラインヘルプを追加しました。"
+            "text": "メイン画面をQuick Play・Music・出力・Settingsに整理しました。出力タブにデバイス選択・ゲイン・Mac情報をまとめ、実行履歴は設定から確認できます。長い音楽リスト・実行履歴・変更履歴はページ分割で表示します。"
           },
           {
             "type": "New",

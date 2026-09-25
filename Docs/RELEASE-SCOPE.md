@@ -124,9 +124,9 @@ Preserve settings compatibility and commit actual UI moves as separate changes.
 
 ## Screen layout and implementation order
 
-The four main areas are **Quick Play / Music / Session history / Settings**.
-Schedule is part of Quick Play; Device & Profile is output detail; the changelog
-is under About in Settings. Quick Play and Lite keep device, signal, duration,
+The four main areas are **Quick Play / Music / Output / Settings**.
+Schedule is part of Quick Play. Output groups device selection, gain, and Mac
+information. Session history is in Settings, with the changelog under About. Quick Play and Lite keep device, signal, duration,
 gain summary, progress, and playback controls visible. Long music/history lists
 use pagination and search, with core controls fixed. Do not shrink text or harm
 accessibility to force content into the window.

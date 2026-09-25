@@ -29,10 +29,10 @@ Built-in signals and music work without an account or internet connection.
 - **Quick Play** — Run a continuous 40-hour plan, split 40 hours into sessions, or set a custom duration. Adjust session and rest lengths. Play noise, music, a sweep, or a full 60-minute cycle, with start, pause, resume, and stop in one view.
 - **Quick Play Lite** — Choose an output and duration from the menu bar. Control playback and check status, remaining time, and schedules even with the main window closed.
 - **Music** — Select and reorder local music files, inspect file information and initial read results, or loop one of seven built-in tracks.
-- **Device & Profile** — Choose an output, view PCM information and Mac/DAC reference specifications, adjust gain, and save named gain presets.
+- **Output** — Choose an output, view PCM information, adjust gain, and check Mac information and DAC reference specifications. Named gain presets remain available in Quick Play.
 - **Schedule** — Configure one-time or repeating schedules and import or export playback and schedule presets as JSON/YAML.
 - **Settings** — English, Korean, and Japanese; system, light, dark, and custom themes; bar or needle Peak/RMS meters; Dev/Stable update channel selection.
-- **Session history** — Keep the latest 500 runs on this Mac, including time, rests, gain, and completion or interruption results. Search, copy summaries, or export records.
+- **Session history (Settings)** — Keep the latest 500 runs on this Mac, including time, rests, gain, and completion or interruption results. Search, copy summaries, or export records.
 
 App gain starts at −30 dB and can be adjusted manually from −60 to 0 dB.
 Choosing a device or reference profile does not change gain automatically.
@@ -117,9 +117,10 @@ requests macOS notification permission. Silent notifications cover completion,
 device changes, failures, and missed schedules, not every pause or rest.
 History is retained even if permission is denied.
 
-The main areas are Quick Play, Music, Session history, and Settings. Open schedule
-and output details from Quick Play, or the changelog and help from About Cinder
-in Settings. Long music lists and changelogs use search or pagination.
+The main areas are Quick Play, Music, Output, and Settings. Output contains device
+selection, gain, and Mac information; Quick Play’s Output details button opens that
+tab. Scheduling stays in Quick Play. Open Session history from Settings, or the
+changelog and help from About Cinder in Settings. Long music lists and changelogs use search or pagination.
 
 While the app is active, `⌘Return` starts, pauses, or resumes; `⌘.` stops playback.
 `⌘1`–`⌘4` switch main areas, and `⌘,` opens Settings. The start shortcut is also

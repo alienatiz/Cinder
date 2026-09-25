@@ -5,7 +5,7 @@ import CinderPlatform
 struct RootView: View {
     @ObservedObject var model: AppModel
     @Environment(\.colorScheme) private var systemColorScheme
-    private let tabs = ["Quick Play", "Music", "Session history", "Settings"]
+    private let tabs = ["Quick Play", "Music", "Output", "Settings"]
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
@@ -21,7 +21,7 @@ struct RootView: View {
             Group {
                 switch model.tab {
                 case 1: MusicView(model: model)
-                case 2: SessionHistoryView(model: model)
+                case 2: DeviceView(model: model)
                 case 3: SettingsView(model: model)
                 default: QuickPlayView(model: model)
                 }
@@ -84,13 +84,12 @@ struct Panel<Content: View>: View {
 
 @MainActor struct QuickPlayView: View {
     @ObservedObject var model: AppModel
-    @State private var outputDetails = false
     @State private var scheduling = false
     var body: some View {
         VStack(spacing: 10) {
             HStack {
                 DevicePicker(model: model)
-                Button(model.t("Output details")) { outputDetails = true }
+                Button(model.t("Output details")) { model.tab = 2 }
                 Button(model.t("Schedule")) { scheduling = true }
                 if model.armed != nil { Button(model.t("Cancel Schedule"), action: model.cancelSchedule) }
                 Spacer()
@@ -109,9 +108,6 @@ struct Panel<Content: View>: View {
                 }
             }
             Text(model.t("Run with earphones out of your ears. Start with low system/DAC volume.")).foregroundStyle(.secondary)
-        }
-        .sheet(isPresented: $outputDetails) {
-            DetailSheet(title: model.t("Output details"), done: model.t("Done")) { DeviceView(model: model) }
         }
         .sheet(isPresented: $scheduling) {
             DetailSheet(title: model.t("Schedule"), done: model.t("Done")) { ScheduleView(model: model) }

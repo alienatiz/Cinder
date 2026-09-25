@@ -14,7 +14,8 @@ struct SettingsView: View {
                 Text(model.t("Language & Appearance")).tag(1)
                 Text(model.t("Updates")).tag(2)
                 Text(model.t("Notifications")).tag(3)
-                Text(model.t("About Cinder")).tag(4)
+                Text(model.t("Session history")).tag(4)
+                Text(model.t("About Cinder")).tag(5)
             }.pickerStyle(.segmented)
             if category == 0 { PlaybackSettingsView(model: model) }
             else if category == 1 {
@@ -39,6 +40,7 @@ struct SettingsView: View {
                 }
             } else if category == 2 { UpdateSettingsView(model: model) }
             else if category == 3 { NotificationSettingsView(model: model) }
+            else if category == 4 { SessionHistoryView(model: model) }
             else { AboutView(model: model) }
         }.sheet(isPresented: $editingTheme) {
             DetailSheet(title: model.t("Theme Editor"), done: model.t("Done")) { ThemeEditorView(model: model) }
@@ -159,7 +161,7 @@ struct DeviceView: View {
         VStack(spacing: 20) {
             DevicePicker(model: model)
             HStack(alignment: .top, spacing: 22) {
-                Panel(title: model.t("App gain")) {
+                Panel(title: model.t("App gain"), compact: true) {
                     Text(model.device?.name ?? model.t("Select output")).font(.headline)
                     Text(String(format: "PCM · %.0f Hz · 2 ch", model.outputRate))
                     Text(GainPolicy.display(model.settings.gainDB)).font(.largeTitle).monospacedDigit()
@@ -186,7 +188,7 @@ struct DeviceView: View {
                     Text(model.t("Manual app gain: −60 to 0 dB. New settings start at −30 dB; this is not an SPL calibration."))
                     Button(model.t("Save connected device"), action: model.saveConnectedDevice).disabled(model.device == nil)
                 }
-                Panel(title: model.t("Host System")) {
+                Panel(title: model.t("Mac information"), compact: true) {
                     Text(model.macProfile?.name ?? model.modelIdentifier).font(.headline)
                     Text(PlatformCompatibility.osDescription)
                     Text(model.macProfile?.output ?? model.t("Unknown output specifications."))

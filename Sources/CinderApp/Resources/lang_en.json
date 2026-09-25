@@ -324,7 +324,7 @@
   "Report an issue": "Report an issue",
   "Playback help": "Playback help",
   "40 hours is an optional plan, not a universal requirement or a guarantee of sound improvement.": "40 hours is an optional plan, not a universal requirement or a guarantee of sound improvement.",
-  "Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically.": "Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically.",
+  "Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically.": "Open Settings → Session history to copy a result when reporting a problem. Nothing is uploaded automatically.",
   "Music supports local files readable by macOS: mono or stereo, 8–96 kHz, up to 10 minutes selected.": "Music supports local files readable by macOS: mono or stereo, 8–96 kHz, up to 10 minutes selected.",
   "Search music": "Search music",
   "No matching music.": "No matching music.",
@@ -332,5 +332,7 @@
   "Move down": "Move down",
   "Selected music: up to 10 minutes · mono or stereo": "Selected music: up to 10 minutes · mono or stereo",
   "External music is band-limited and faded for this playback path; it is not unprocessed listening playback.": "External music is band-limited and faded for this playback path; it is not unprocessed listening playback.",
-  "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens"
+  "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens",
+  "Output": "Output",
+  "Mac information": "Mac information"
 }

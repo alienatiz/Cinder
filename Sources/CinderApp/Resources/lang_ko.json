@@ -324,7 +324,7 @@
   "Report an issue": "문제 제보",
   "Playback help": "재생 도움말",
   "40 hours is an optional plan, not a universal requirement or a guarantee of sound improvement.": "40시간은 선택 가능한 계획입니다. 모든 기기에 필수인 시간이거나 음질 개선을 보장하는 기준은 아닙니다.",
-  "Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically.": "문제를 제보할 때 실행 기록에서 결과를 복사할 수 있습니다. 자동으로 업로드되는 정보는 없습니다.",
+  "Use Session history to copy a result when reporting a problem. Nothing is uploaded automatically.": "문제를 제보할 때 설정 → 실행 기록에서 결과를 복사할 수 있습니다. 자동으로 업로드되는 정보는 없습니다.",
   "Music supports local files readable by macOS: mono or stereo, 8–96 kHz, up to 10 minutes selected.": "macOS에서 읽을 수 있는 로컬 음악 파일을 지원합니다. 모노·스테레오, 8–96 kHz이며 선택한 곡의 합계는 최대 10분입니다.",
   "Search music": "음악 검색",
   "No matching music.": "일치하는 음악이 없습니다.",
@@ -332,5 +332,7 @@
   "Move down": "아래로 이동",
   "Selected music: up to 10 minutes · mono or stereo": "선택한 음악: 최대 10분 · 모노 또는 스테레오",
   "External music is band-limited and faded for this playback path; it is not unprocessed listening playback.": "외부 음악에는 대역 제한과 페이드를 적용하므로 원음 감상용 재생과 다릅니다.",
-  "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return: 시작·일시정지·재개 · ⌘.: 정지 · ⌘1–4: 화면 전환"
+  "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return: 시작·일시정지·재개 · ⌘.: 정지 · ⌘1–4: 화면 전환",
+  "Output": "출력",
+  "Mac information": "Mac 정보"
 }

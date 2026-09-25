@@ -22,7 +22,7 @@ import AppKit
             Divider()
             Button(model.t("Quick Play")) { show(0) }.keyboardShortcut("1", modifiers: .command)
             Button(model.t("Music")) { show(1) }.keyboardShortcut("2", modifiers: .command)
-            Button(model.t("Session history")) { show(2) }.keyboardShortcut("3", modifiers: .command)
+            Button(model.t("Output")) { show(2) }.keyboardShortcut("3", modifiers: .command)
             Button(model.t("Settings")) { show(3) }.keyboardShortcut("4", modifiers: .command)
         }
     }

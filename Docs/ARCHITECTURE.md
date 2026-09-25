@@ -55,6 +55,14 @@ files does not require Python, FluidSynth, or a SoundFont at runtime.
 Live output, memory, and energy are checked separately on a Mac. See
 [VALIDATION.md](../VALIDATION.md) for the current evidence and limits.
 
+## Main navigation
+
+The main areas are Quick Play, Music, Output, and Settings. Output reuses the
+shared device and gain controls and presents Mac information. Quick Play's Output
+details action and ⌘3 open the same tab. Session history lives inside Settings;
+its storage, capture, search, and export are unchanged. History pages show three
+records to fit the settings area without adding a main-view scroll container.
+
 ## Session history storage
 
 `SessionRecorder` accumulates played frames and preparation, pause, and inter-session

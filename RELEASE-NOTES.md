@@ -27,14 +27,14 @@ first stable release.
 - Store the latest 500 runs locally, including completion, user stop, device change, failure, app quit, and missed schedules. Search history and copy or export time, rest, gain-range, and completed-session summaries.
 - Save history about every 5 seconds and on state changes. After an unexpected exit, restore only up to the last checkpoint without starting playback.
 - Optionally enable completion/error notifications in Settings. Permission is requested when enabled, and banners are silent. Denied permission does not remove history.
-- Four main areas: Quick Play, Music, Session history, and Settings. Schedule/output details open from Quick Play; theme editing, About, and the changelog open from Settings. Long music lists and changelogs support pagination.
+- Four main areas: Quick Play, Music, Output, and Settings. Output groups device selection, gain, and Mac information; Quick Play links to it and retains schedule settings. Session history, theme editing, About, and the changelog open from Settings. Music, history, and changelogs use pagination.
 - App-local shortcuts: `⌘Return` starts/pauses/resumes, `⌘.` stops, `⌘1`–`⌘4` switch areas, and `⌘,` opens Settings.
 
 ## Output, schedules, and preferences
 
 - Select and save Dev/Stable under Updates in Settings. Installed version/channel remain visible separately. No stable release exists yet, and update download/installation are not implemented. Selection does not alter playback, schedules, or the installed app.
 - Manually adjust gain from −60 to 0 dB and save named gain presets. Reset restores the saved default or the gain in the applied playback preset.
-- View connected outputs, app PCM information, and Mac/DAC reference specifications. Selecting a device or reference profile does not automatically change gain.
+- View connected outputs, app PCM information, and Mac/DAC reference specifications in Output. Selecting a device or reference profile does not automatically change gain.
 - Set one-time or daily repeating schedules and a total run count. Import/export playback and schedule presets as JSON/YAML. Schedules require explicit activation and are cancelled when the app quits.
 - English, Korean, and Japanese; system/light/dark appearance and custom themes; bar or needle Peak/RMS meters.
 - Preserve existing duration, gain, theme, music selection, and presets. Launching the app or loading a preset does not start playback or activate a schedule.
