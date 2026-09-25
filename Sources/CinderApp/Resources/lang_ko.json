@@ -1,5 +1,5 @@
 {
-  "Quick Play": "빠른 재생",
+  "Quick Play": "빠른 시작",
   "Settings & Schedule": "설정 및 예약",
   "Device & Profiles": "장치 및 프로파일",
   "Appearance": "화면 설정",
@@ -156,7 +156,7 @@
   "One full cycle takes 60 minutes including rests. This is a program duration, not a proven minimum burn-in time.": "전체 사이클 1회는 휴식 포함 60분입니다. 프로그램 소요 시간이며, 번인 효과에 필요한 최소 시간을 뜻하지 않습니다.",
   "Under 60 minutes: select pink noise, band-limited noise, music or a gentle sweep.": "60분 미만이면 핑크 노이즈·대역 제한 노이즈·음악·스윕 중 사용할 기능을 선택하세요.",
   "A full cycle needs 60 minutes. Choose one function for a shorter session.": "전체 사이클에는 60분이 필요합니다. 짧게 실행하려면 단일 기능을 선택하세요.",
-  "Select tracks in Music for the music-only program.": "음악만 실행하려면 Music에서 곡을 선택하세요.",
+  "Select tracks in Music for the music-only program.": "음악만 실행하려면 음악 탭에서 곡을 선택하세요.",
   "Single function": "단일 기능",
   "Single function runs for the selected duration without scheduled rests.": "단일 기능은 선택한 시간 동안 별도 휴식 단계 없이 실행됩니다.",
   "Action": "동작",
@@ -196,10 +196,10 @@
   "Genre": "장르",
   "8 bars · %d BPM · %.1f s loop": "8마디 · %d BPM · %.1f초 반복",
   "The selected arrangement repeats until the configured session ends.": "선택한 연주 패턴을 지정한 세션이 끝날 때까지 반복합니다.",
-  "Music mode plays the preset alone. Full cycle uses it during the music step.": "Music 모드에서는 프리셋만 재생합니다. 전체 사이클에서는 음악 단계에 사용합니다.",
-  "Use Music mode in Quick Play": "Quick Play에서 Music 모드로 사용",
+  "Music mode plays the preset alone. Full cycle uses it during the music step.": "음악 모드에서는 프리셋만 재생합니다. 전체 사이클에서는 음악 단계에 사용합니다.",
+  "Use Music mode in Quick Play": "빠른 시작에서 음악 모드로 사용",
   "No audio files or downloads needed. Your music-source and preset choices are saved automatically.": "음원 파일이나 다운로드가 필요 없습니다. 음악 소스와 프리셋 선택은 자동 저장됩니다.",
-  "Choose tracks or Preset Music in Music.": "Music에서 내 음원을 선택하거나 프리셋 음악을 사용하세요.",
+  "Choose tracks or Preset Music in Music.": "음악 탭에서 내 음원을 선택하거나 프리셋 음악을 사용하세요.",
   "Cannot prepare preset music.": "프리셋 음악을 준비할 수 없습니다.",
   "Piano-like arpeggios, soft strings and a flowing melody.": "피아노풍 아르페지오, 부드러운 현악 음색과 흐르는 멜로디.",
   "Bass, chords, melody and light drums share the arrangement.": "베이스, 화음, 멜로디와 가벼운 드럼을 고르게 배치한 구성.",
@@ -248,7 +248,7 @@
   "Plan cancelled": "계획 취소됨",
   "Resting between sessions": "회차 사이 휴식 중",
   "Each scheduled run executes the entire 40-hour plan, including its rests.": "예약 1회마다 휴식이 포함된 40시간 분할 계획 전체를 실행합니다.",
-  "Choose Custom duration in Quick Play to change this time.": "Quick Play에서 직접 시간 설정을 선택하면 시간을 변경할 수 있습니다.",
+  "Choose Custom duration in Quick Play to change this time.": "빠른 시작에서 직접 시간 설정을 선택하면 시간을 변경할 수 있습니다.",
   "Cinder status and controls": "Cinder 상태 및 제어",
   "Starts in": "시작까지",
   "Open Cinder": "Cinder 열기",
@@ -334,5 +334,6 @@
   "External music is band-limited and faded for this playback path; it is not unprocessed listening playback.": "외부 음악에는 대역 제한과 페이드를 적용하므로 원음 감상용 재생과 다릅니다.",
   "⌘Return: start, pause or resume · ⌘.: stop · ⌘1–4: switch screens": "⌘Return: 시작·일시정지·재개 · ⌘.: 정지 · ⌘1–4: 화면 전환",
   "Output": "출력",
-  "Mac information": "Mac 정보"
+  "Mac information": "Mac 정보",
+  "Quick Play Lite": "빠른 시작 간편 모드"
 }

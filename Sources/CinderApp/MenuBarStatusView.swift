@@ -33,7 +33,7 @@ import CinderCore
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: symbol).font(.title2).frame(width: 28)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Cinder · Quick Play Lite").font(.headline)
+                    Text("Cinder · " + model.t("Quick Play Lite")).font(.headline)
                     Text(status).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 }
             }
