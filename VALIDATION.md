@@ -1,11 +1,28 @@
 # 1.0.0-dev validation status
 
-Evidence recorded on **2026-09-25** from automated checks and local app inspection.
+Evidence recorded on **2026-09-25** from local and GitHub-hosted automated checks
+and local app inspection.
 Stable distribution and full device validation remain in progress.
 
 ## Environment and results
 
 Execution environment: macOS 27.0 / arm64, Xcode 27.0, macOS SDK 27.0, Swift 6.4.
+
+One manual staging build on `dev` succeeded for commit
+`bc444ab893d80dd55ed04a835c05e73f198b4b83`:
+[GitHub Actions run 36087628029](https://github.com/alienatiz/Cinder/actions/runs/36087628029).
+The `xcode-27` runner reported macOS 27.0 / arm64, Xcode 27.0 (27A266a),
+Swift 6.4, and macOS SDK 27.0. Both default-mode and separate Swift 6 checks
+passed 91 tests with no compiler warnings. Source and release-policy checks,
+app packaging, and artifact uploads passed; the Release draft job was skipped.
+
+The downloaded `Cinder-staging-1.0.0-dev-bc444ab-arm64.zip` matched its SHA-256
+checksum (`5c89fbda510865f895f4eaf237fb554e0752f49e612343c5c9fa02dae71c3953`).
+Artifact digests, build identification, arm64 architecture, executable permissions,
+and strict codesign verification passed after extraction. The app is ad-hoc
+signed and not notarized. These results establish CI build and archive validity;
+they do not establish installation, physical playback, or stable-release readiness.
+The app artifact is retained in Actions for 14 days and validation logs for 7 days.
 
 | Check | Scope | Result |
 |---|---|---|
@@ -26,7 +43,7 @@ Execution environment: macOS 27.0 / arm64, Xcode 27.0, macOS SDK 27.0, Swift 6.4
 | System notifications | Off by default, explicit permission, denial/delivery failure with retained results | 5 new XCTest cases passed (included in 91); actual system banners unverified |
 | Initial four-area UI | Quick Play, Music, Session history, Settings; music pagination; output/schedule/About/changelog | Layout and routes checked in Korean at 1280×800 before the Output navigation change |
 | Output navigation and history placement | Main Output tab, device/gain/Mac information, ⌘3, Session history inside Settings | Default app build and separate Swift 6 check each passed 91 tests with 0 compiler warnings. New app launched; Korean Output and Settings/history routes and an existing record were checked. Minimum-size and full three-language interaction checks remain open |
-| Shortcuts and live records | External Headphones at −30 dB; ⌘Return start/pause/resume, ⌘. stop, ⌘3 history | 17 seconds playback, 5 paused, 3 preparing; text export and record restoration after relaunch; no automatic playback |
+| Shortcuts and live records | External Headphones at −30 dB; ⌘Return start/pause/resume, ⌘. stop, former ⌘3 history shortcut | 17 seconds playback, 5 paused, 3 preparing; text export and record restoration after relaunch; no automatic playback. ⌘3 now opens Output |
 | Built-in music revision 5 | Seven regenerated tracks, peaks, finite samples, hashes, loop boundaries, conversion | Passed including 6 existing music XCTest cases; musical listening evaluation incomplete |
 | Menu bar UI | Lite output/time choices, player controls, status/schedules | Native build passed; current UI tool did not expose the system menu bar, so direct click/layout checks remain incomplete |
 

@@ -20,7 +20,7 @@ burn-in tools and macOS players. Implementation and validation are tracked separ
 
 | Area | Current state | Remaining before stable release |
 |---|---|---|
-| Build | Default-mode build, 91 XCTest cases, local app packaging passed | Reproduce in the distribution environment |
+| Build | Local and GitHub staging builds passed; 91 tests in each language mode; downloaded arm64 archive and ad-hoc signature verified | Verify the signed distribution build and installation |
 | Swift 6 | Separate-mode build and 91 tests passed; default remains Swift 5 | Review concurrency/resource lifetimes before deciding on the default mode |
 | Audio | Noise loop boundaries and offline source-node/mixer checks passed | Continuous real-device output, jack/USB/Bluetooth, device changes/disconnection |
 | Music | Revision 5 arrangements, dynamics, and instrumentation; loop/conversion checks passed | Listening evaluation and further arrangement refinement |
