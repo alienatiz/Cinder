@@ -1,68 +1,75 @@
-# 내장 음악
+# Built-in music
 
-Cinder는 외부 음원이 없어도 사용할 수 있는 기악 프리셋 7종을 제공합니다.
-현재 편곡은 revision 5입니다. 도입·전개·조용한 구간·재현·회귀를 악기 구성과
-프레이즈로 구분했으며, 실제 청취 평가는 계속 진행합니다.
+Cinder includes seven instrumental presets that work without external music files.
+The current arrangements are revision 5. Instrumentation and phrasing distinguish
+introductions, development, quieter passages, reprises, and returns to the loop.
+Listening evaluation remains in progress.
 
-| 프리셋 | BPM | 반복 길이 | 구성 |
+| Preset | BPM | Loop length | Instrumentation |
 |---|---:|---:|---|
-| Classic | 90 | 56초 | 오케스트라, 피아노, 하프 |
-| Balanced | 100 | 38.4초 | 일렉트릭 피아노, 화음과 절제된 리듬 |
-| Electronic | 112 | 60초 | 신스, 베이스, 패드와 전자 타악기 |
-| Acoustic | 96 | 60초 | 기타 핑거피킹, 선율과 피아노 |
-| POP | 112 | 60초 | 피아노·기타 선율과 브리지 |
-| Rock | 128 | 60초 | 기타·베이스 리프와 피아노 |
-| Metal | 160 | 60초 | 뮤트 리프, 파워 코드, 하프타임 리듬 |
+| Classic | 90 | 56 seconds | Orchestra, piano, and harp |
+| Balanced | 100 | 38.4 seconds | Electric piano, chords, and restrained rhythm |
+| Electronic | 112 | 60 seconds | Synths, bass, pads, and electronic percussion |
+| Acoustic | 96 | 60 seconds | Fingerpicked guitar, melody, and piano |
+| POP | 112 | 60 seconds | Piano and guitar melodies with a bridge |
+| Rock | 128 | 60 seconds | Guitar and bass riffs with piano |
+| Metal | 160 | 60 seconds | Muted riffs, power chords, and half-time rhythm |
 
-## 사용 방법
+## Using the presets
 
-Music에서 프리셋 음악과 장르를 선택하고 Quick Play의 Music 기능으로 재생합니다.
-전체 사이클에서는 음악 단계에 사용합니다. 선택한 곡은 세션이 끝날 때까지 반복됩니다.
-선택만으로 재생하지 않으며 외부 음원 보관함도 그대로 유지합니다.
+Choose preset music and a genre in Music, then select Music mode in Quick Play.
+The full cycle uses the selected track during its music step. The track loops
+until the session ends. Selecting it does not start playback or replace your
+external music library.
 
-## 리소스와 재생
+## Resources and playback
 
-음원은 48kHz·24bit·스테레오 FLAC이며 총 약 58.5MB입니다. Electronic은
-자체 전자 합성, 나머지 여섯 곡은 GeneralUser GS 2.0.3과 macOS의 FluidSynth 2.6.1으로
-미리 렌더링했습니다. 앱 실행과 일반 빌드에는 합성기·악기 뱅크·다운로드가 필요하지 않습니다.
+The tracks are 48 kHz, 24-bit, stereo FLAC files totaling about 58.5 MB. Electronic
+uses custom electronic synthesis; the other six were rendered in advance with
+GeneralUser GS 2.0.3 and FluidSynth 2.6.1 on macOS. Running the app and normal builds
+require no synthesizer, instrument bank, or music download.
 
-선택한 한 곡만 재생 전에 준비하고 출력 샘플레이트로 변환합니다. 변환 시 앞뒤 반복
-신호를 공급해 반복 경계를 처리하며, 내장 음악에는 외부 음원용 저역 차단과 끝 무음
-페이드를 적용하지 않습니다. 192kHz·60초 스테레오 PCM 버퍼의 최대 크기는
-92.16MB로 세션 길이와 무관합니다. 이 값은 앱 전체 메모리 사용량이 아닙니다.
+Only the selected track is prepared and converted to the output sample rate before
+playback. Surrounding loop samples handle conversion at repeat boundaries. Built-in
+music bypasses the low-frequency cut and silent end fades used for external files.
+A 192 kHz, 60-second stereo PCM buffer can occupy 92.16 MB regardless of session
+length. This is not the app's total memory usage.
 
-Classic은 56초를 각 8초씩 나누어 20–60Hz, 60–250Hz, 250–500Hz,
-500Hz–2kHz, 2–4kHz, 4–6kHz, 6–16kHz를 차례로 강조합니다.
-각 구간의 중심 대역을 최대 약 3.5dB 강조하며 대역별 에너지를 동일하게 맞추지는 않습니다.
+Classic divides 56 seconds into seven 8-second sections emphasizing 20–60 Hz,
+60–250 Hz, 250–500 Hz, 500 Hz–2 kHz, 2–4 kHz, 4–6 kHz, and 6–16 kHz in order.
+The central band in each section is emphasized by up to about 3.5 dB; energy is
+not forced to be equal across bands.
 
-## 검증과 재생성
+## Validation and regeneration
 
-소스 검사와 앱 패키징에서 음원 해시를 확인합니다. XCTest는 AVAudioConverter의
-샘플레이트 변환과 반복 재생을 검사합니다. 신호 검사와 음악적 품질·실제 청취 평가는
-구분하며, 상세 범위는 [검증 상태](../../VALIDATION.md)를 참조하세요.
+Source checks and app packaging verify music hashes. XCTest checks sample-rate
+conversion through AVAudioConverter and loop playback. Signal tests are separate
+from musical quality and real listening evaluation. See [validation status](../../VALIDATION.md).
 
-음원 재생성은 선택 사항입니다. [생성기](../../Tools/Generate-PresetMusic.py)에
-`--library`, `--bank`, `--output`, `--previews` 경로를 지정합니다.
-[의존성](../../Tools/requirements-music.txt), [도구 해시](../../Tools/INSTRUMENT-SOURCES.json),
-[크레딧·라이선스](../../Sources/CinderApp/Resources/preset-music-credits.txt)를 함께 확인하세요.
+Regeneration is optional. Pass `--library`, `--bank`, `--output`, and `--previews`
+paths to the [generator](../../Tools/Generate-PresetMusic.py). Check the
+[dependencies](../../Tools/requirements-music.txt),
+[tool hashes](../../Tools/INSTRUMENT-SOURCES.json), and
+[credits and licenses](../../Sources/CinderApp/Resources/preset-music-credits.txt).
 
-macOS에서 재생성 도구를 준비하려면 Homebrew의 `fluid-synth`와 프로젝트 내부
-가상환경에 `Tools/requirements-music.txt`를 설치합니다. 악기 뱅크는 생성 전에
-`Tools/INSTRUMENT-SOURCES.json`의 SHA-256과 일치하는지 확인해야 합니다.
-macOS 27 arm64의 FluidSynth 2.6.1에서 기존 Balanced 악보의 오프라인 렌더링을
-검증했습니다. 해당 도구는 앱 타깃의 의존성이 아니며, 일반 빌드와 설치된 앱은
-제공된 FLAC만 사용합니다. 새 편곡 리소스는 생성 도구 준비와 별도로 관리합니다.
+To prepare the tools on macOS, install Homebrew's `fluid-synth` and install
+`Tools/requirements-music.txt` in a project-local virtual environment. Verify the
+instrument bank against its SHA-256 in `Tools/INSTRUMENT-SOURCES.json` before
+rendering. The existing Balanced score was rendered and checked using FluidSynth
+2.6.1 on macOS 27 arm64. These tools are not app target dependencies; normal builds
+and installed apps use the supplied FLAC files. Arrangement resources are managed
+separately from generation-tool preparation.
 
+## Revision 5 development
 
-## Revision 5의 전개
+- Classic: a piano/cello opening grows into strings and brass, moves through a chamber passage led by woodwinds, and returns to the theme. The ending reduces instrumentation before looping.
+- Balanced: separate electric-piano opening, rhythm entry, short bridge, and octave reprise.
+- Electronic: bass, chords, and percussion build over a pad opening. A higher lead follows the middle bridge before a dominant return.
+- Acoustic: sparse fingerpicking alternates with fuller accompaniment; piano, an ascending melody, and strumming enter later.
+- POP: reduced accompaniment in the introduction and bridge, followed by an octave melody and denser rhythm in the reprise.
+- Rock and Metal: reduced drum and riff density in the opening, breakdown, and final return, with answering leads at the climax.
 
-- Classic: 피아노·첼로 도입 뒤 현과 금관이 합류하고, 목관이 선율을 이어받는 실내악 구간을 거쳐 재현합니다. 마지막에는 악기 수를 줄여 첫 구간으로 돌아갑니다.
-- Balanced: 일렉트릭 피아노 도입, 리듬 진입, 짧은 브리지와 선율의 옥타브 재현을 구분합니다.
-- Electronic: 패드 중심 도입에서 베이스·코드·타악기가 쌓이며, 중간 브리지 뒤 높은 리드 선율을 더한 다음 도미넌트로 회귀합니다.
-- Acoustic: 성긴 핑거피킹과 풍부한 반주를 번갈아 배치하고, 후반에 피아노·상행 선율·스트럼을 합류시킵니다.
-- POP: 도입과 브리지에서는 반주를 줄이고, 후반에는 옥타브 선율과 촘촘한 리듬으로 재현합니다.
-- Rock·Metal: 도입·브레이크다운·마지막 회귀에서 드럼과 리프 밀도를 줄이고, 절정에 응답형 리드를 추가합니다.
-
-이는 악보와 악기 배치를 바꾼 버전입니다. 마스터 음량 변화만으로 전개를 대신하지
-않습니다. 기존 BPM·반복 길이·프리셋 선택값을 유지하며, 음원 해시·피크·반복 경계와
-변환 검사를 다시 수행합니다. 수치 검사를 음악 완성도나 청취 승인으로 간주하지 않습니다.
+These revisions change scores and instrumentation rather than relying on master
+volume changes alone. BPM, loop lengths, and preset identifiers are preserved.
+Resource hashes, peaks, loop boundaries, and conversion are checked again.
+Passing numeric checks does not establish musical completion or listening approval.

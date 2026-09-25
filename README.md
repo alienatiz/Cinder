@@ -1,79 +1,99 @@
 # Cinder
 
-**오디오 번인을 간편하게.**
+**English** · [한국어](Docs/Locales/README.ko.md) · [日本語](Docs/Locales/README.ja.md)
 
-Cinder는 이어폰과 헤드폰을 위한 오디오 번인 앱입니다.
-핑크 노이즈와 음악, 주파수 스윕 중 원하는 신호를 선택하고 나에게 맞는 번인
-세션을 시작하세요. 재생 시간과 휴식 간격을 직접 정하고, 메뉴 막대에서 진행
-상황을 확인하며, 지난 번인 기록까지 한곳에서 관리할 수 있습니다.
+**Audio burn-in, made simple.**
 
-현재 버전은 **1.0.0-dev**이며 **macOS 27 · Apple Silicon**을 지원합니다.
-첫 정식 출시를 준비하는 개발판입니다. [변경 기록](RELEASE-NOTES.md)에서 기능과 개선 사항을 확인할 수 있습니다.
+Cinder is an audio burn-in app for earphones and headphones. Choose pink noise,
+music, or a frequency sweep and start a burn-in session that fits your needs.
+Set playback and rest times, follow progress from the menu bar, and keep your
+burn-in history in one place.
 
-## 주요 기능
+The current version is **1.0.0-dev**, targeting **macOS 27 · Apple Silicon**.
+This development build is preparing for the first stable release. See the
+[release notes](RELEASE-NOTES.md) for features and changes.
 
-- **Quick Play** — 40시간 연속·40시간 분할·직접 시간 설정, 회당 시간과 휴식 간격 조절. 노이즈·음악·스윕 또는 60분 전체 사이클을 선택하고 한 화면에서 시작·일시정지·재개·중지를 제어합니다.
-- **Quick Play Lite** — 메뉴 막대에서 출력 장치와 재생 시간을 선택하고 시작·일시정지·재개·정지를 조작합니다. 창을 닫아도 재생·예약을 유지하며 상태·남은 시간·예약을 확인할 수 있습니다.
-- **Music** — 외부 음원 보관함, 곡 선택과 순서 변경, 파일 정보와 초기 읽기 검사, 7종 내장 음악의 반복 재생.
-- **Device & Profile** — 출력 선택과 PCM 정보, Mac·DAC 참고 사양, 수동 게인과 이름을 붙인 게인 프리셋.
-- **Schedule** — 일회성·반복 예약과 재생·예약 프리셋, JSON/YAML 가져오기·내보내기.
-- **Settings** — 한국어·영어·일본어, 시스템·라이트·다크 외관, 사용자 테마와 막대형·바늘형 Peak/RMS 미터, Dev·Stable 업데이트 채널 선택.
-- **실행 기록** — 최근 500개 실행의 시간·휴식·게인·완료/중단 결과를 이 Mac에 보관하고 검색·요약 복사·내보내기를 제공합니다.
+## Getting started
 
-초기 앱 게인은 −30 dB, 수동 조절 범위는 −60~0 dB입니다. 장치나 참고 프로파일을
-선택해도 게인은 자동으로 바뀌지 않습니다. 디지털 게인과 미터는 실제 음압을
-나타내지 않습니다. 앱을 열거나 프리셋을 불러오는 것만으로 재생·예약을 시작하지 않습니다.
+1. Open your locally built `Cinder (Dev).app`. See **Build locally** below for build instructions.
+2. In Quick Play, select the output connected to your earphones or headphones.
+3. Choose a signal and a playback plan. A full cycle requires at least 60 minutes; split plans let you set each session's duration and the rest between sessions.
+4. To use music, choose a built-in track or add music files from your Mac in Music.
+5. Keep earphones out of your ears, start with low system/DAC volume, and check the output and app gain before pressing Start.
 
-## 실행 계획
+Pause, resume, or stop from the main window or the menu bar during playback.
+Built-in signals and music work without an account or internet connection.
 
-| 선택 | 동작 |
+## Features
+
+- **Quick Play** — Run a continuous 40-hour plan, split 40 hours into sessions, or set a custom duration. Adjust session and rest lengths. Play noise, music, a sweep, or a full 60-minute cycle, with start, pause, resume, and stop in one view.
+- **Quick Play Lite** — Choose an output and duration from the menu bar. Control playback and check status, remaining time, and schedules even with the main window closed.
+- **Music** — Select and reorder local music files, inspect file information and initial read results, or loop one of seven built-in tracks.
+- **Device & Profile** — Choose an output, view PCM information and Mac/DAC reference specifications, adjust gain, and save named gain presets.
+- **Schedule** — Configure one-time or repeating schedules and import or export playback and schedule presets as JSON/YAML.
+- **Settings** — English, Korean, and Japanese; system, light, dark, and custom themes; bar or needle Peak/RMS meters; Dev/Stable update channel selection.
+- **Session history** — Keep the latest 500 runs on this Mac, including time, rests, gain, and completion or interruption results. Search, copy summaries, or export records.
+
+App gain starts at −30 dB and can be adjusted manually from −60 to 0 dB.
+Choosing a device or reference profile does not change gain automatically.
+Digital gain and meters do not represent actual sound pressure. Opening the app
+or loading a preset does not start playback or activate a schedule.
+
+## Playback plans
+
+| Plan | Behavior |
 |---|---|
-| 40시간 연속 | 40시간을 한 세션으로 실행 |
-| 40시간 분할 | 회당 시간과 회차 사이 휴식을 직접 지정. 마지막 회차를 남은 시간으로 조정해 세션 합계 40시간 실행 |
-| 직접 시간 설정 | 1분부터 1000시간까지 분 단위로 한 세션 실행 |
+| Continuous 40 hours | Run one 40-hour session |
+| Split 40 hours | Set session duration and rest intervals; the final session uses the remaining time so sessions total 40 hours |
+| Custom duration | Run one session from 1 minute to 1000 hours, in one-minute increments |
 
-예를 들어 회당 3시간, 휴식 30분이면 3시간 13회와 마지막 1시간으로 나뉩니다.
-회차 사이 휴식 13회를 포함한 예상 소요 시간은 46시간 30분입니다.
-휴식이 끝나면 다음 회차를 자동으로 시작합니다. 창을 닫아도 계속 실행되며,
-중지·앱 종료·출력 장치 변경이나 연결 해제 시 남은 계획을 취소합니다.
-잠자기 등으로 다음 시작을 1분 넘게 놓치면 자동 재개하지 않습니다.
+For example, 3-hour sessions with 30-minute rests produce thirteen 3-hour sessions
+and a final 1-hour session. Thirteen rests bring the estimated total to 46 hours
+30 minutes. The next session starts after its rest. Closing the window keeps the
+plan running. Stop, Quit, an output change, or disconnection cancels the remaining
+plan. If a start is missed by more than one minute, for example after sleep,
+Cinder does not resume it automatically.
 
-40시간은 선택 가능한 계획이며 모든 기기에 권장되는 번인 시간이 아닙니다.
-세션 시간에는 선택한 전체 사이클 안의 휴식이 포함되고, 회차 사이 휴식은 별도로 더해집니다.
-Quick Play는 세션 시간·신호 구간·사이클 휴식·회차 사이 휴식을 따로 표시합니다.
-완료 예상 시각은 분할 계획 전체를 기준으로 하며 일시정지·준비 시간에 따라 늦어집니다.
-준비·일시정지로 실제 종료 시각은 늦어질 수 있습니다. 전체 사이클을 선택할 때는
-마지막 회차를 포함해 매회 60분 이상이어야 합니다.
+40 hours is an available plan, not a universal burn-in recommendation.
+Session time includes rests within the selected full cycle; rests between sessions
+are added separately. Quick Play shows session time, signal time, cycle rests, and
+rests between sessions separately. The finish estimate covers the entire split
+plan and moves later during preparation or pauses. With a full cycle, every
+session, including the last, must be at least 60 minutes.
 
-메뉴 막대의 **Quick Play Lite**에서는 1·2·4·8·40시간 또는 직접 입력 시간을 선택합니다.
-1·2·4·8시간과 직접 입력은 한 번 재생하는 계획이며, 40시간 연속과 기존 분할 계획도 선택할 수 있습니다.
-팝업을 여는 것만으로 기존 계획을 바꾸지 않습니다. 회당 시간·휴식 간격·재생 신호·음악·게인의
-상세 설정은 메인 창에서 조절하며 Lite에도 같은 값이 반영됩니다. 실행·예약 중에는 장치와 시간을 잠급니다.
+**Quick Play Lite** offers 1, 2, 4, 8, or 40 hours and custom time entry. The 1-, 2-,
+4-, and 8-hour options and custom durations are single sessions; continuous 40-hour
+and existing split plans are also available. Opening the popup does not change
+your plan. Adjust session lengths, rests, signal, music, and gain in the main
+window; Lite shares those settings. Device and time controls are locked while
+running or waiting for a schedule.
 
-창의 닫기 버튼이나 ⌘W는 창만 닫습니다. **Cinder 종료 또는 ⌘Q**는 재생을
-끝내고 남은 예약과 실행 계획을 취소합니다. 메뉴 막대의 **Cinder 열기**로
-진행 중인 세션에 돌아갈 수 있습니다. 종료 후 재실행 시 재생이나 예약을 자동 복원하지 않습니다.
-메뉴 항목은 일반 앱의 상태 아이콘으로 표시합니다. Cinder가 위치나 표시 우선순위를
-강제로 지정하지 않으며 macOS와 사용자의 배치 설정을 따릅니다.
-위치를 바꾸려면 ⌘를 누른 채 Cinder 아이콘을 다른 앱 아이콘 옆으로 드래그하세요.
-[Apple의 메뉴 막대 안내](https://support.apple.com/guide/mac-help/whats-in-the-menu-bar-mchlp1446/mac)를 참조하세요.
+The close button and ⌘W close only the window. **Quit Cinder or ⌘Q** stops playback
+and cancels remaining schedules and plans. Choose **Open Cinder** in the menu bar
+to return to the session. Relaunching does not automatically restore playback or
+schedules. Cinder uses a normal menu bar icon and respects macOS and your chosen
+icon order without forcing a position or priority. Hold ⌘ and drag the icon to
+reposition it. See [Apple's menu bar guide](https://support.apple.com/guide/mac-help/whats-in-the-menu-bar-mchlp1446/mac).
 
-## 개발 상태
+## Development status
 
-실행 기록은 재생 중 약 5초 간격과 상태 전환 때 저장합니다. 비정상 종료된 실행은
-마지막 저장 지점까지 복원하며 재생·예약을 자동 시작하지 않습니다. 기록된 신호 시간은
-앱의 재생 구간이며 실제 이어폰 출력의 측정값이 아닙니다. 총계는 보관된 최근 500개에
-대해서만 표시합니다. 음악 파일 경로나 장치 UID는 기록·요약에 포함하지 않습니다.
+History is saved about every 5 seconds during playback and at state changes.
+After an unexpected exit, records recover up to the last saved checkpoint without
+restarting playback or schedules. Recorded signal time describes the app's
+playback intervals, not a measurement at the earphones. Totals cover only the
+latest 500 retained records. Records and summaries exclude music paths and
+device UIDs.
 
-Mac의 자동 빌드·오디오 신호 검사는 통과했습니다. 실제 장치에서의 노이즈 연속성,
-7곡의 편곡·다이내믹, 장시간 재생과 배포 검증은 진행 중입니다.
-[검증 범위](VALIDATION.md)와 [1.0.0 계획](ROADMAP.md)을 확인하세요.
+Automated Mac builds and audio signal checks have passed. Noise continuity on
+real devices, the arrangements and dynamics of all seven tracks, long sessions,
+and distribution checks remain in progress. See the [validation status](VALIDATION.md)
+and [1.0.0 roadmap](ROADMAP.md).
 
-## 로컬 빌드
+## Build locally
 
-macOS 27.0 이상, Apple Silicon, Xcode 27.x와 macOS 27 SDK가 필요합니다.
-Swift 6.4 컴파일러의 Swift 5 언어 모드와 전체 동시성 진단을 기본으로 사용합니다.
-Yams 6.2.2는 고정된 의존성이며 최초 준비 시 인터넷 연결이 필요합니다.
+Requires macOS 27.0 or later, Apple Silicon, Xcode 27.x, and the macOS 27 SDK.
+The default uses the Swift 6.4 compiler in Swift 5 language mode with complete
+concurrency diagnostics. Yams 6.2.2 is pinned; initial setup needs internet access.
 
 ```bash
 bash Setup-Mac.command
@@ -81,51 +101,60 @@ bash Check-Xcode.command
 bash Build-App.command
 ```
 
-생성 앱은 `dist/Cinder (Dev).app`입니다. 로컬 ad-hoc 서명을 사용하며
-Developer ID 서명·공증된 배포본은 아닙니다. 자세한 빌드·패키징 방법과
-별도 Swift 6 검사는 [개발 안내](DEVELOPMENT.md)에 있습니다.
+The output is `dist/Cinder (Dev).app`. It uses a local ad-hoc signature and is not
+a Developer ID signed or notarized distribution build. See the [build guide](Docs/BUILDING.md)
+for packaging and the separate Swift 6 check.
 
-공개 버전은 `1.0.0-dev`입니다. macOS 번들의 숫자 형식에 맞춰 마케팅 버전
-`1.0.0`과 내부 빌드 `5.0.0`을 구분합니다. 앱 식별자는 `local.chu.cinder`,
-설정 위치는 `~/Library/Application Support/Swinder/`이며 기존 설정을 유지합니다.
+The public version is `1.0.0-dev`. To meet macOS bundle numbering requirements,
+the marketing version is `1.0.0` and the internal build is `5.0.0`. The app ID
+remains `local.chu.cinder`; existing preferences remain in
+`~/Library/Application Support/Swinder/`.
 
-## 화면과 알림
+## Navigation and notifications
 
-완료·오류 알림은 Settings에서 선택적으로 켤 수 있습니다. 처음 켤 때만 macOS 알림
-허용을 요청하며, 완료·장치 변경·실패·놓친 예약을 소리 없는 알림으로 전달합니다.
-일시정지나 회차 사이 휴식마다 알리지 않습니다. 허용하지 않아도 실행 기록은 남습니다.
+Completion and error notifications are optional in Settings. Enabling them first
+requests macOS notification permission. Silent notifications cover completion,
+device changes, failures, and missed schedules, not every pause or rest.
+History is retained even if permission is denied.
 
-주 화면은 Quick Play·Music·실행 기록·Settings로 구성됩니다. 예약과 출력 상세는
-Quick Play에서, 변경 기록과 도움말은 Settings의 Cinder 정보에서 열 수 있습니다.
-긴 음악 목록과 변경 기록은 검색 또는 페이지 이동으로 확인합니다.
+The main areas are Quick Play, Music, Session history, and Settings. Open schedule
+and output details from Quick Play, or the changelog and help from About Cinder
+in Settings. Long music lists and changelogs use search or pagination.
 
-앱이 활성화된 동안 `⌘Return`으로 시작·일시정지·재개, `⌘.`으로 중지합니다.
-`⌘1`–`⌘4`는 주 화면을 전환하며, `⌘,`는 설정을 엽니다. 예약 대기나 준비 중에는
-시작 단축키도 비활성화됩니다. 다른 음악 앱의 전역 미디어 키를 가로채지 않습니다.
+While the app is active, `⌘Return` starts, pauses, or resumes; `⌘.` stops playback.
+`⌘1`–`⌘4` switch main areas, and `⌘,` opens Settings. The start shortcut is also
+disabled during preparation or while waiting for a schedule. Cinder does not
+intercept other players' global media keys.
 
-## 개발판과 정식판
+## Development and stable releases
 
-**설정 → 업데이트**에서 Dev·Stable 업데이트 채널을 선택하고 저장합니다.
-설치된 앱의 버전·채널은 별도로 표시하며, 선택만으로 앱이나 재생이 바뀌지 않습니다.
-정식판은 아직 출시되지 않았습니다. 현재는 채널 선택을 제공하며 업데이트 다운로드와
-설치는 추후 지원합니다. Swift 언어 모드와 앱의 업데이트 채널은 별개입니다.
+Select and save Dev or Stable under **Settings → Updates**. The installed app's
+version and channel are shown separately. Channel selection does not replace the
+app or alter playback. No stable version has been released yet; update download
+and installation are not implemented. Swift language mode and update channel
+are separate settings.
 
-| 구분 | 운영 방식 |
+| Stage | Policy |
 |---|---|
-| `dev` | 개발 소스. 커밋과 PR에서는 소스 검사만 실행 |
-| staging | 기능이 모인 시점에 Actions에서 수동으로 앱 빌드·검증 |
-| `main` | 첫 정식판부터 검증된 소스를 관리 |
-| `v1.0.0` 같은 태그 | 출시용 빌드 후 Release 초안 생성 |
+| `dev` | Development source; commits and pull requests run source checks only |
+| Staging | Manually build and validate accumulated changes in Actions |
+| `main` | Reviewed source, starting with the first stable release |
+| Tags such as `v1.0.0` | Build for release and create a Release draft |
 
-staging 전용 브랜치나 상시 빌드 서버는 두지 않습니다. 개발 앱은 Actions에서
-14일간 보관하고, 같은 개발 버전의 빌드는 커밋 해시로 구분합니다.
-LTS는 첫 정식판 이후 유지보수 필요에 따라 결정합니다. [출시 운영](Docs/RELEASING.md)을 참조하세요.
+There is no staging branch or always-on build server. Development app artifacts
+are retained in Actions for 14 days and identified by commit hash within a
+development version. LTS will be considered after the first stable release if
+maintenance needs justify it. See the [release guide](Docs/RELEASING.md).
 
-## 문서와 크레딧
+## Documentation and credits
 
-[개발 안내](DEVELOPMENT.md) · [아키텍처](Docs/ARCHITECTURE.md) ·
-[내장 음악](Docs/Audio/PRESET-MUSIC.md) · [변경 기록](RELEASE-NOTES.md)
+English is the default for guides and contribution documentation. The README
+language links are independent of the app's language setting.
 
-Cinder는 **Byeongcheol Kim과 OpenAI의 공동 작업**입니다. ChatGPT/Codex에서
-작성한 커밋에 공동 작성 정보를 기록합니다. [AUTHORS.md](AUTHORS.md)와
-[음원·도구 크레딧](Sources/CinderApp/Resources/preset-music-credits.txt)을 참조하세요.
+[Submit a pull request](DEVELOPMENT.md) · [Build guide](Docs/BUILDING.md) ·
+[Architecture](Docs/ARCHITECTURE.md) · [Built-in music](Docs/Audio/PRESET-MUSIC.md) ·
+[Release notes](RELEASE-NOTES.md)
+
+Cinder is a collaboration between **Byeongcheol Kim and OpenAI**. Commits produced
+through ChatGPT/Codex record this attribution. See [AUTHORS.md](AUTHORS.md) and the
+[music and tool credits](Sources/CinderApp/Resources/preset-music-credits.txt).

@@ -1,101 +1,110 @@
-# 개발판과 정식판 운영
+# Development and stable releases
 
-현재 개발 브랜치는 `dev`입니다. 정식판에는 `main`과 버전 태그를 사용합니다.
-아직 정식 1.0.0과 LTS는 없습니다.
+The current development branch is `dev`. Stable releases will use `main` and
+version tags. There is no stable 1.0.0 or LTS release yet.
 
-| 구분 | 기준 | 자동 빌드 결과 |
+| Stage | Source | Automated result |
 |---|---|---|
-| 개발판 | `dev`, 현재 `1.0.0-dev` | 가벼운 소스 검사만 실행. 앱 빌드 없음 |
-| staging 검증 | `dev` 또는 `main`의 선택한 커밋에서 수동 실행 | 앱 ZIP·SHA-256, Actions에서 14일 보관 |
-| 정식판 준비 | `main`, 예: `1.0.0` | 가벼운 소스 검사만 실행. 앱 빌드 없음 |
-| 출시 지점 | `main`에 포함된 커밋의 `v1.0.0` 같은 태그 | 빌드 성공 후 GitHub Release **초안** 생성 |
-| 변경 검토 | `dev` 또는 `main` 대상 PR | 가벼운 소스 검사만 실행 |
+| Development | `dev`, currently `1.0.0-dev` | Lightweight source checks; no app build |
+| Staging validation | Manual run at a chosen commit on `dev` or `main` | App ZIP and SHA-256, retained in Actions for 14 days |
+| Stable preparation | `main`, for example `1.0.0` | Lightweight source checks; no app build |
+| Release point | A tag such as `v1.0.0` on a commit included in `main` | A GitHub Release **draft** after a successful build |
+| Change review | Pull request targeting `dev` or `main` | Lightweight source checks only |
 
-개발 커밋마다 Mac 빌드나 Release를 만들지 않습니다. staging도 브랜치가 아니라
-선택한 커밋을 수동으로 검증하는 단계입니다. `latest`, `stable`, `beta` 등의 브랜치를
-추가하지 않습니다. GitHub Releases는 승인한 버전만 공개합니다. 현재 개발
-소스는 `dev`에만 올리며 `main`은 첫 정식판 승격 시 만듭니다.
+Development commits do not each produce a Mac build or Release. Staging is a
+manual validation step at a selected commit, not a branch. Do not add `latest`,
+`stable`, or `beta` branches. Publish only approved versions in GitHub Releases.
+Current development source is published on `dev`; create `main` when promoting
+the first stable release.
 
-## 앱의 채널 선택
+## Channel selection in the app
 
-설정 → 업데이트에서 `dev` 또는 `stable`을 선택합니다. 선택은 기존 설정 폴더의
-`swift-updates-v1.json`에 저장하며 재생·UI 설정 파일은 변경하지 않습니다.
-이 파일이 없는 기존 설치는 설치된 앱의 채널을 기본값으로 사용합니다.
-정식판은 `stable`, 개발·검증판은 `dev`를 기본 선택합니다.
+Choose `dev` or `stable` in Settings → Updates. The choice is saved in
+`swift-updates-v1.json` in the existing settings directory without modifying
+playback or UI settings files. Existing installations without this file default
+to the installed app's channel: `stable` for stable builds and `dev` for development
+and validation builds.
 
-현재는 선택과 저장, 설치된 버전·채널 표시를 제공합니다. 정식판과 업데이트 배포
-연동이 아직 없으므로 다운로드·설치·재실행은 수행하지 않습니다. `stable` 선택으로
-개발판의 이름이나 버전을 정식판으로 바꾸지 않으며 Git 브랜치도 만들지 않습니다.
-앱의 채널 선택은 Swift 컴파일러나 언어 모드를 변경하지 않습니다.
+The current feature saves the choice and shows the installed version and channel.
+Release distribution is not connected, so it does not download, install, or restart
+the app. Selecting `stable` does not rename or convert a development build, create
+a Git branch, or change the Swift compiler or language mode.
 
-향후 실제 전환은 승인된 배포본 조회와 Developer ID 서명·공증 검증, 설정 호환성,
-재생 종료 후 설치·재실행을 별도 기능으로 연결해야 합니다. stable 채널에 개발판이나
-staging 산출물을 대신 제공하지 않습니다. 출시·배포 연동 전에는 앱의 미출시 안내를 유지합니다.
+Actual switching will require approved distribution lookup, Developer ID signature
+and notarization verification, settings compatibility, and installation/restart
+after playback has ended. Do not serve development or staging artifacts as stable.
+Keep the unreleased-status notice until distribution integration is ready.
 
-## 자동화
+## Automation
 
-`.github/workflows/build.yml` 하나를 사용합니다. push/PR에서는 1번만 실행합니다.
-기능이 충분히 모이면 Actions → Build → Run workflow에서 `dev`를 골라
-staging 검증을 시작합니다. 커밋 수로 자동 실행하지 않습니다. 정식 버전 태그를
-push할 때에도 앱 빌드를 실행합니다. 상시 서버나 예약 실행은 두지 않습니다.
+The repository uses one workflow, `.github/workflows/build.yml`. Pushes and pull
+requests run only step 1 below. When enough work is ready, choose `dev` under
+Actions → Build → Run workflow to start staging validation. Commit count does not
+trigger it. Stable version tags also trigger app builds. There is no always-on
+server or scheduled build.
 
-1. 메타데이터·번역·음원 해시·Bash 문법 및 브랜치/태그 정책 검사.
-2. GitHub의 `xcode-27` arm64 실행 환경에서 의존성 준비.
-3. 별도 Swift 6 검사와 기본 모드 XCTest·릴리스 앱 빌드.
-4. 실행 권한을 보존한 앱 ZIP·체크섬·빌드 식별 정보를 Actions에 저장.
-5. 정식 버전 태그일 때만 출시 초안을 생성합니다. 자동 공개하지 않습니다.
+1. Check metadata, translations, music hashes, Bash syntax, and branch/tag policy.
+2. Prepare dependencies on GitHub's `xcode-27` arm64 runner.
+3. Run the separate Swift 6 check, default-mode XCTest, and release-configuration app build.
+4. Store an app ZIP preserving executable permissions, checksums, and build identification in Actions.
+5. Create a Release draft only for a stable version tag. Never publish it automatically.
 
-같은 실행 종류·브랜치의 오래된 검사는 새 실행이 오면 취소합니다. 로그 보관은 7일,
-앱은 14일이며 빌드 결과와 로컬 작업 자료는 저장소에 포함하지 않습니다.
-staging 파일 이름에는 버전과 짧은 커밋 해시를 넣어 같은 개발 버전의 빌드를 구분합니다.
-앱 안에서는 `Cinder (Dev)`와 공개 버전 `1.0.0-dev`를 표시합니다.
+New branch checks cancel older checks of the same event kind and branch. Logs are
+retained for 7 days and app artifacts for 14 days; neither build products nor local
+working records belong in the repository. Staging filenames include the version
+and short commit hash to distinguish builds. The development app displays
+`Cinder (Dev)` and public version `1.0.0-dev`.
 
-GitHub `xcode-27`은 2026-09-24 확인 당시 **public preview**입니다. 워크플로가
-실제 OS·Xcode·SDK·Swift를 검사하며, 맞지 않으면 실패합니다. 이미지 번호만으로
-실기기 호환성을 인정하지 않습니다. Actions 사용 가능 여부·실행 결과는 GitHub에서
-확인해야 합니다. [공식 runner 목록](https://docs.github.com/en/actions/reference/runners/github-hosted-runners),
-[Xcode 27 이미지](https://github.com/actions/runner-images/blob/main/images/macos/xcode-27-arm64-Readme.md).
+GitHub's `xcode-27` runner was in **public preview** when checked on 2026-09-24.
+The workflow verifies the actual OS, Xcode, SDK, and Swift and fails on a mismatch.
+An image name does not establish real-device compatibility. Check availability
+and run results in Actions. See the [runner reference](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
+and [Xcode 27 image](https://github.com/actions/runner-images/blob/main/images/macos/xcode-27-arm64-Readme.md).
 
-## 버전 승격
+## Promoting a version
 
-현재 개발 버전은 숫자 접미사 없이 `1.0.0-dev`로 유지합니다. 커밋마다 버전을
-올리지 않으며 staging 산출물은 커밋 해시로 구분합니다. 향후 검증 단계를 나눌
-필요가 생기면 `1.0.0-beta.1`, `1.0.0-rc.1` 같은 번호를 별도로 지정할 수 있습니다.
-`dev`는 접미사가 있는 버전만, `main`은 `1.0.0` 같은 정식 형식만 허용합니다.
+Keep development at `1.0.0-dev` without a numeric suffix. Do not bump the version
+for each commit; staging artifacts use the commit hash. If separate validation
+stages become necessary, versions such as `1.0.0-beta.1` or `1.0.0-rc.1` can be
+introduced deliberately. `dev` accepts prerelease versions only; `main` accepts
+stable versions such as `1.0.0` only.
 
-출시 준비 시 다음 파일의 버전을 함께 갱신하고 소스 검사를 실행합니다.
+For release preparation, update these together and run the source checks:
 
 - `VERSION`
-- `Build-Identity.sh`: 공개/마케팅/빌드 버전, 채널, 앱 이름
-- `Sources/CinderCore/Models.swift`: Identity 버전·빌드·채널
-- `Sources/CinderApp/Resources/changelog.json`: 해당 버전의 실제 변경 설명
+- `Build-Identity.sh`: public, marketing, and build versions; channel; app name
+- `Sources/CinderCore/Models.swift`: Identity version, build, and channel
+- `Sources/CinderApp/Resources/changelog.json`: actual changes for the version
 
-정식판은 채널 `stable`, 앱 이름 `Cinder`를 사용합니다. 현재 개발판은 채널 `dev`,
-앱 이름 `Cinder (Dev)`를 사용합니다. 향후 alpha/beta/rc 검증판은 해당 채널과
-`Cinder (Beta)`를 사용합니다. 새 배포판의 내부 빌드 번호는 이전보다 증가시킵니다.
-식별자 `local.chu.cinder`와 기존 `Swinder` 설정 위치는 유지합니다. 현재 두 채널은
-설정을 공유하며 독립 설치·설정 격리 기능을 제공하지 않습니다.
+Stable builds use channel `stable` and name `Cinder`. Current development builds
+use channel `dev` and name `Cinder (Dev)`. Future alpha/beta/rc builds use their
+respective channels and `Cinder (Beta)`. Increase the internal build number for
+each new distribution. Preserve `local.chu.cinder` and the existing `Swinder`
+settings location. Channels currently share settings; separate installations and
+isolated settings are not supported.
 
-ROADMAP.md의 출시 조건을 충족한 소스를 `main`으로 승격한 뒤 해당 커밋에
-`v` + VERSION과 정확히 같은 태그를 붙입니다. 태그는 이동하거나 덮어쓰지 않습니다.
-잘못된 태그, 개발 버전 태그, `main`에 없는 커밋은 출시 작업에서 거절합니다.
+Promote source that satisfies [ROADMAP.md](../ROADMAP.md) to `main`, then tag the
+release commit with `v` followed by the exact VERSION value. Do not move or
+overwrite tags. Release checks reject invalid tags, development version tags,
+and commits that are not included in `main`.
 
-현재 자동 빌드는 ad-hoc 서명입니다. 출시 초안에서 실기기 결과와 릴리스 노트를
-검토하고 Developer ID 서명·공증된 파일을 준비한 뒤 정식으로 공개해야 합니다.
-[릴리즈 본문](RELEASE-DRAFT.md)은 Cinder를 오디오 번인 앱으로 소개하는 제품 설명으로
-시작합니다. 게시 전 해당 버전의 실제 기능과 대조하고 배포 안내를 완성한 뒤,
-출시 조건을 충족했을 때만 본문의 ‘게시 전 확인’ 절을 제거합니다.
+Automated builds currently use ad-hoc signing. Review device results and release
+notes, then prepare Developer ID signed and notarized files before publishing.
+The [release body](RELEASE-DRAFT.md) begins with an introduction to Cinder as an
+audio burn-in app. Check the description against that version's actual features,
+complete distribution instructions, and remove the **Before publishing** section
+only when all release gates have been met.
 
-## LTS를 추가하는 시점
+## When to add LTS
 
-LTS는 새 버전 출시 후에도 특정 이전 버전에 버그·보안 수정을 제공하는 지원 정책입니다.
+LTS is a commitment to provide bug and security fixes for an older version after
+new versions are released. Cinder does not designate an LTS before its first stable
+release. If new features or OS requirements later leave users on an older version,
+define its support end date and maintenance scope before adding a branch such as
+`release/1.x`. Explicitly extend CI branch and tag-origin rules at that point;
+current CI does not accept that branch.
 
-Cinder는 아직 첫 정식판 전이므로 LTS를 지정하지 않습니다. 향후 새 기능·최소 OS
-변경 때문에 기존 사용자가 구버전에 남아야 한다면, 지원 종료일과 수정 범위를 먼저
-정하고 `release/1.x` 같은 유지보수 브랜치 하나를 추가할 수 있습니다. 그때 CI의
-브랜치·태그 출처 규칙도 명시적으로 확장합니다. 현재 CI는 이 브랜치를 허용하지 않습니다.
+## Collaboration
 
-## 공동 작업
-
-모든 ChatGPT/Codex 커밋은 Byeongcheol Kim의
-작성자 정보와 `Co-Authored-By: OpenAI <noreply@openai.com>`을 함께 기록합니다.
+Every ChatGPT/Codex commit records Byeongcheol Kim's author identity and
+`Co-Authored-By: OpenAI <noreply@openai.com>`.

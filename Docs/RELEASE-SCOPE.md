@@ -1,135 +1,144 @@
-# Cinder 1.0 기능 범위
+# Cinder 1.0 feature scope
 
-검토일: 2026-09-24 · 기준 버전: 1.0.0-dev
+Review date: 2026-09-24 · Baseline: 1.0.0-dev
 
-첫 정식판의 중심은 **출력 장치를 골라 정해진 신호를 연속 재생하고, 실행 시간과
-휴식·중단 결과를 확인하는 것**이다. 새 신호나 음악 감상 기능의 수보다 이 흐름의
-신뢰성을 우선한다. 아래 범위를 기능별로 구현·검증하며, 미구현 기능을 이미
-제공하는 것으로 표시하지 않는다. 구현 현황은 ROADMAP.md와 함께 갱신한다.
+The first stable release centers on audio burn-in: choose an output, play defined
+signals continuously, and track session time, rests, and interruption results.
+Reliability of that flow takes priority over adding signal types or music-player
+features. Implement and validate each item separately; do not describe unimplemented
+features as available. Keep implementation status aligned with [ROADMAP.md](../ROADMAP.md).
 
-## 비교에서 가져올 부분
+## Lessons from other products
 
-공식 제품 설명과 개발자가 게시한 기능 목록을 기준으로 비교했다. 경쟁 앱을 직접
-설치해 재생 품질·자원 사용·현재 OS 호환성을 검증한 결과는 아니다.
+This comparison uses official product descriptions and developer feature lists.
+It is not a hands-on assessment of their playback quality, resource use, or current
+OS compatibility.
 
-| 비교 대상 | 확인한 기능·구성 | Cinder에 반영할 판단 |
+| Reference | Published features | Decision for Cinder |
 |---|---|---|
-| [JLab Audio Burn-in](https://www.jlab.com/pages/audio-burn-in-app-youtube) | 노이즈·스윕·휴식을 묶은 반복 파일과 시작 안내, 40시간 및 분할 실행 제안 | 기본 사이클·휴식·간단한 시작 흐름을 유지. 제조사의 시간·효과 설명을 모든 장치의 정답으로 일반화하지 않음 |
-| [1MORE Assistant](https://apps.apple.com/us/app/1more-assistant/id1064417017) | 제조사 설명에 Smart Burn-in, 음악, 연결·제품 기능을 함께 제공 | 번인 시작의 편의만 참고. 상점·제품 계정·이어폰 펌웨어 관리는 범위 밖. 목록상 마지막 업데이트가 2020년이므로 현재 동작의 기준으로 삼지 않음 |
-| [Headphone Burn-In 웹 도구](https://burninheadphones.com/) | Pink/Brown/White·스윕, 시간 선택, 현재 단계·경과 시간, 좌/우 출력 선택 | 단계와 남은 시간은 핵심. 좌/우 점검은 후속 후보. 노이즈 종류 확대·무제한 반복은 출시 필수가 아님 |
-| [IINA](https://iina.io/) | Music Mode, 시스템 미디어 제어, macOS 외관 통합 | 작은 재생 조작 화면과 일관된 키보드 접근을 참고. 온라인 스트림·플러그인·영상 기능은 제외 |
-| [Cog](https://cog.losno.co/) | Gapless, 반복 재생, 단축키, 알림, 자동 업데이트; EQ·시각화·다양한 형식 지원 | 반복 경계 품질·상태 알림은 우선. 범용 라이브러리·효과 처리·형식 확장은 분리하고 업데이트 자동 설치는 후속으로 검토 |
+| [JLab Audio Burn-in](https://www.jlab.com/pages/audio-burn-in-app-youtube) | Repeating noise/sweep/rest files, getting-started instructions, suggested 40-hour and split runs | Keep a basic cycle, rests, and simple startup. Do not generalize a manufacturer's duration or effect claims to every device |
+| [1MORE Assistant](https://apps.apple.com/us/app/1more-assistant/id1064417017) | Manufacturer describes Smart Burn-in, music, connectivity, and product features | Use convenient burn-in setup as a reference; exclude shopping, accounts, and earphone firmware management. The listed last update was in 2020, so it is not evidence of current behavior |
+| [Headphone Burn-In web tool](https://burninheadphones.com/) | Pink/Brown/White noise, sweeps, duration, current stage/elapsed time, left/right output | Stage and remaining time are core. Left/right checks are a later candidate; more noise types and unlimited loops are not release requirements |
+| [IINA](https://iina.io/) | Music Mode, system media controls, native macOS appearance | Reference compact playback controls and consistent keyboard access; exclude online streams, plugins, and video |
+| [Cog](https://cog.losno.co/) | Gapless/repeat playback, shortcuts, notifications, automatic updates, EQ, visualization, broad format support | Prioritize loop quality and status notifications. Separate general library/effects/format expansion; consider automatic update installation later |
 
-40시간은 현재 제공하는 선택지다. JLab은 이를 제안하지만, Shure는 KSE1500에 대해
-자사 측정에서 시간에 따른 드라이버 성능 변화가 없었다고 설명한다. 제품별 설명만으로
-모든 이어폰의 필수 번인 시간이나 음질 개선을 보장할 수 없으므로, Cinder는 실행
-계획의 완료와 음질 개선 판정을 구분한다. [Shure KSE1500 FAQ](https://www.shure.com/en-ASIA/go/kse1500/en/faq.html)
+40 hours is a plan option. JLab suggests that duration, while Shure reports no
+change over time in its KSE1500 driver-performance measurements. Product-specific
+claims do not establish a required duration or guaranteed sound improvement for
+all earphones. Cinder distinguishes completing a plan from judging sound quality.
+See the [Shure KSE1500 FAQ](https://www.shure.com/en-ASIA/go/kse1500/en/faq.html).
 
-## A. 1.0에 포함하고 완료 기준을 확인할 기능
+## A. Features to complete and validate for 1.0
 
-기능별로 구현과 자동 검사를 진행하며, 실제 장치·배포 검증은 별도로 확인한다.
+Implementation and automated checks are separate from physical-device and
+distribution validation.
 
-| 기능 | 현재 상태 | 1.0에 필요한 범위·완료 기준 |
+| Feature | Current state | Required scope and acceptance criteria |
 |---|---|---|
-| A1. 연속 재생과 상태 전환 | 구현·자동 검사 통과, 실기기 미완료 | **보강 최우선.** 노이즈 반복·시작/일시정지/재개/중지·신호 전환에 의도하지 않은 끊김·팝음이 없는지 실제 출력으로 확인. 계획된 휴식과 비정상 끊김을 구분 |
-| A2. 출력·게인 제어 | 장치 선택, −30 dB 초기값, −60~0 dB 수동 게인·미터·장치 변경 중지 구현 | 잭·USB·Bluetooth 분리/재연결·출력 형식 변경에서 다른 출력으로 예기치 않게 재생되지 않는지 확인. 시작 전에 장치·신호·시간·앱 게인을 한눈에 확인. 앱 게인을 실제 음압으로 표시하지 않음 |
-| A3. 실행 계획과 시간 의미 | 40시간 연속/분할·사용자 시간, 세션/신호/휴식 구분·전체 완료 예상 구현 | 준비·일시정지·잠자기로 변하는 예상 시각을 확정 시각처럼 표시하지 않음. 실제 휴식·재개와 화면 배치 확인 |
-| A4. 간단한 기록과 중단 사유 | 최근 500개 로컬 기록·검색·요약 복사·내보내기 구현 | **추가 우선.** 완료/사용자 중지/장치 변경/오류별로 시간·선택 출력·신호·게인·완료 회차를 로컬에 저장. 재실행 후 기록 확인 가능. 파일 자동 전송 없이 사용자가 요약을 복사·내보낼 수 있게 제공 |
-| A5. 창 닫기와 메뉴 제어 | Quick Play Lite·창 닫기 후 실행 유지 구현, 메뉴 UI 실사용 미완료 | 메인 창과 Lite의 장치·시간·시작/일시정지/중지를 같은 세션으로 검증. 창 닫기와 완전 종료를 구분하고 종료 시 남은 예약 취소. 일반 메뉴 아이콘의 순서·위치 존중 |
-| A6. 완료·실패 확인 | 기본 비활성인 완료·오류 알림과 설정 구현 | **추가 권고.** 완료·오류·장치 분리만 선택적으로 알림. 허용을 거절해도 앱/메뉴의 결과는 남김. 알림 권한은 기능을 켤 때 요청하고 단계마다 알리지 않음 |
-| A7. 음악과 기본 신호 | Pink-like·Band-limited·스윕·외부 음악·내장 7곡 구현 | 현재 신호와 7곡 유지. Revision 5에 전개·강약·악기 구성을 반영했으며 실제 청취와 반복 경계 평가 필요. 외부 음악의 길이·형식·가공 여부를 설명하고 읽기 실패·준비 취소를 검증. 새 장르·신호 추가는 보류 |
-| A8. 예약·휴식·잠자기 | 일회성/반복 예약·분할 휴식 구현, 시간 모의 검사 통과 | 실제 휴식 뒤 재개, 잠자기/깨우기·시간대·지연 취소 확인. 재실행 시 기록만 복원하고 재생·예약은 자동 복원하지 않음. 계속 실행하려면 앱이 실행 중이어야 함을 표시 |
-| A9. 설정·접근성·지원 정보 | 세 언어·설정 저장·음악 검사·테마·오프라인 도움말·재생 단축키 구현, 전체 UI 검증 미완료 | 최소 창 크기에서 핵심 조작 노출. 키보드·VoiceOver·대비·오류 설명 확인. 기존 설정 업그레이드와 손상된 파일 처리 검증. 오프라인 핵심 기능·지원 형식·최소 OS·문의 경로 제공 |
-| A10. 설치와 배포 | 로컬 ad-hoc 앱, dev/stable 선택 저장만 제공 | Developer ID 서명·공증, 새 설치/덮어쓰기/설정 유지·앱 이동 검증. 승인된 정식 파일과 변경 기록을 찾는 수동 경로 제공. 채널 선택만으로 앱이 교체된 것처럼 표시하지 않음 |
+| A1. Continuous playback and transitions | Implemented; automated checks passed; device validation open | Highest reliability priority. Check physical output for unintended gaps or pops at loops, start/pause/resume/stop, and signal changes. Distinguish planned rests from dropouts |
+| A2. Output and gain | Output selection, initial −30 dB, manual −60 to 0 dB gain, meters, stop on device change | Test jack/USB/Bluetooth disconnect/reconnect and format changes without unexpected playback on another output. Show device, signal, duration, and gain before Start. Never present app gain as actual sound pressure |
+| A3. Plans and time accounting | Continuous/split 40 hours, custom duration, session/signal/rest breakdown, whole-plan finish estimate | Keep estimates clearly provisional when preparation, pauses, or sleep affect them. Check actual rest/resume behavior and layout |
+| A4. History and interruption reasons | Latest 500 local records, search, summary copy/export | Record time, selected output, signal, gain, and completed sessions for completion/user stop/device change/error. Retain records after relaunch. Provide user-initiated copy/export without automatic file upload |
+| A5. Window closing and menu controls | Quick Play Lite and continued execution after window close; menu UI use unverified | Validate main-window/Lite output, duration, and controls against one shared session. Distinguish closing from quitting; cancel remaining schedules on quit. Respect normal menu icon order |
+| A6. Completion and failure feedback | Optional completion/error notifications and settings, off by default | Notify selectively for completion/errors/device changes/missed schedules. Preserve results when denied. Ask permission on enable, not at every stage |
+| A7. Music and basic signals | Pink-like, Band-limited, sweep, external music, seven built-in tracks | Keep current signals/tracks. Revision 5 adds development/dynamics/instrumentation; listening and loop-quality evaluation remain open. Explain external music limits/processing and test read failure/cancellation. Defer new genres/signals |
+| A8. Scheduling, rests, and sleep | One-time/repeating schedules and split rests; simulated-time checks passed | Check real rest/resume, sleep/wake, time zones, and late cancellation. Restore history only on relaunch, without autoplay or reactivating schedules. Explain that continued execution requires the app to remain running |
+| A9. Settings, accessibility, and help | Three languages, persistence, music inspection, themes, offline help, playback shortcuts; full UI checks open | Keep core controls visible at minimum size. Check keyboard/VoiceOver/contrast/errors, settings upgrades, and corrupt files. Explain offline core features, supported formats, minimum OS, and support routes |
+| A10. Installation and distribution | Local ad-hoc app; Dev/Stable preference only | Developer ID signing/notarization; fresh install, overwrite, settings retention, relocation. Provide a manual route to approved releases and notes. Do not imply channel selection has replaced the app |
 
-장시간 검증은 1/8/40시간 재생과 분할 휴식 재개를 포함한다. CPU·메모리·에너지와
-준비/취소 반복 시 자원 회수를 확인한다. Apple Silicon 전체 지원을 설명하려면
-최소 지원 등급의 Mac(M1 등)에서도 확인하고, 장치별로 실제 지원하는 출력 형식을
-검사한다. M2 Pro 한 대의 자동 테스트로 모든 Mac·출력 장치의 검증을 대신하지 않는다.
+Long-session validation includes 1/8/40-hour playback and resume after split rests.
+Measure CPU, memory, energy, and resource recovery after repeated preparation and
+cancellation. Verify the minimum supported Mac class, such as M1, before asserting
+coverage across Apple Silicon, and check actual formats per output. Automated tests
+on one M2 Pro do not establish support for every Mac and device.
 
-### 시간과 기록의 구체적 기준
+### Time and history rules
 
-현재 60분 전체 사이클에는 5분 휴식 두 번이 들어 있다. 이 사이클을 세션 시간
-40시간 실행하면 예정된 신호 구간은 **33시간 20분**, 사이클 내부 휴식은 **6시간 40분**이다.
-회차 사이 휴식은 여기에 별도로 더해진다. 현재 40시간 설정을 조용히 다른 의미로
-바꾸지 말고, 이 차이를 계획 요약과 기록에 표시하는 것을 우선한다.
+The full 60-minute cycle contains two 5-minute rests. Running this cycle for
+40 hours of session time schedules **33 hours 20 minutes of signal** and
+**6 hours 40 minutes of internal rest**. Inter-session rests are additional.
+Preserve the meaning of the existing 40-hour setting and show the breakdown in
+plan summaries and history.
 
-기록에는 세션 경과, 신호 구간 진행, 휴식, 일시정지·준비를 구분한다. 앱이 집계한
-신호 재생 시간은 실제 음압·이어폰 출력·음질 변화의 측정값이 아니다. 음악 파일
-자체의 무음까지 제거한 시간이라고도 표현하지 않는다. 아날로그 이어폰을 같은
-잭에서 교체하면 자동 식별할 수 없으므로 1.0 기록은 출력 장치 기준으로 남긴다.
-이어폰별 누적 관리는 추후 사용자가 이름을 지정하는 방식으로 검토한다.
+Separate session progress, signal intervals, rests, pauses, and preparation in
+records. App-counted signal time is not a measurement of sound pressure, earphone
+output, or sound-quality change; it also includes any silence inside a music file.
+Analog earphones swapped on the same jack cannot be identified automatically, so
+1.0 records are associated with the selected output. Per-earphone totals may later
+use names supplied by the user.
 
-중단 기록을 읽는 기능과 남은 계획을 다시 실행하는 기능을 분리한다. 1.0에서는
-기록을 복원해도 재생을 시작하지 않는다. 이후 이어 실행 기능을 추가할 때도 현재
-장치·게인·남은 시간 확인 후 사용자가 시작하도록 한다. 기록 저장·내보내기는
-실시간 오디오 처리 경로 밖에서 수행한다.
+Reading interrupted history is separate from resuming a plan. Restoring history
+in 1.0 does not start playback. Any later resume feature must confirm the current
+output, gain, and remaining time before the user starts. History storage and export
+stay outside the real-time audio path.
 
-### 음악 기능의 범위
+### Music scope
 
-현재 외부 음악은 합계 10분, 모노/스테레오·8–96 kHz 입력 조건과 출력 변환 후
-256 MB 버퍼 제한을 적용한다. 준비 과정에 대역 가공과 양끝 페이드가 있으므로
-현재 경로를 원본 그대로의 재생 또는 bit-perfect 재생이라고 설명하지 않는다.
-출시 시에는 음악 선택 단계에서 길이 제한과 신호 가공을 알 수 있어야 한다.
+External music currently has a combined 10-minute limit, mono/stereo input at
+8–96 kHz, and a 256 MB limit after conversion to output PCM. Preparation applies
+band processing and end fades, so this path is not unprocessed or bit-perfect
+playback. Duration limits and processing must be clear during music selection.
 
-노이즈 반복의 비정상 공백 제거는 A1의 필수다. 임의의 외부 음원 사이를 앨범처럼
-완전히 이어 재생하는 기능, 장시간 파일 스트리밍, 원본 감상 경로는 후속 범위다.
-기존 7곡의 품질 개선은 현재 출시 과제로 유지하고, 그 범위를 장르 확대나 실시간
-음악 생성으로 넓히지 않는다.
+Eliminating unintended noise-loop gaps is required by A1. Seamless album-style
+transitions between arbitrary external tracks, long-file streaming, and an
+unprocessed listening path are later scope. Improving the existing seven tracks
+remains a release requirement; it does not imply expanding genres or generating
+music in real time.
 
-## B. 유지하되 고급 설정으로 정리할 기능
+## B. Features retained in advanced settings
 
-| 기존 기능 | 정리 제안 |
+| Existing feature | Presentation |
 |---|---|
-| 전체/단일 신호, 게인·재생·예약 프리셋, JSON/YAML 가져오기·내보내기 | 기본값으로 바로 시작할 수 있게 하고 프리셋 관리·파일 형식은 상세 설정에 배치 |
-| Mac/DAC 사양, UID, PCM·샘플레이트 정보 | 현재 출력 이름은 항상 노출. 참고 사양·식별자·기술 정보는 펼쳐 보기. 사양으로 게인 자동 계산하지 않음 |
-| 테마 편집, 색상 토큰, 바늘형 미터 | 시스템 외관을 기본으로 유지하고 개인화 영역에 배치. 신규 테마 확장은 후순위 |
-| Dev/Stable 채널 선택 | 업데이트 설정에 유지. 미출시/설치 기능 준비 상태를 명확히 표시. 재생 화면에는 채널 선택 UI를 추가하지 않음 |
-| Changelog | 설정의 정보/변경 기록에서 페이지별로 표시. 향후 실행 기록과 이름·목적을 분리 |
+| Full/single signals; gain/playback/schedule presets; JSON/YAML import/export | Allow a simple default start; put preset management and file formats in detail views |
+| Mac/DAC specs, UID, PCM/sample-rate information | Always show the output name; expand for reference specs, identifiers, and technical details. Do not derive gain automatically from specs |
+| Theme editing, color tokens, needle meters | Default to system appearance and group under personalization; defer more themes |
+| Dev/Stable selection | Keep in Updates with clear release/installer availability. Do not add it to the playback view |
+| Changelog | Paginated under About/Settings, with a name and purpose distinct from session history |
 
-지금 구현된 기능을 숨김 제안만으로 삭제하지 않는다. 설정 호환성을 유지하며
-실제 화면 이동은 별도 기능 변경 커밋으로 진행한다.
+Do not remove implemented features merely because they belong in advanced settings.
+Preserve settings compatibility and commit actual UI moves as separate changes.
 
-## C. 1.0 이후 수요에 따라 추가할 기능
+## C. Candidates after 1.0
 
-| 후보 | 미루는 이유·추가 조건 |
+| Candidate | Reason to defer and conditions |
 |---|---|
-| 좌/우 채널 확인·짧은 출력 미리듣기 | 출력 점검에는 유용하지만 번인 실행의 필수는 아님. 별도 짧은 점검 모드에서 자동 종료·게인 보존부터 설계 |
-| White/Brown 등 신호 추가, 사용자 사이클 편집 | 기존 신호 연속성 검증을 먼저 완료. 노이즈 종류가 많다고 효과가 커진다고 설명하지 않음 |
-| 이어폰별 누적 목표, 남은 계획 이어 실행 | 로컬 실행 기록이 먼저 필요. 사용자가 붙인 기기 이름과 실제 선택 출력 구분, 명시적 시작 유지 |
-| 긴 외부 파일·Gapless 큐·ReplayGain | 메모리·파일 I/O·출력 레벨 정책 변경이 필요. 현재 번인용 음악 경로와 별도 요구로 검토 |
-| 미디어 키·Now Playing·선택적 로그인 실행 | 다른 플레이어와의 충돌·의도하지 않은 시작 방지 검증 필요. 메뉴 Lite와 앱 내부 단축키를 먼저 완성 |
-| 업데이트 조회·다운로드·설치·채널 실제 전환 | 정식 배포본과 서명 검증·업그레이드/다운그레이드 정책 확립 후 연결. 첫 출시에는 수동 배포 경로로 대응 가능 |
-| Swift 6 언어 모드 기본 전환 | 품질·유지보수 과제. 컴파일러 6.4는 이미 사용하며 dev/stable 기능과 무관. 별도 동시성·자원 수명 검토 뒤 결정 |
+| Left/right checks and short output preview | Useful diagnostics, not essential to burn-in. Design a separate short check with automatic stop and preserved gain |
+| White/Brown signals and custom cycles | Validate continuity of current signals first. More noise types do not imply stronger effects |
+| Per-earphone goals and resuming remaining plans | Depend on local history; distinguish user-named devices from selected outputs and keep explicit Start |
+| Long external files, gapless queues, ReplayGain | Require new memory, file I/O, and level policies; assess separately from the current burn-in music path |
+| Media keys, Now Playing, optional launch at login | Need checks for player conflicts and unintended starts; complete Lite and app-local shortcuts first |
+| Update lookup/download/install and actual channel switching | Require approved distributions, signature checks, and upgrade/downgrade policy; manual distribution can serve the first release |
+| Default Swift 6 language mode | A maintenance/quality decision after concurrency/lifetime review. The compiler is already 6.4; this is unrelated to Dev/Stable |
 
-## D. 1.0에서 제외할 항목
+## D. Excluded from 1.0
 
-| 항목 | 제외 이유 |
+| Item | Reason |
 |---|---|
-| 스트리밍 서비스·계정·클라우드 음악 보관함·가사·태그 편집·대규모 앨범 관리 | 번인 세션 관리와 별도의 제품 범위. 인증·네트워크·라이브러리 유지 비용 증가 |
-| EQ·AutoEQ·업샘플링·DSD·exclusive/bit-perfect 출력 모드·플러그인 | 출력 경로·신호 처리 정책을 별도로 설계해야 함. 현재 가공·게인 경로와 혼동을 만들며 첫 출시 목적에 불필요 |
-| 측정 장비 없는 주파수 응답·실제 SPL·청력 진단, 번인 효과 점수·음질 개선 보장 | 앱의 디지털 신호와 시간 기록만으로 판정할 수 없음 |
-| 강제 음량 증가·자동 음압 보정·기기별 보장 번인 시간·기본 무제한 반복 | 장치·사용 환경과 무관한 자동 판단을 피하고 명시적인 시간·수동 게인을 유지 |
-| 실제 앱 종료 뒤에도 살아 있는 helper/daemon, 강제 자동 재생 | 현재 창 닫기 후 실행 유지와 메뉴 제어로 목적을 충족. 재실행/로그인만으로 소리를 내지 않음 |
-| 네이티브 Live Activities·항상 떠 있는 별도 플로팅 창 | 현재 메뉴 막대 흐름을 완성하는 것이 우선. ActivityKit 지원은 별도 SDK 검사 결과에 따름. [지원 범위](LIVE-ACTIVITIES.md) |
-| LTS·추가 stable/staging 브랜치·개발 커밋마다 Mac 빌드 | 첫 정식판 이전에는 운영 비용을 늘림. dev 소스 검사, 수동 staging, 향후 승인된 정식판 운영을 유지 |
+| Streaming services, accounts, cloud libraries, lyrics, tag editing, large album libraries | Separate product scope with authentication, networking, and library maintenance |
+| EQ, AutoEQ, upsampling, DSD, exclusive/bit-perfect modes, plugins | Need different output and processing policies and can obscure the current gain/processing path |
+| Frequency-response/SPL/hearing diagnosis without measurement hardware; burn-in scores or sound-improvement guarantees | Cannot be inferred from digital signals and elapsed time |
+| Forced volume increases, automatic sound-pressure compensation, guaranteed device-specific durations, unlimited default loops | Preserve explicit duration and manual gain instead of assumptions about devices or surroundings |
+| A helper/daemon surviving actual quit, forced autoplay | Window-close persistence and menu controls cover current needs; relaunch/login alone must not produce sound |
+| Native Live Activities and an always-visible floating window | Finish the menu bar flow first; ActivityKit availability follows the separate [SDK checks](LIVE-ACTIVITIES.md) |
+| LTS, extra stable/staging branches, Mac builds on every development commit | Avoid extra operation before the first release; retain dev source checks, manual staging, and reviewed stable releases |
 
-## 화면 구성과 구현 순서
+## Screen layout and implementation order
 
-주 화면은 **Quick Play / Music / 실행 기록 / Settings** 네 영역이다.
-Schedule은 Quick Play의 예약 설정으로, Device & Profile은 출력 상세로,
-Changelog는 Settings의 정보로 통합했다.
-Quick Play와 Lite에는 장치·신호·시간·게인 요약·진행·재생 조작만 항상 표시한다.
-리스트가 길어지는 음악/기록은 페이지 분할·검색을 사용하고 핵심 조작은 고정한다.
-UI를 억지로 축소해 글씨·접근성을 희생하지 않는다.
+The four main areas are **Quick Play / Music / Session history / Settings**.
+Schedule is part of Quick Play; Device & Profile is output detail; the changelog
+is under About in Settings. Quick Play and Lite keep device, signal, duration,
+gain summary, progress, and playback controls visible. Long music/history lists
+use pagination and search, with core controls fixed. Do not shrink text or harm
+accessibility to force content into the window.
 
-1. **기존 문제 확인과 수정:** 실제 장치 노이즈 연속성, 출력 변경·준비 취소·휴식 재개.
-2. **시간 의미와 기록:** 계획 요약 → 로컬 기록 모델·저장 → 기록 화면·내보내기.
-3. **백그라운드 사용 마무리:** Lite 실사용·완료/오류 알림·키보드/접근성.
-4. **음악과 화면 정리:** 7곡 개선·청취 평가, 외부 음악 안내, 고급 기능 재배치.
-5. **출시 검증:** 장시간·최소 지원 Mac·세 언어·설정 업그레이드·서명/공증·설치.
+1. **Check and fix current issues:** real-device noise continuity, output changes, preparation cancellation, rest/resume.
+2. **Time and history:** plan summary, local record model/storage, history view/export.
+3. **Background use:** Lite in practice, completion/error notifications, keyboard/accessibility.
+4. **Music and layout:** seven-track refinement/listening, external music guidance, advanced settings placement.
+5. **Release validation:** long sessions, minimum Mac, three languages, settings upgrades, signing/notarization, installation.
 
-각 단계 안에서도 독립 기능·수정별로 검사 후 커밋한다. 예를 들어 기록 저장 기반과
-기록 화면을 나누면 화면부터 되돌릴 수 있지만, 화면이 의존하는 저장 기반만 먼저
-되돌릴 수 있다고 보장하지 않는다. 새 SDK가 필요한 기능은 준비 커밋을 먼저 검증한다.
-버전·브랜치·빌드 자동화 정책을 유지하며 기능별 구현과 검증 결과를 기록한다.
+Within each stage, validate and commit independent features and fixes separately.
+For example, a history UI can be reverted before its storage foundation, but
+reverting the foundation alone cannot be promised to preserve that UI. Validate
+SDK preparation before committing dependent runtime features. Retain version,
+branch, and build policies while recording implementation and verification status.

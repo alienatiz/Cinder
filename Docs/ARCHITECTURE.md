@@ -1,72 +1,89 @@
-# Cinder 1.0 개발 트리
+# Cinder 1.0 architecture
 
-프로젝트 루트의 Package.swift가 모듈과 리소스를 구성합니다. 소스·리소스·테스트 자료는 저장소 안에서 상대 경로로 찾습니다.
+The root `Package.swift` defines modules and resources. Sources, resources, and
+test fixtures are resolved through paths relative to the repository.
 
-| 모듈 | 책임 |
+| Module | Responsibility |
 |---|---|
-| CinderApp | SwiftUI 화면, AppModel, 예약과 작업 수명, 사용자 동작 연결 |
-| CinderCore | 세션·프리셋·테마·장르·시간·게인·예약 규칙 |
-| CinderAudio | AVAudioEngine, 외부 음악·내장 프리셋 로딩과 변환, PCM 소유권 전달 |
-| CinderDSP | C11 렌더 콜백, 고정 버퍼, 게인·페이드·미터 집계 |
-| CinderPlatform | Core Audio 장치 조회·변경 감시, 모델 정보와 잠자기 방지, 메인 루프 타이머 |
-| CinderStorage | 설정·프리셋·테마의 JSON/YAML 저장과 리소스 탐색 |
+| CinderApp | SwiftUI views, AppModel, scheduling and task lifetimes, user actions |
+| CinderCore | Session, preset, theme, genre, duration, gain, and schedule rules |
+| CinderAudio | AVAudioEngine, loading/converting external music and built-in presets, PCM ownership transfer |
+| CinderDSP | C11 render callback, fixed buffers, gain, fades, and meter aggregation |
+| CinderPlatform | Core Audio device discovery/observation, model information, sleep prevention, main-run-loop timer |
+| CinderStorage | JSON/YAML settings, presets, themes, and resource discovery |
 
-음악 준비는 렌더 콜백 밖에서 수행하고 취소 여부를 확인합니다. 준비된 PCM은 C 엔진으로 소유권을 이전합니다. 재생 콜백에서는 음원 생성·파일 접근·동적 할당을 하지 않습니다. 일시정지 페이드가 완료되면 엔진을 멈추며, 미터는 화면 갱신 사이의 오디오 블록을 집계합니다.
+Music preparation runs outside the render callback and checks cancellation.
+Prepared PCM ownership transfers to the C engine. The playback callback performs
+no music generation, file access, or dynamic allocation. The engine stops after
+the pause fade completes, and meters aggregate audio blocks between UI updates.
 
-실행 계획은 저장 가능한 `PlaybackPlan`과 메모리 전용 `PlaybackPlanRun`으로 나눕니다.
-분할 세션의 합계는 2,400분이며 휴식은 실제 회차 완료 시각부터 계산합니다.
-AppModel이 회차별 시간으로 오디오 엔진을 시작하고, 회차 사이에는 기존 예약 타이머를
-사용합니다. 실행 중인 계획과 타이머는 저장하지 않으며 앱 종료 후 자동 복원하지 않습니다.
-기존 설정의 `hours`는 직접 설정 시간으로 보존하고, 선택적 계획 필드가 없는 프리셋도 읽습니다.
+Playback plans separate persistable `PlaybackPlan` from in-memory `PlaybackPlanRun`.
+Split sessions total 2,400 minutes; rests are measured from each actual completion.
+AppModel starts the engine for each session and uses the existing schedule timer
+between sessions. Active runs and timers are not persisted or automatically restored
+after quitting. Existing `hours` values remain custom durations, and presets without
+the optional plan fields remain readable.
 
-메인 창과 `MenuBarExtra`는 앱 수명의 단일 AppModel을 공유합니다. 창 닫기는
-재생·예약·장치 감시를 종료하지 않습니다. 앱 활성 상태와 실제 종료는 AppDelegate가
-처리하며, 종료 시 AppModel.shutdown()으로 재생·예약·잠자기 방지와 저장 작업을 정리합니다.
-메인 창이 닫히거나 앱이 비활성화되면 재생 상태를 1초 간격으로 갱신합니다. 메뉴의
-예약 카운트다운은 표시 전용이며 기존 예약 타이머가 다음 세션 실행을 담당합니다.
-ActivityKit이나 별도 백그라운드 서비스에 의존하지 않습니다.
+The main window and `MenuBarExtra` share one app-lifetime AppModel. Closing the
+window does not end playback, schedules, or device observation. AppDelegate handles
+activation and actual termination; `AppModel.shutdown()` cleans up playback,
+schedules, sleep prevention, and pending saves. Playback state refreshes once a
+second when the main window is closed or the app is inactive. The menu countdown
+is display-only; the existing timer starts the next session. No ActivityKit or
+separate background service is required.
 
-Quick Play Lite는 별도 재생 엔진이나 설정 복사본을 만들지 않습니다. 장치 선택은
-AppModel.selectOutput()에서 잠금·장치 존재 여부를 확인하고 샘플레이트와 저장 값을 갱신합니다.
-메인 창과 Lite 모두 같은 시작 가능 여부와 시간·계획 변경 메서드를 사용합니다. 직접 입력 중에는
-시작을 막고, 적용·취소·팝업 닫기 또는 외부 설정 변경으로 편집을 끝냅니다.
-CinderAppTests는 임시 설정 폴더와 가상 장치로 창 없는 조작을 검사하며 실제 오디오를 시작하지 않습니다.
+Quick Play Lite creates neither a separate playback engine nor a settings copy.
+`AppModel.selectOutput()` checks locking and device availability, then updates the
+sample rate and stored choice. Both views share start eligibility and duration/plan
+methods. Custom-time editing blocks Start and ends on apply, cancel, popup close,
+or an external settings change. CinderAppTests use temporary settings and virtual
+devices to check windowless actions without starting audio.
 
-메뉴 항목은 표준 `MenuBarExtra`의 기본 배치를 사용합니다. 앱에서 위치·우선순위를
-지정하거나 시스템의 저장된 아이콘 순서를 덮어쓰지 않습니다. 제어센터 옆 고정 배치를
-요구하지 않으며, 사용자가 메뉴 막대에서 정한 순서를 macOS가 관리하도록 둡니다.
+The menu item uses standard `MenuBarExtra` placement. The app does not assign
+position or priority, overwrite stored icon order, or demand a slot beside Control
+Center. macOS manages the order chosen by the user.
 
-Tests/CinderCoreTests에는 Core·저장·예약·노이즈·음원 로딩 검사가 있으며 Fixtures 경로는 테스트 소스 위치를 기준으로 찾습니다. SwiftPM이 Sources/CinderApp/Resources의 JSON·이미지·FLAC를 번들에 포함합니다. 앱 생성 스크립트는 번들 배치와 프리셋 해시를 검사합니다.
+Tests/CinderCoreTests cover core rules, storage, scheduling, noise, and music
+loading. Fixture paths are relative to test sources. SwiftPM bundles JSON, images,
+and FLAC from Sources/CinderApp/Resources. App generation checks bundle layout and
+preset hashes.
 
-일반 개발에는 프로젝트와 Xcode만 사용합니다. Tools의 Python 스크립트는 소스 검증·아카이브 제작 및 선택적인 오프라인 음원 재생성용입니다. 이미 생성된 FLAC를 앱에서 사용하는 데에는 Python·FluidSynth·SoundFont가 필요하지 않습니다.
+Normal development needs the project and Xcode. Python tools validate sources,
+create archives, or optionally regenerate music offline. Using the supplied FLAC
+files does not require Python, FluidSynth, or a SoundFont at runtime.
 
-실시간 장치 출력·메모리·에너지는 자동 신호 검사와 별도로 Mac에서 확인합니다. 현재 검증 범위는 [VALIDATION.md](../VALIDATION.md)에 있습니다.
+Live output, memory, and energy are checked separately on a Mac. See
+[VALIDATION.md](../VALIDATION.md) for the current evidence and limits.
 
-## 실행 기록 저장 기반
+## Session history storage
 
-`SessionRecorder`는 제어 흐름에서 재생 프레임 수와 준비·일시정지·회차 사이 대기
-시간을 집계합니다. `SessionHistoryStore`는 별도 `swift-history-v1.json`에 최근
-500개 기록을 원자적으로 저장합니다. 기존 재생·UI 설정 파일과 분리하며 잘못된
-기록은 저장 전에 거절합니다. FIFO 백그라운드 쓰기 큐가 약 5초마다 및 상태 전환 시
-저장하고 실제 앱 종료 때 큐를 비웁니다. 파일 I/O와 인코딩은 렌더 콜백에 들어가지 않습니다.
+`SessionRecorder` accumulates played frames and preparation, pause, and inter-session
+wait times in the control flow. `SessionHistoryStore` atomically saves the latest
+500 records to `swift-history-v1.json`, separately from playback/UI settings, and
+rejects invalid records before saving. A FIFO background queue writes about every
+5 seconds and on state transitions, and drains at actual app termination.
+Encoding and file I/O never enter the render callback.
 
-종료되지 않은 기록은 다음 로드에서 마지막 저장 시각 기준의 `interrupted`로
-정리할 수 있습니다. 이는 과거 상태의 기록이며 재생·예약 복원 명령이 아닙니다.
-재생 수명과 실행 기록 화면은 이 저장 기반에 의존하므로 되돌릴 때 연동부터 취소합니다.
-기록에는 음악 파일 경로나 출력 장치 UID를 저장하지 않습니다.
+An unfinished record can be marked `interrupted` at its last saved timestamp on
+next load. This is historical state, not an instruction to restore playback or
+schedules. Playback integration and the history view depend on this storage;
+revert integration before the foundation. Records omit music file paths and
+output device UIDs.
 
-## 시스템 알림 기반
+## System notifications
 
-`CinderPlatform.SessionNotifications`는 macOS SDK에 포함된 UserNotifications를
-사용합니다. 외부 SDK 설치 없이 권한 확인·사용자 요청 시 권한 신청·무음 배너
-전송을 제공합니다. 초기화만으로 권한을 요청하지 않으며 CLI/XCTest 호스트에서는
-시스템 알림 서비스에 접근하지 않습니다. `SessionNotifying`로 앱 테스트를 실제
-권한 대화상자·알림 전송과 분리합니다. 설정은 기본 비활성인 별도 파일에 저장합니다.
+`CinderPlatform.SessionNotifications` uses UserNotifications from the macOS SDK.
+Without installing an external SDK, it checks authorization, requests permission
+when the user enables notifications, and sends silent banners. Initialization
+alone never requests permission; CLI/XCTest hosts do not access the system service.
+`SessionNotifying` isolates app tests from real permission dialogs and delivery.
+Preferences are stored separately and default to disabled.
 
-알림 설정 화면과 완료/오류 전달은 이 기반에 의존합니다. 되돌릴 때 앱 연동부터
-제거하고, 기반만 먼저 되돌리지는 않습니다. 알림은 오디오 재생의 필수 의존성이 아닙니다.
+The settings view and completion/error delivery depend on this foundation.
+Revert app integration first, not the foundation alone. Notifications are optional
+and not a prerequisite for playback.
 
-앱은 기록이 최종 결과로 전환된 뒤 완료·장치 변경·실패·놓친 예약만 알립니다.
-설정에서 활성화할 때만 권한을 요청하고, 전송 경로에서는 허용 상태만 확인합니다.
-알림 실패와 거부는 기록·재생 상태에 영향을 주지 않습니다. 기본값은 끔이며
-알림에 소리를 넣지 않습니다.
+After a record becomes final, the app notifies only for completion, device change,
+failure, or missed schedule. Permission is requested when enabled in Settings;
+delivery only checks the current authorization. Denial or delivery failure does
+not change history or playback state. Notifications are off by default and silent.

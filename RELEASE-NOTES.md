@@ -1,58 +1,61 @@
 # Cinder 1.0.0-dev
 
-**오디오 번인을 간편하게.**
+**Audio burn-in, made simple.**
 
-Cinder는 이어폰과 헤드폰을 위한 오디오 번인 앱입니다.
-핑크 노이즈와 음악, 주파수 스윕 중 원하는 신호를 선택하고 나에게 맞는 번인
-세션을 시작하세요. 재생 시간과 휴식 간격을 직접 정하고, 메뉴 막대에서 진행
-상황을 확인하며, 지난 번인 기록까지 한곳에서 관리할 수 있습니다.
+Cinder is an audio burn-in app for earphones and headphones. Choose pink noise,
+music, or a frequency sweep and start a burn-in session that fits your needs.
+Set playback and rest times, follow progress from the menu bar, and keep your
+burn-in history in one place.
 
-현재 버전은 1.0.0-dev이며 macOS 27과 Apple Silicon을 지원합니다.
-첫 정식 출시를 준비하는 개발판의 기능과 변경 사항을 아래에 정리했습니다.
+The current version is 1.0.0-dev, targeting macOS 27 and Apple Silicon.
+These are the features and changes in the development build preparing for the
+first stable release.
 
-## 재생과 음악
+## Playback and music
 
-- 핑크 노이즈·대역 제한 노이즈·음악·스윕을 개별 실행하거나, 휴식을 포함한 60분 전체 사이클로 재생합니다. 세션 시간은 1분부터 1000시간까지 분 단위로 설정합니다.
-- Quick Play에서 40시간 연속·40시간 분할·직접 시간 설정을 선택합니다. 분할 계획의 회당 시간과 휴식 간격을 직접 지정하고, 마지막 회차는 남은 시간으로 조정합니다. 회차 수·휴식 포함 예상 소요 시간·완료 회차를 표시하며 휴식 뒤 다음 회차를 자동 시작합니다.
-- 출력·실행 계획·진행 표시·게인과 재생 조작을 스크롤 없이 Quick Play 한 화면에 배치했습니다. 중지·앱 종료·출력 변경 시 남은 분할 계획을 취소하며, 다음 시작을 1분 넘게 놓친 경우에도 자동 재개하지 않습니다.
-- macOS 우측 메뉴 막대에서 상태·남은 시간·출력 장치·다음 예약을 확인하고 일시정지·재개·중지·예약 취소를 제어합니다. 창을 닫아도 계속 실행되며 Cinder 열기로 돌아옵니다. Cinder 종료 또는 ⌘Q로 완전히 종료하면 재생과 남은 계획을 취소합니다.
-- 메뉴 막대의 Quick Play Lite에서 출력 장치, 1·2·4·8·40시간 또는 직접 입력 시간을 선택하고 플레이어 형태의 시작·일시정지·재개·정지 버튼을 사용합니다. 기존 분할 계획과 신호·음악·게인을 공유하며, 실행·예약 중에는 장치와 시간을 잠급니다. 창을 닫은 상태의 장치 선택도 검증과 설정 저장에 반영합니다.
-- 음원 보관함에서 곡을 선택하고 순서를 바꿉니다. 형식·비트 깊이·샘플레이트·길이와 초기 읽기 검사 결과를 표시하며, 선택한 파일에 문제가 있으면 재생과 예약을 막습니다.
-- Classic, Balanced, Electronic, Acoustic, POP, Rock, Metal의 내장 음악 7종을 제공합니다. Revision 5에서 도입·브리지·악기 진입·선율 재현·마무리를 다시 편곡했으며 BPM과 반복 길이는 유지합니다. 선택한 곡은 세션이 끝날 때까지 반복됩니다.
+- Play pink noise, band-limited noise, music, or sweeps individually, or use a full 60-minute cycle with rests. Set sessions from 1 minute to 1000 hours in one-minute increments.
+- Quick Play offers continuous 40 hours, split 40 hours, and custom duration. Set each split session and rest interval; the last session uses the remaining time. The app shows session count, estimated duration including rests, and completed sessions, and starts the next session after its rest.
+- Output, plan, progress, gain, and playback controls fit in one Quick Play view without scrolling. Stop, Quit, or an output change cancels remaining split sessions. A start missed by more than one minute does not resume automatically.
+- The macOS menu bar shows status, remaining time, output, and the next schedule, with pause, resume, stop, and schedule cancellation. Closing the window keeps playback running; Open Cinder returns to it. Quit Cinder or ⌘Q ends playback and cancels remaining plans.
+- Quick Play Lite offers output selection, 1/2/4/8/40-hour or custom duration, and player-style start/pause/resume/stop buttons. It shares the existing split plan, signal, music, and gain. Device/time changes are locked during a run or schedule, and windowless device selection uses the same validation and settings storage.
+- Select and reorder library tracks. View format, bit depth, sample rate, duration, and initial read checks. Detected problems in selected files block playback and scheduling.
+- Seven built-in tracks are available: Classic, Balanced, Electronic, Acoustic, POP, Rock, and Metal. Revision 5 revises introductions, bridges, instrument entries, reprises, and endings while preserving BPM and loop length. The chosen track loops until the session ends.
 
-## 시간·기록·조작
+## Time, history, and controls
 
-- 계획 요약에서 세션 시간, 신호 구간, 사이클 휴식과 회차 사이 휴식을 구분합니다. 전체 계획의 완료 예상은 일시정지·준비·휴식 상태를 반영합니다.
-- 최근 500개 실행의 완료·중지·장치 변경·실패·앱 종료·놓친 예약을 로컬에 기록합니다. 실행 기록에서 검색하고 시간·휴식·게인 범위·완료 회차 요약을 복사하거나 내보낼 수 있습니다.
-- 실행 기록은 약 5초 간격과 상태 변경 때 저장합니다. 비정상 종료 뒤에는 마지막 저장 지점까지만 복원하며 자동 재생하지 않습니다.
-- 설정에서 완료·오류 알림을 선택적으로 켭니다. 켤 때 권한을 요청하고 소리 없는 배너로 알립니다. 알림을 거부해도 결과 기록을 유지합니다.
-- 주 화면을 Quick Play·Music·실행 기록·Settings로 정리했습니다. 예약·출력 상세는 Quick Play에서, 테마 편집·앱 정보·변경 기록은 Settings에서 엽니다. 긴 음악 목록과 변경 기록에는 페이지 이동을 제공합니다.
-- 앱 내부 `⌘Return`으로 시작·일시정지·재개, `⌘.`으로 중지합니다. `⌘1`–`⌘4`는 화면 전환, `⌘,`는 설정입니다.
+- Plan summaries distinguish session time, signal intervals, cycle rests, and rests between sessions. The whole-plan finish estimate reflects pauses, preparation, and rests.
+- Store the latest 500 runs locally, including completion, user stop, device change, failure, app quit, and missed schedules. Search history and copy or export time, rest, gain-range, and completed-session summaries.
+- Save history about every 5 seconds and on state changes. After an unexpected exit, restore only up to the last checkpoint without starting playback.
+- Optionally enable completion/error notifications in Settings. Permission is requested when enabled, and banners are silent. Denied permission does not remove history.
+- Four main areas: Quick Play, Music, Session history, and Settings. Schedule/output details open from Quick Play; theme editing, About, and the changelog open from Settings. Long music lists and changelogs support pagination.
+- App-local shortcuts: `⌘Return` starts/pauses/resumes, `⌘.` stops, `⌘1`–`⌘4` switch areas, and `⌘,` opens Settings.
 
-## 출력·예약·사용자 설정
+## Output, schedules, and preferences
 
-- 설정의 업데이트 탭에서 Dev·Stable 채널을 선택하고 저장합니다. 설치된 앱의 버전·채널은 별도로 표시합니다. 정식판은 아직 없으며 업데이트 다운로드·설치는 추후 지원합니다. 채널 선택은 재생·예약과 설치된 앱을 바꾸지 않습니다.
-- 앱 게인을 −60~0 dB에서 수동 조절하고 이름을 붙인 게인 프리셋으로 관리합니다. Reset은 저장한 기본값이나 적용한 재생 프리셋의 게인으로 돌아갑니다.
-- 연결된 출력 장치, 앱 PCM 출력 정보와 Mac·DAC의 참고 사양을 확인합니다. 장치나 참고 프로파일을 선택해도 게인은 자동으로 바뀌지 않습니다.
-- 일회성 예약과 일 단위 반복 예약, 총 실행 횟수를 설정합니다. 재생·예약 프리셋은 JSON/YAML로 가져오거나 내보낼 수 있습니다. 예약은 직접 확정해야 하며 앱을 완전히 종료하면 해제됩니다.
-- 한국어·영어·일본어, 시스템·라이트·다크 외관과 사용자 테마를 지원합니다. Peak/RMS 미터는 막대형과 바늘형 중에서 선택합니다.
-- 기존 시간·게인·테마·음악 선택과 프리셋을 유지합니다. 앱 실행이나 프리셋 불러오기만으로 재생·예약을 시작하지 않습니다.
+- Select and save Dev/Stable under Updates in Settings. Installed version/channel remain visible separately. No stable release exists yet, and update download/installation are not implemented. Selection does not alter playback, schedules, or the installed app.
+- Manually adjust gain from −60 to 0 dB and save named gain presets. Reset restores the saved default or the gain in the applied playback preset.
+- View connected outputs, app PCM information, and Mac/DAC reference specifications. Selecting a device or reference profile does not automatically change gain.
+- Set one-time or daily repeating schedules and a total run count. Import/export playback and schedule presets as JSON/YAML. Schedules require explicit activation and are cancelled when the app quits.
+- English, Korean, and Japanese; system/light/dark appearance and custom themes; bar or needle Peak/RMS meters.
+- Preserve existing duration, gain, theme, music selection, and presets. Launching the app or loading a preset does not start playback or activate a schedule.
 
-## 개선 사항
+## Improvements
 
-- 핑크 노이즈와 대역 제한 노이즈의 반복 경계에서 음량이 내려가던 처리를 보완했습니다.
-- 일시정지 페이드가 끝난 뒤 엔진을 멈추고, 재개 실패를 안내합니다. 중지·장치 변경·연결 해제 시 재생 상태와 자원을 정리합니다.
-- 음악 준비 중 취소를 개선하고 불필요한 변환과 음원 복사를 줄였습니다. 큰 파일을 처리하기 전에 필요한 메모리를 확인합니다.
-- Peak와 RMS 측정을 화면 갱신 주기와 분리하고, 일시정지 중의 무음이 재개 직후 RMS에 섞이지 않도록 했습니다.
-- 완료 후 지정 시간 표시와 설정 변경 시 진행 초기화를 보완했습니다. 미터의 반복 갱신을 줄이고 테마의 배경·글자색을 함께 적용합니다.
+- Revised processing that caused volume dips at pink and band-limited noise loop boundaries.
+- Stop the engine after the pause fade completes and report resume failures. Clean up playback state and resources on stop, output change, or disconnection.
+- Improve cancellation during music preparation and reduce unnecessary conversion and copies. Check required memory before handling large files.
+- Separate Peak/RMS measurement from UI refreshes and prevent paused silence from affecting RMS immediately after resume.
+- Improve duration display after completion and progress reset after settings changes. Reduce repeated meter refreshes and apply theme background/text colors together.
 
-## 현재 확인 중인 사항
+## Validation still in progress
 
-Mac의 자동 신호 검사는 통과했지만, 노이즈의 연속 재생은 실제 이어폰과
-출력 장치에서 추가 확인이 필요합니다. 내장 음악 7곡은 새 편곡의 실제 청취 평가와
-후속 조정이 필요합니다. 장시간 재생, 장치 변경, 예약·잠자기 복귀와 배포 검증이 남아 있습니다.
+Automated Mac signal tests passed, but continuous noise output needs further checks
+with physical earphones and output devices. The seven revised arrangements still
+need listening evaluation and refinement. Long sessions, output changes,
+scheduling/wake behavior, and distribution validation remain open.
 
-현재 제공하는 빌드는 개발용입니다. 디지털 게인과 미터는 실제 음압을 나타내지 않으며,
-60분 사이클은 재생 구성의 길이입니다. 40시간은 선택 가능한 계획이며 보편적인 권장 번인 시간이 아닙니다.
-세션 시간에는 전체 사이클 안의 휴식이 포함되고 회차 사이 휴식은 별도로 더해집니다.
-자세한 검증 결과는 [VALIDATION.md](VALIDATION.md)를 참조하세요.
+Current builds are for development. Digital gain and meters do not represent actual
+sound pressure. The 60-minute cycle describes playback structure; 40 hours is an
+available plan, not a universal burn-in recommendation. Session time includes
+rests inside a full cycle; rests between sessions are additional.
+See [VALIDATION.md](VALIDATION.md) for evidence and limits.

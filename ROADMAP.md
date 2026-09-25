@@ -1,43 +1,42 @@
-# Cinder 1.0.0 계획
+# Cinder 1.0.0 roadmap
 
-현재 버전은 **1.0.0-dev**입니다. macOS 27 / Apple Silicon에서 검증된
-첫 정식판을 목표로 하며 출시일은 정하지 않았습니다.
+The current version is **1.0.0-dev**. The goal is a first stable release verified
+on macOS 27 / Apple Silicon. No release date has been set.
 
-## 기능 범위
+## Feature scope
 
-[1.0 기능 범위](Docs/RELEASE-SCOPE.md)는 번인 도구와 macOS 플레이어의
-공식 기능 설명을 비교해 정한 구현 범위입니다. 각 항목의 구현·검증 상태는
-아래 표에서 별도로 추적합니다.
+The [1.0 scope](Docs/RELEASE-SCOPE.md) draws on official feature descriptions of
+burn-in tools and macOS players. Implementation and validation are tracked separately.
 
-| 구분 | 범위 |
+| Category | Scope |
 |---|---|
-| 1.0 핵심 | 연속 재생·출력 제어·시간/휴식 계획·Quick Play Lite·7곡 품질·예약·설정·설치 검증 |
-| 1.0 추가 우선 | 시간 의미 명확화, 로컬 실행 기록·중단 사유·요약 내보내기, 선택적 완료/오류 알림 |
-| 고급 설정으로 정리 | 테마 편집·미터 형식·DAC 참고 사양·프리셋 파일 관리·업데이트 채널·변경 기록 |
-| 출시 후 | 좌/우 점검·신호 확대·이어 실행·긴 음악 큐·미디어 키·실제 자동 업데이트 |
-| 1.0 제외 | 스트리밍/계정·EQ/DSD/bit-perfect 모드·번인 효과 판정·자동 음량 증가·상주 helper·LTS |
+| 1.0 core | Continuous playback, output control, time/rest plans, Quick Play Lite, seven-track quality, schedules, settings, installation checks |
+| 1.0 priorities | Clear time accounting, local history and interruption reasons, summary export, optional completion/error notifications |
+| Advanced settings | Theme editor, meter style, DAC reference specs, preset files, update channel, changelog |
+| After release | Left/right checks, more signals, resuming plans, longer music queues, media keys, actual automatic updates |
+| Excluded from 1.0 | Streaming/accounts, EQ/DSD/bit-perfect modes, burn-in effect scoring, automatic gain increases, persistent helper, LTS |
 
-## 구현 상태와 출시 검증
+## Implementation and release validation
 
-| 영역 | 현재 상태 | 정식 출시 전 남은 작업 |
+| Area | Current state | Remaining before stable release |
 |---|---|---|
-| 빌드 | 기본 모드 빌드·91개 XCTest·로컬 앱 패키징 통과 | 배포 환경에서 재현 확인 |
-| Swift 6 | 별도 모드 빌드·91개 XCTest 통과, 기본 모드는 Swift 5 | 동시성·자원 수명 검토 후 기본 모드 전환 판단 |
-| 오디오 | 노이즈 반복 경계와 소스 노드·믹서 오프라인 검사 통과 | 실제 장치의 연속 재생, 잭·USB·Bluetooth, 장치 변경·분리 |
-| 음악 | 7곡 revision 5 편곡·강약·악기 전개 반영, 반복·변환 검사 통과 | 새 편곡의 실제 청취 평가와 후속 조정 |
-| UI·설정 | 네 영역 화면·페이지 이동·오프라인 도움말·재생 단축키, Quick Play Lite 구현 | 메뉴 팝업 실사용, 세 언어·테마·최소 창·VoiceOver·오류 표시·업그레이드 |
-| 예약 | 일회성·반복 예약과 프리셋 구현 | 시간대·DST·잠자기 복귀·앱 종료 취소 |
-| 장시간 재생 | 40시간 연속·분할 계획과 사용자 시간 구현, 회차·휴식 모의 검사 통과 | 1/8/40시간 재생, 휴식 후 장치 출력 재개, CPU·메모리·에너지, 취소 반복 |
-| 배포 | 로컬 ad-hoc 앱·패키징 경로 제공 | 앱 이동·설치·업그레이드, Developer ID 서명·공증 |
-| 시간·실행 기록 | 계획 시간 구분·전체 완료 예상, 로컬 500개 기록·중단 사유·요약 내보내기 구현 | 실제 장시간 기록·중단 복원·화면 검증 |
-| 완료·오류 안내 | 선택적 시스템 알림·설정·권한 거부/전송 실패 검사 통과 | 실제 서명 앱의 배너·권한 설정 확인 |
-| 업데이트 채널 | Dev·Stable 선택 저장, 설치된 버전·채널 구분 | 첫 출시의 수동 배포 경로·현재 설치 정보 명확화. 자동 조회·다운로드·설치·실제 채널 전환은 출시 후 범위 |
+| Build | Default-mode build, 91 XCTest cases, local app packaging passed | Reproduce in the distribution environment |
+| Swift 6 | Separate-mode build and 91 tests passed; default remains Swift 5 | Review concurrency/resource lifetimes before deciding on the default mode |
+| Audio | Noise loop boundaries and offline source-node/mixer checks passed | Continuous real-device output, jack/USB/Bluetooth, device changes/disconnection |
+| Music | Revision 5 arrangements, dynamics, and instrumentation; loop/conversion checks passed | Listening evaluation and further arrangement refinement |
+| UI/settings | Four main areas, pagination, offline help, playback shortcuts, Quick Play Lite implemented | Menu popup use, three languages, themes, minimum window, VoiceOver, errors, upgrades |
+| Scheduling | One-time/repeating schedules and presets implemented | Time zones, DST, wake from sleep, cancellation on quit |
+| Long sessions | Continuous/split 40-hour plans and custom duration; simulated transitions/rests passed | 1/8/40-hour playback, device output after rests, CPU/memory/energy, repeated cancellation |
+| Distribution | Local ad-hoc app and packaging paths | App relocation, installation/upgrades, Developer ID signing/notarization |
+| Time/history | Time breakdown, whole-plan finish estimate, 500 local records, interruption reasons/export | Real long-session records, interrupted recovery, UI validation |
+| Completion/errors | Optional notifications, preferences, denial/delivery-failure checks passed | Real signed-app banners and permission settings |
+| Update channel | Dev/Stable selection saved; installed version/channel shown separately | Clear manual distribution path and installed-build information for the first release; actual lookup/download/install/switching remains post-release scope |
 
-자동 신호 검사는 실제 출력 장치의 청취 품질을 보증하지 않습니다.
-노이즈 연속성의 실기기 확인과 7곡의 편곡 개선은 출시 전까지 계속 추적합니다.
-검사 환경과 범위는 [VALIDATION.md](VALIDATION.md)에 기록합니다.
+Automated signal tests do not establish listening quality on physical outputs.
+Real-device noise continuity and all seven arrangements remain open release items.
+Environment details and evidence are recorded in [VALIDATION.md](VALIDATION.md).
 
-개발은 `dev`에서 진행하며 staging 시점에 수동 앱 빌드를 실행합니다.
-정식판은 위 조건을 충족한 소스를 `main`으로 승격해 태그로 관리합니다.
-LTS는 첫 정식판 이후 지원 수요와 범위를 정한 뒤 검토합니다.
-자세한 절차는 [출시 운영](Docs/RELEASING.md)에 있습니다.
+Development stays on `dev`; app builds run manually at staging. Promote source
+that meets these gates to `main` and manage releases with tags. Consider LTS only
+after the first stable release, based on support needs and scope. See the
+[release guide](Docs/RELEASING.md).

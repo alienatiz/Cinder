@@ -1,68 +1,68 @@
-# 1.0.0-dev 검증 상태
+# 1.0.0-dev validation status
 
-확인일: **2026-09-25**. 자동 검사와 로컬 앱 확인 결과입니다.
-정식 배포 및 전체 실기기 검증은 진행 중입니다.
+Evidence recorded on **2026-09-25** from automated checks and local app inspection.
+Stable distribution and full device validation remain in progress.
 
-## 환경과 결과
+## Environment and results
 
-실행 환경: macOS 27.0 / arm64, Xcode 27.0, macOS SDK 27.0, Swift 6.4.
+Execution environment: macOS 27.0 / arm64, Xcode 27.0, macOS SDK 27.0, Swift 6.4.
 
-| 검사 | 확인 범위 | 결과 |
+| Check | Scope | Result |
 |---|---|---|
-| 기본 빌드·XCTest | Swift 5 모드, 전체 동시성 진단 | 91개 테스트 통과, 컴파일 경고 0 |
-| 별도 Swift 6 검사 | 언어 모드 전환 호환성 | 91개 테스트 통과, 컴파일 경고 0 |
-| 현재 앱 패키징 | 기본 모드 XCTest, arm64 릴리스 빌드, 번들·서명 확인 | 91개 테스트, 리소스 및 strict codesign 검사 통과 |
-| 소스·리소스 검사 | 버전·번역·7곡 해시·경로·스크립트 | 9개 그룹 통과 |
-| 출시 정책 검사 | 개발판·정식판 분리, 태그 출처, 소스 공개 범위 | 6개 테스트 통과 |
-| 앱 기본 확인 | 개발판 이름·버전·변경 기록, 기존 설정 복원, 자동 재생 없음 | 확인 |
-| 실행 계획 | 40시간 합계·나머지 회차·휴식·중지·지연 취소·저장·프리셋 | 7개 XCTest 통과(91개에 포함) |
-| Quick Play UI | 한국어·영어, 모드 변경, 회당 시간·휴식 입력, 기존 시간 보존, 잘못된 분할 안내 | 1280×800 창에서 확인, Quick Play 스크롤 없음 |
-| 창 수명 | 짧은 실제 재생 중 창 닫기·다시 열기, 일시정지, ⌘Q | 진행 시간 유지·일시정지·프로세스 종료 확인 |
-| 공유 장치 선택 UI | 메인 창의 출력 해제·기존 장치 재선택 | 시작 버튼 잠금·해제, 기존 게인·분할 계획 유지, 자동 재생 없음 확인 |
-| Quick Play Lite 로직 | 창 없는 장치 선택 저장·시간 변경·잠금·시작 검증·분할 휴식 취소 | 새 앱 모델 테스트 5개 통과(91개에 포함), 임시 설정과 가상 장치 사용 |
-| 업데이트 채널 로직 | 기존 설정 보존·오류 파일·선택 저장/복원·재생/예약 유지·저장 실패 | 새 테스트 5개 통과(91개에 포함), 임시 설정 사용 |
-| 업데이트 설정 UI | 채널 선택·설치 정보·미출시 안내 | 네이티브 빌드 통과. 실제 화면의 클릭·배치 검증 대기 |
-| 시간·실행 기록 | 세션/신호/휴식 구분, 전체 완료 예상, 결과·원자적 저장·복원·파일 손상 | 새 XCTest 12개 통과(91개에 포함) |
-| 시스템 알림 | 기본 꺼짐, 명시적 허용, 거부·전송 실패와 결과 보존 | 새 XCTest 5개 통과(91개에 포함), 실제 시스템 배너는 미검증 |
-| 네 영역 화면 | Quick Play·Music·실행 기록·Settings, 음악 페이지 이동, 출력/예약/정보/변경 기록 | 한국어 1280×800 창에서 배치·경로 확인 |
-| 단축키와 실제 기록 | External Headphones·−30 dB, ⌘Return 시작/일시정지/재개, ⌘. 중지, ⌘3 기록 | 재생 17초·일시정지 5초·준비 3초 구분, 텍스트 내보내기·앱 재실행 후 기록 복원, 자동 재생 없음 확인 |
-| 내장 음악 revision 5 | 7곡 재생성, 피크·유한 샘플·해시·반복 경계·변환 | 6개 기존 음악 XCTest 포함 통과. 음악적 청취 평가는 미완료 |
-| 메뉴 막대 UI | Lite 장치·시간 선택, 플레이어 버튼, 상태·예약 표시 | 네이티브 빌드 통과. 현재 UI 검사 도구가 시스템 메뉴 막대를 노출하지 않아 직접 클릭·배치 검증은 미완료 |
+| Default build/XCTest | Swift 5 mode, complete concurrency diagnostics | 91 tests passed; 0 compiler warnings |
+| Separate Swift 6 check | Language-mode migration compatibility | 91 tests passed; 0 compiler warnings |
+| App packaging | Default-mode XCTest, arm64 release build, bundle/signature checks | 91 tests, resources, and strict codesign passed |
+| Source/resources | Version, translations, seven music hashes, paths, scripts | 9 groups passed |
+| Release policy | Development/stable separation, tag origin, source publication scope | 6 tests passed |
+| App basics | Development name/version/changelog, settings restoration, no automatic playback | Confirmed |
+| Playback plans | 40-hour total, final remainder, rests, stop, late cancellation, storage, presets | 7 XCTest cases passed (included in 91) |
+| Quick Play UI | Korean/English, plan changes, session/rest entry, retained duration, invalid split feedback | Checked at 1280×800 with no Quick Play scrolling |
+| Window lifetime | Close/reopen during brief live playback, pause, ⌘Q | Elapsed time retained, pause and process termination confirmed |
+| Shared output selection UI | Clear and reselect the existing output in the main window | Start disabled/enabled; gain and split plan retained; no automatic playback |
+| Quick Play Lite logic | Windowless output storage, time edits, locks, start validation, split-rest cancellation | 5 new app-model tests passed (included in 91), using temporary settings and virtual devices |
+| Update channel logic | Existing settings, invalid files, choice save/restore, unchanged playback/schedules, save failure | 5 new tests passed (included in 91), using temporary settings |
+| Update settings UI | Channel choice, installed information, unreleased notice | Native build passed; actual clicks/layout remain unchecked |
+| Time/history | Session/signal/rest distinctions, whole-plan estimate, results, atomic storage, recovery, corrupt files | 12 new XCTest cases passed (included in 91) |
+| System notifications | Off by default, explicit permission, denial/delivery failure with retained results | 5 new XCTest cases passed (included in 91); actual system banners unverified |
+| Four-area UI | Quick Play, Music, Session history, Settings; music pagination; output/schedule/About/changelog | Layout and routes checked in Korean at 1280×800 |
+| Shortcuts and live records | External Headphones at −30 dB; ⌘Return start/pause/resume, ⌘. stop, ⌘3 history | 17 seconds playback, 5 paused, 3 preparing; text export and record restoration after relaunch; no automatic playback |
+| Built-in music revision 5 | Seven regenerated tracks, peaks, finite samples, hashes, loop boundaries, conversion | Passed including 6 existing music XCTest cases; musical listening evaluation incomplete |
+| Menu bar UI | Lite output/time choices, player controls, status/schedules | Native build passed; current UI tool did not expose the system menu bar, so direct click/layout checks remain incomplete |
 
-시간 구분·기록·알림·화면·단축키·새 음원 변경에 대해 기본 모드 `Build-App.command` 앱 패키징과 Swift 6 검사를
-다시 실행했습니다. 91개는 Core·오디오·저장 테스트 74개와 앱 모델 테스트 17개의 합계입니다.
-새 자동 테스트는 실제 재생을 시작하지 않습니다. 위 짧은 재생은 별도 UI 검사이며
-노이즈 끊김이 해결되었다는 청취 증거가 아닙니다. 세 언어 리소스의 일치와
-변경 기록은 확인했으나 세 언어의 전체 UI 경로를 검증한 것은 아닙니다.
-실행 로그는 `.build/`에 저장합니다.
+Default-mode `Build-App.command` packaging and the separate Swift 6 check were
+rerun for timing, history, notifications, navigation, shortcuts, and revised music.
+The 91 tests comprise 74 core/audio/storage tests and 17 app-model tests. New
+automated tests do not start physical playback. The brief live run was a separate
+UI check, not listening evidence that noise dropouts are resolved. Three-language
+resource parity and the changelog were checked, but not every UI path in all
+languages. Execution logs remain in `.build/`.
 
-분할 실행 검사는 시간을 모의 진행해 회차 전환과 취소를 확인합니다.
-실제 40시간 재생, 휴식 후 장치 출력의 재개와 잠자기 복귀를 완료한 결과는 아닙니다.
+Split-plan tests simulate time to verify transitions and cancellation. They do
+not establish successful physical 40-hour playback, device output after rests,
+or wake-from-sleep behavior.
 
-## 오디오 검사 범위
+## Audio test coverage
 
-- 앱의 소스 노드와 믹서를 사용하는 AVAudioEngine 오프라인 출력 검사:
-  Pink / Band-limited / 음악 없는 Pink fallback, 32/44.1/48/192kHz,
-  각 1분 및 서로 다른 콜백 크기. C DSP 원본과 샘플 차이 0.
-- 12·24·36·48초의 반복 경계에서 에너지 저하 검사 통과.
-- PCM 소유권·해제, 일시정지·엔진 재시작 검사 통과.
-- AVAudioConverter를 통한 내장 음악·외부 FLAC 변환과 준비 취소 검사 통과.
+- AVAudioEngine offline output through the app's source node and mixer: Pink, Band-limited, and Pink fallback without music at 32/44.1/48/192 kHz; one minute per case and varying callback sizes. Zero sample difference from the C DSP reference.
+- Energy-drop checks passed at the 12/24/36/48-second loop boundaries.
+- PCM ownership/release and pause/engine restart checks passed.
+- Built-in music and external FLAC conversion through AVAudioConverter, plus preparation cancellation, passed.
 
-오프라인 검사는 실제 장치의 출력 지연·소리 끊김·아날로그 출력 품질을
-확인하지 않습니다. **노이즈의 실기기 연속성 검사는 아직 완료되지 않았습니다.**
-내장 음악의 수치 검사도 편곡의 완성도를 판정하지 않습니다.
+Offline tests do not verify physical output latency, dropouts, or analog quality.
+**Real-device noise continuity validation is not complete.** Numeric music checks
+do not establish the quality of the arrangements.
 
-## 남은 검증
+## Remaining validation
 
-- 잭·USB·Bluetooth 출력, 장치 변경·연결 해제, 실제 청취.
-- 재생·일시정지·재개·중지·준비 취소와 다양한 세션 길이.
-- Lite 팝업의 세 언어 배치·키보드 조작, 장치·시간 선택, 시작·일시정지·재개·중지·창 열기·종료.
-- 창을 닫은 상태에서 예약·분할 휴식의 자동 시작·취소, 시간대·DST·잠자기 복귀.
-- 신규 설치·설정 업그레이드, 세 언어·테마·최소 창·키보드·오류 표시.
-- 업데이트 설정 화면의 채널 선택·재실행 복원과 세 언어 배치. 배포 연동 후 실제 다운로드·설치·전환.
-- 1/8/40시간의 CPU·메모리·에너지, 분할 계획의 실제 자동 재개, 반복 취소 시 자원 회수.
-- Revision 5의 7곡 청취 평가와 편곡·강약·전개의 후속 조정.
-- DMG/PKG 설치·업그레이드, Developer ID 서명·공증. 현재 호스트의 Developer ID Application 인증서는 0개입니다.
+- Jack, USB, and Bluetooth output; device changes/disconnection; actual listening.
+- Play, pause, resume, stop, preparation cancellation, and varied session lengths.
+- Lite popup layout in all three languages, keyboard access, output/time selection, playback controls, open window, and quit.
+- Automatic starts/cancellation for schedules and split rests with the window closed; time zones, DST, and wake from sleep.
+- Fresh installation, settings upgrades, three languages, themes, minimum window size, keyboard access, and errors.
+- Update settings selection, persistence after relaunch, and three-language layout. Actual download/install/switching after distribution integration.
+- CPU, memory, and energy for 1/8/40-hour runs; real split-plan restart; resource cleanup after repeated cancellation.
+- Listening evaluation of all seven revision 5 tracks and further arrangement, dynamics, and development adjustments.
+- DMG/PKG installation/upgrades, Developer ID signing, and notarization. The host currently has no Developer ID Application certificate.
 
-GitHub의 일반 push/PR은 소스 검사만 실행합니다. 네이티브 앱 빌드는
-staging 수동 실행 또는 정식 태그에서 수행하며, 자동으로 정식판을 공개하지 않습니다.
+Ordinary GitHub pushes and pull requests run source checks only. Native app builds
+run on manual staging or stable tags, and never publish a stable release automatically.
