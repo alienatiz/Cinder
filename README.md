@@ -29,7 +29,7 @@ Built-in signals and music work without an account or internet connection.
 - **Quick Play** — Run a continuous 40-hour plan, split 40 hours into sessions, or set a custom duration. Adjust session and rest lengths. Play noise, music, a sweep, or a full 60-minute cycle, with start, pause, resume, and stop in one view.
 - **Quick Play Lite** — Choose an output and duration from the menu bar. Control playback and check status, remaining time, and schedules even with the main window closed.
 - **Music** — Select and reorder local music files, inspect file information and initial read results, or loop one of seven built-in tracks.
-- **Output** — Choose an output, view PCM information, adjust gain, and check Mac information and DAC reference specifications. Named gain presets remain available in Quick Play.
+- **Output** — See the selected device, connection, manufacturer, current sample rate and output channels. View device-supported rates in details; use live meters, precise gain controls and named gain presets. Mac information and published reference specifications are shown separately.
 - **Schedule** — Configure one-time or repeating schedules and import or export playback and schedule presets as JSON/YAML.
 - **Settings** — English, Korean, and Japanese; system, light, dark, and custom themes; bar or needle Peak/RMS meters; Dev/Stable update channel selection.
 - **Session history (Settings)** — Keep the latest 500 runs on this Mac, including time, rests, gain, and completion or interruption results. Search, copy summaries, or export records.

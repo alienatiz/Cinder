@@ -60,6 +60,23 @@ final class MenuQuickPlayTests: XCTestCase {
         XCTAssertNil(model.planRun)
     }
 
+    @MainActor func testOutputDetailsClearWithSelectionWithoutChangingGainOrPlayback() throws {
+        let (model, store) = try fixture(); defer { cleanup(model, store) }
+        model.selectOutput("test-output")
+        XCTAssertNotNil(model.outputDetails)
+        XCTAssertNil(model.outputDetails?.sampleRate)
+        XCTAssertNil(model.outputDetails?.outputChannels)
+        model.outputDetails = OutputDeviceDetails(manufacturer: "Previous device", sampleRate: 96000,
+                                                 outputChannels: 8, availableSampleRates: [96000...96000])
+        model.outputRate = 96000
+        model.selectOutput("")
+        XCTAssertNil(model.outputDetails)
+        XCTAssertEqual(model.outputRate, 0)
+        XCTAssertEqual(model.settings.gainDB, -42)
+        XCTAssertEqual(model.state, .idle)
+        XCTAssertFalse(model.canStart)
+    }
+
     @MainActor func testPlaybackScheduleAndPreparationLockLiteEdits() throws {
         let (model, store) = try fixture(); defer { cleanup(model, store) }
         model.selectOutput("test-output")

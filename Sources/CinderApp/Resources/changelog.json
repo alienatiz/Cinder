@@ -44,7 +44,7 @@
           },
           {
             "type": "New",
-            "text": "출력 탭에서 연결된 출력 장치와 앱의 PCM 출력 정보, Mac·DAC의 참고 사양을 확인합니다. 장치나 참고 프로파일을 선택해도 게인은 자동으로 바뀌지 않습니다."
+            "text": "출력 탭에서 선택한 장치·연결 방식·제조사·현재 샘플레이트·출력 채널 수를 확인하고 세부 정보에서 지원 샘플레이트와 식별자를 볼 수 있습니다. 디지털 미터·게인 조절·게인 프리셋과 Mac 정보를 함께 제공하며, Mac·DAC의 공개 참고 사양은 감지한 장치 정보와 구분합니다."
           },
           {
             "type": "New",
@@ -142,7 +142,7 @@
           },
           {
             "type": "New",
-            "text": "The Output tab shows connected outputs, app PCM output details and Mac/DAC reference specifications. Selecting a device or reference profile does not automatically change gain."
+            "text": "The Output tab groups the selected device, connection type, manufacturer, current sample rate and output channel count, with device-supported rates and identifiers in details. Digital meters, gain controls, saved gain presets and Mac information are available together. Published Mac/DAC reference specifications are kept separate from detected device information."
           },
           {
             "type": "New",
@@ -240,7 +240,7 @@
           },
           {
             "type": "New",
-            "text": "出力タブで接続中の出力デバイス、アプリのPCM出力情報、Mac・DACの参考仕様を確認できます。デバイスや参考プロファイルを選んでもゲインは自動で変わりません。"
+            "text": "出力タブに選択したデバイス・接続方式・メーカー・現在のサンプルレート・出力チャンネル数をまとめ、詳細で対応サンプルレートと識別子を確認できます。デジタルメーター・ゲイン調整・ゲインプリセット・Mac情報も利用できます。Mac・DACの公開参考仕様は検出したデバイス情報と区別します。"
           },
           {
             "type": "New",

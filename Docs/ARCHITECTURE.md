@@ -58,7 +58,12 @@ Live output, memory, and energy are checked separately on a Mac. See
 ## Main navigation
 
 The main areas are Quick Play, Music, Output, and Settings. Output reuses the
-shared device and gain controls and presents Mac information. Quick Play's Output
+shared device and gain controls, live meters, and gain presets. Device details
+are a read-only Core Audio snapshot refreshed on selection, device-list refresh,
+or opening Output; reads stay outside the render callback. Unsupported metadata
+remains unknown. Physical channel counts and supported rate ranges describe the
+driver, while Cinder still renders stereo at 32–192 kHz. Mac/DAC reference profiles
+are presented separately and are not detected hardware capabilities. Quick Play's Output
 details action and ⌘3 open the same tab. Session history lives inside Settings;
 its storage, capture, search, and export are unchanged. History pages show three
 records to fit the settings area without adding a main-view scroll container.

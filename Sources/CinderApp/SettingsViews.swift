@@ -155,57 +155,6 @@ struct ScheduleView: View {
     }
 }
 
-struct DeviceView: View {
-    @ObservedObject var model: AppModel
-    var body: some View {
-        VStack(spacing: 20) {
-            DevicePicker(model: model)
-            HStack(alignment: .top, spacing: 22) {
-                Panel(title: model.t("App gain"), compact: true) {
-                    Text(model.device?.name ?? model.t("Select output")).font(.headline)
-                    Text(String(format: "PCM · %.0f Hz · 2 ch", model.outputRate))
-                    Text(GainPolicy.display(model.settings.gainDB)).font(.largeTitle).monospacedDigit()
-                    Slider(value: Binding(get: { model.settings.gainDB }, set: { model.setGain($0) }), in: GainPolicy.minimum...GainPolicy.maximum, step: 1)
-                        .disabled(model.gainControlsDisabled)
-                    TextField(model.t("App gain"), value: Binding(get: { model.settings.gainDB }, set: { model.setGain($0) }), format: .number.precision(.fractionLength(0...2)))
-                        .frame(width: 100).disabled(model.gainControlsDisabled)
-                    HStack {
-                        Text(model.t("Signal amplitude") + String(format: " · %.2f%%", pow(10, model.settings.gainDB / 20) * 100)).monospacedDigit()
-                        InfoHint(text: model.t("Digital amplitude relative to unity. DAC hardware gain and filters are controlled on the device or in its manufacturer app."))
-                        Spacer()
-                        Button(model.t("Reset"), action: model.resetAppGain).disabled(model.gainControlsDisabled)
-                    }
-                    Text(model.resetGainDescription).foregroundStyle(.secondary)
-                    Picker(model.t("Reference specifications"), selection: $model.dacSelection) {
-                        Text(model.t("No reference profile")).tag("")
-                        ForEach(model.dacProfiles) { profile in Text(profile.name).tag(profile.name) }
-                    }.disabled(model.isLocked)
-                    if let profile = model.selectedDAC {
-                        Text(profile.specification)
-                        if let url = URL(string: profile.source) { Link(model.t("Specification source"), destination: url) }
-                    }
-                    Text(model.t("Profiles show reference specifications only. Selecting a device or profile does not change app gain."))
-                    Text(model.t("Manual app gain: −60 to 0 dB. New settings start at −30 dB; this is not an SPL calibration."))
-                    Button(model.t("Save connected device"), action: model.saveConnectedDevice).disabled(model.device == nil)
-                }
-                Panel(title: model.t("Mac information"), compact: true) {
-                    Text(model.macProfile?.name ?? model.modelIdentifier).font(.headline)
-                    Text(PlatformCompatibility.osDescription)
-                    Text(model.macProfile?.output ?? model.t("Unknown output specifications."))
-                    if let source = model.macProfile?.source, let url = URL(string: source) { Link(model.t("Specification source"), destination: url) }
-                    if model.audiophile {
-                        Text(model.modelIdentifier + " · " + PlatformCompatibility.osDescription)
-                        Text(model.device?.uid ?? "—").textSelection(.enabled)
-                        Text(String(format: "%.0f Hz", model.device.map { AudioDevices.sampleRate($0) } ?? 0))
-                    }
-                    Text(model.t("Published specifications are not measured sound pressure or current analog voltage."))
-                }
-            }
-            Text(model.message).foregroundStyle(.secondary).textSelection(.enabled)
-        }
-    }
-}
-
 struct ThemeEditorView: View {
     @ObservedObject var model: AppModel
     var body: some View {

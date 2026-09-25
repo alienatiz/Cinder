@@ -20,8 +20,8 @@ burn-in tools and macOS players. Implementation and validation are tracked separ
 
 | Area | Current state | Remaining before stable release |
 |---|---|---|
-| Build | Local and GitHub staging builds passed; 91 tests in each language mode; downloaded arm64 archive and ad-hoc signature verified | Verify the signed distribution build and installation |
-| Swift 6 | Separate-mode build and 91 tests passed; default remains Swift 5 | Review concurrency/resource lifetimes before deciding on the default mode |
+| Build | Local builds: 94 tests in each language mode. GitHub staging at `bc444ab`: 91 tests per mode, downloaded arm64 archive and ad-hoc signature verified | Verify the signed distribution build and installation |
+| Swift 6 | Separate-mode build and 94 tests passed; default remains Swift 5 | Review concurrency/resource lifetimes before deciding on the default mode |
 | Audio | Noise loop boundaries and offline source-node/mixer checks passed | Continuous real-device output, jack/USB/Bluetooth, device changes/disconnection |
 | Music | Revision 5 arrangements, dynamics, and instrumentation; loop/conversion checks passed | Listening evaluation and further arrangement refinement |
 | UI/settings | Four main areas, pagination, offline help, playback shortcuts, Quick Play Lite implemented | Menu popup use, three languages, themes, minimum window, VoiceOver, errors, upgrades |

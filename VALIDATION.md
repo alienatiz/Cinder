@@ -26,30 +26,32 @@ The app artifact is retained in Actions for 14 days and validation logs for 7 da
 
 | Check | Scope | Result |
 |---|---|---|
-| Default build/XCTest | Swift 5 mode, complete concurrency diagnostics | 91 tests passed; 0 compiler warnings |
-| Separate Swift 6 check | Language-mode migration compatibility | 91 tests passed; 0 compiler warnings |
-| App packaging | Default-mode XCTest, arm64 release build, bundle/signature checks | 91 tests, resources, and strict codesign passed |
+| Default build/XCTest | Swift 5 mode, complete concurrency diagnostics | 94 tests passed; 0 compiler warnings |
+| Separate Swift 6 check | Language-mode migration compatibility | 94 tests passed; 0 compiler warnings |
+| App packaging | Default-mode XCTest, arm64 release build, bundle/signature checks | 94 tests, resources, and strict codesign passed |
 | Source/resources | Version, translations, seven music hashes, paths, scripts | 9 groups passed |
 | Release policy | Development/stable separation, tag origin, source publication scope | 6 tests passed |
 | App basics | Development name/version/changelog, settings restoration, no automatic playback | Confirmed |
-| Playback plans | 40-hour total, final remainder, rests, stop, late cancellation, storage, presets | 7 XCTest cases passed (included in 91) |
+| Playback plans | 40-hour total, final remainder, rests, stop, late cancellation, storage, presets | 7 XCTest cases passed (included in 94) |
 | Quick Play UI | Korean/English, plan changes, session/rest entry, retained duration, invalid split feedback | Checked at 1280×800 with no Quick Play scrolling |
 | Window lifetime | Close/reopen during brief live playback, pause, ⌘Q | Elapsed time retained, pause and process termination confirmed |
 | Shared output selection UI | Clear and reselect the existing output in the main window | Start disabled/enabled; gain and split plan retained; no automatic playback |
-| Quick Play Lite logic | Windowless output storage, time edits, locks, start validation, split-rest cancellation | 5 new app-model tests passed (included in 91), using temporary settings and virtual devices |
-| Update channel logic | Existing settings, invalid files, choice save/restore, unchanged playback/schedules, save failure | 5 new tests passed (included in 91), using temporary settings |
+| Quick Play Lite logic | Windowless output storage, time edits, locks, start validation, split-rest cancellation | 5 new app-model tests passed (included in 94), using temporary settings and virtual devices |
+| Update channel logic | Existing settings, invalid files, choice save/restore, unchanged playback/schedules, save failure | 5 new tests passed (included in 94), using temporary settings |
 | Update settings UI | Channel choice, installed information, unreleased notice | Native build passed; actual clicks/layout remain unchecked |
-| Time/history | Session/signal/rest distinctions, whole-plan estimate, results, atomic storage, recovery, corrupt files | 12 new XCTest cases passed (included in 91) |
-| System notifications | Off by default, explicit permission, denial/delivery failure with retained results | 5 new XCTest cases passed (included in 91); actual system banners unverified |
+| Time/history | Session/signal/rest distinctions, whole-plan estimate, results, atomic storage, recovery, corrupt files | 12 new XCTest cases passed (included in 94) |
+| System notifications | Off by default, explicit permission, denial/delivery failure with retained results | 5 new XCTest cases passed (included in 94); actual system banners unverified |
 | Initial four-area UI | Quick Play, Music, Session history, Settings; music pagination; output/schedule/About/changelog | Layout and routes checked in Korean at 1280×800 before the Output navigation change |
-| Output navigation and history placement | Main Output tab, device/gain/Mac information, ⌘3, Session history inside Settings | Default app build and separate Swift 6 check each passed 91 tests with 0 compiler warnings. New app launched; Korean Output and Settings/history routes and an existing record were checked. Minimum-size and full three-language interaction checks remain open |
+| Initial Output navigation and history placement | Main Output tab, device/gain/Mac information, ⌘3, Session history inside Settings | Default app build and separate Swift 6 check each passed 91 tests with 0 compiler warnings. New app launched; Korean Output and Settings/history routes and an existing record were checked. Minimum-size and full three-language interaction checks remain open |
+| Output device details | Driver-reported manufacturer, connection, sample rate, channel count and supported rate ranges; shared meters, gain and presets | 94 tests passed in each language mode with 0 compiler warnings. Missing-device, malformed-rate and cleared-selection cases passed. Korean layout, MacBook Pro Speakers metadata (48 kHz, 2 channels), details/reference sheets and gain synchronization checked at 1280×800 without scrolling; no physical playback started |
 | Shortcuts and live records | External Headphones at −30 dB; ⌘Return start/pause/resume, ⌘. stop, former ⌘3 history shortcut | 17 seconds playback, 5 paused, 3 preparing; text export and record restoration after relaunch; no automatic playback. ⌘3 now opens Output |
 | Built-in music revision 5 | Seven regenerated tracks, peaks, finite samples, hashes, loop boundaries, conversion | Passed including 6 existing music XCTest cases; musical listening evaluation incomplete |
 | Menu bar UI | Lite output/time choices, player controls, status/schedules | Native build passed; current UI tool did not expose the system menu bar, so direct click/layout checks remain incomplete |
 
 Default-mode `Build-App.command` packaging and the separate Swift 6 check were
 rerun for timing, history, notifications, navigation, shortcuts, and revised music.
-The 91 tests comprise 74 core/audio/storage tests and 17 app-model tests. New
+The current 94 tests comprise 76 core/audio/storage/platform tests and 18 app-model
+tests, including three additional output metadata and selection cases. New
 automated tests do not start physical playback. The brief live run was a separate
 UI check, not listening evidence that noise dropouts are resolved. Three-language
 resource parity and the changelog were checked, but not every UI path in all

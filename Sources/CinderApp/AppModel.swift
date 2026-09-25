@@ -38,6 +38,7 @@ import CinderStorage
     @Published var music: [String] = []
     @Published var musicInspection: [MusicInspection] = []
     @Published var outputRate = 0.0
+    @Published var outputDetails: OutputDeviceDetails?
     @Published var selectedMusic = Set<String>()
     var playbackMusic: [String] { music.filter { selectedMusic.contains($0) } }
     var musicSeconds: Double { musicInspection.reduce(0) { selectedMusic.contains($1.path) ? $0 + $1.seconds : $0 } }
@@ -167,7 +168,10 @@ import CinderStorage
         catch { devices = []; self.error = error.localizedDescription }
         refreshOutputInfo()
     }
-    func refreshOutputInfo() { outputRate = device.map { AudioDevices.sampleRate($0) } ?? 0 }
+    func refreshOutputInfo() {
+        outputDetails = device.map { AudioDevices.details($0) }
+        outputRate = outputDetails?.sampleRate ?? 0
+    }
     var musicProblem: String? {
         do { try settings.validatePlayback() } catch { return t(error.localizedDescription) }
         guard settings.selectedProgram.usesMusic else { return nil }
@@ -308,7 +312,7 @@ import CinderStorage
     func mainWindowVisible(_ value: Bool) { mainWindowIsVisible = value; armTimer() }
     private func armTimer() {
         guard state.locksSettings, state != .preparing, state != .paused else { ticker.stop(); return }
-        let interval = state == .stopping || state == .pausing || (foreground && mainWindowIsVisible && tab == 0 && state == .playing) ? 0.1 : 1.0
+        let interval = state == .stopping || state == .pausing || (foreground && mainWindowIsVisible && [0, 2].contains(tab) && state == .playing) ? 0.1 : 1.0
         ticker.start(interval: interval) { [weak self] in self?.tick() }
     }
     private func tick() {
