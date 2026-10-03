@@ -12,8 +12,8 @@ burn-in history in one place.
 The current version is **1.0.0-dev**, targeting **macOS 14 Sonoma or later · Apple Silicon**.
 This development build is preparing for the first stable release. See the
 [release notes](RELEASE-NOTES.md) for features and changes.
-The deployment target is macOS 14. Runtime checks on macOS 14, 15, and 26 remain
-pending; current execution evidence is from macOS 27. See [validation](VALIDATION.md).
+Compatibility testing on macOS 14, 15, and 26 is still in progress. See the
+[current limitations and validation status](VALIDATION.md).
 
 ## Getting started
 
@@ -73,30 +73,24 @@ running or waiting for a schedule.
 The close button and ⌘W close only the window. **Quit Cinder or ⌘Q** stops playback
 and cancels remaining schedules and plans. Choose **Open Cinder** in the menu bar
 to return to the session. Relaunching does not automatically restore playback or
-schedules. Cinder uses a normal menu bar icon and respects macOS and your chosen
-icon order without forcing a position or priority. Hold ⌘ and drag the icon to
-reposition it. See [Apple's menu bar guide](https://support.apple.com/guide/mac-help/whats-in-the-menu-bar-mchlp1446/mac).
+schedules. Hold ⌘ and drag the Cinder menu bar icon to reposition it. See [Apple's menu bar guide](https://support.apple.com/guide/mac-help/whats-in-the-menu-bar-mchlp1446/mac).
 
-## Development status
+## History and current limitations
 
-History is saved about every 5 seconds during playback and at state changes.
-After an unexpected exit, records recover up to the last saved checkpoint without
-restarting playback or schedules. Recorded signal time describes the app's
-playback intervals, not a measurement at the earphones. Totals cover only the
-latest 500 retained records. Records and summaries exclude music paths and
-device UIDs.
+Session history stays on this Mac. After an unexpected exit, Cinder restores the
+last saved records without restarting playback or schedules; the most recent
+activity may be missing. Totals cover the latest 500 retained records. Records
+and summaries exclude music file paths and device identifiers.
 
-Automated Mac builds and audio signal checks have passed. Noise continuity on
-real devices, the arrangements and dynamics of all seven tracks, long sessions,
-and distribution checks remain in progress. See the [validation status](VALIDATION.md)
-and [1.0.0 roadmap](ROADMAP.md).
+This is a development build. Real-device playback, built-in music quality,
+long sessions, and installation are still being evaluated. See the
+[validation status](VALIDATION.md) for confirmed checks and remaining limitations.
 
 ## Build locally
 
-The development workflow requires a macOS 27.0 or later build host, Apple Silicon,
-Xcode 27.x, and the macOS 27 SDK. The generated app targets macOS 14.0 or later.
-The default uses the Swift 6.4 compiler in Swift 5 language mode with complete
-concurrency diagnostics. Yams 6.2.2 is pinned; initial setup needs internet access.
+Build the development version from the `dev` branch. Building requires an
+Apple Silicon Mac running macOS 27 or later with Xcode 27. This build requirement
+is separate from the app's macOS 14 minimum. Initial setup needs internet access.
 
 ```bash
 bash Setup-Mac.command
@@ -104,14 +98,9 @@ bash Check-Xcode.command
 bash Build-App.command
 ```
 
-The output is `dist/Cinder (Dev).app`. It uses a local ad-hoc signature and is not
-a Developer ID signed or notarized distribution build. See the [build guide](Docs/BUILDING.md)
-for packaging and the separate Swift 6 check.
-
-The public version is `1.0.0-dev`. To meet macOS bundle numbering requirements,
-the marketing version is `1.0.0` and the internal build is `5.0.0`. The app ID
-remains `local.chu.cinder`; existing preferences remain in
-`~/Library/Application Support/Swinder/`.
+Open the generated `dist/Cinder (Dev).app`. Development builds are locally signed
+and are not Developer ID signed or notarized. See the [build guide](Docs/BUILDING.md)
+for detailed requirements and packaging instructions.
 
 ## Navigation and notifications
 
@@ -130,35 +119,18 @@ While the app is active, `⌘Return` starts, pauses, or resumes; `⌘.` stops pl
 disabled during preparation or while waiting for a schedule. Cinder does not
 intercept other players' global media keys.
 
-## Development and stable releases
+## Updates
 
-Select and save Dev or Stable under **Settings → Updates**. The installed app's
-version and channel are shown separately. Channel selection does not replace the
-app or alter playback. No stable version has been released yet; update download
-and installation are not implemented. Swift language mode and update channel
-are separate settings.
+No stable version has been released yet. **Settings → Updates** lets you save a
+Dev or Stable channel preference and view the installed version. Selecting a
+channel does not replace the app or change playback. Automatic update downloads
+and installation are not available.
 
-| Stage | Policy |
-|---|---|
-| `dev` | Development source; commits and pull requests run source checks only |
-| Staging | Manually build and validate accumulated changes in Actions |
-| `main` | Reviewed source, starting with the first stable release |
-| Tags such as `v1.0.0` | Build for release and create a Release draft |
+## Contributing and credits
 
-There is no staging branch or always-on build server. Development app artifacts
-are retained in Actions for 14 days and identified by commit hash within a
-development version. LTS will be considered after the first stable release if
-maintenance needs justify it. See the [release guide](Docs/RELEASING.md).
+To contribute, follow the [pull request guide](DEVELOPMENT.md).
+See the [release notes](RELEASE-NOTES.md) for features and changes.
 
-## Documentation and credits
-
-English is the default for guides and contribution documentation. The README
-language links are independent of the app's language setting.
-
-[Submit a pull request](DEVELOPMENT.md) · [Build guide](Docs/BUILDING.md) ·
-[Architecture](Docs/ARCHITECTURE.md) · [Built-in music](Docs/Audio/PRESET-MUSIC.md) ·
-[Release notes](RELEASE-NOTES.md)
-
-Cinder is a collaboration between **Byeongcheol Kim and OpenAI**. Commits produced
-through ChatGPT/Codex record this attribution. See [AUTHORS.md](AUTHORS.md) and the
+Cinder is a collaboration between **Byeongcheol Kim and OpenAI**.
+See [AUTHORS.md](AUTHORS.md) and the
 [music and tool credits](Sources/CinderApp/Resources/preset-music-credits.txt).
