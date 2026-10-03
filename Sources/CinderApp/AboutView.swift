@@ -9,7 +9,7 @@ struct AboutView: View {
             Panel(title: model.t("About Cinder")) {
                 Text("Cinder · " + Identity.version).font(.title2)
                 Text(model.t("A timed audio signal player with planned rests and local session history."))
-                Text(model.t("Requires Apple Silicon and macOS 27 or later. Core playback works offline."))
+                Text(model.t("Requires Apple Silicon and macOS 14 or later. Core playback works offline."))
                 Text(model.t("Closing the window keeps Cinder in the menu bar. Quit Cinder stops playback and cancels pending schedules."))
                 Button(model.t("Changelog")) { changelog = true }
                 Link(model.t("Project and downloads"), destination: URL(string: "https://github.com/alienatiz/Cinder")!)

@@ -17,6 +17,13 @@ Prepared PCM ownership transfers to the C engine. The playback callback performs
 no music generation, file access, or dynamic allocation. The engine stops after
 the pause fade completes, and meters aggregate audio blocks between UI updates.
 
+The deployment target is macOS 14 on arm64. `AudioEngineCompatibility` isolates
+setup-time device selection and node connections: macOS 27 uses scoped AudioUnit
+access and throwing connections; earlier target systems use the existing
+AudioUnit property and graph connection APIs. Offline engine tests share this
+connection helper. Older-OS execution still requires separate runtime validation;
+the render callback and DSP are common to all target versions.
+
 Playback plans separate persistable `PlaybackPlan` from in-memory `PlaybackPlanRun`.
 Split sessions total 2,400 minutes; rests are measured from each actual completion.
 AppModel starts the engine for each session and uses the existing schedule timer

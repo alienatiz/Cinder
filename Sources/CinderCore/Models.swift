@@ -3,7 +3,7 @@ import Foundation
 public enum Identity {
     public static let version = "1.0.0-dev"
     public static let build = "5.0.0"
-    public static let minimumMacOS = "27.0"
+    public static let minimumMacOS = "14.0"
     public static let releaseChannel = "dev"
     public static let name = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Cinder (Dev)"
     public static let bundleID = Bundle.main.bundleIdentifier ?? "local.chu.cinder"

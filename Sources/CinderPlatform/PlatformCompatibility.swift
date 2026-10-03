@@ -3,7 +3,7 @@ import Foundation
 public enum PlatformCompatibility {
     public static var osDescription: String { ProcessInfo.processInfo.operatingSystemVersionString }
     public static var validationStatus: String { "macOS runtime verification pending" }
-    // Centralize future 27-only paths here; do not label an OS supported from its number alone.
+    // Gate APIs newer than the macOS 14 deployment target; runtime support needs OS-specific verification.
 }
 
 @MainActor public final class SleepPrevention {

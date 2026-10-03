@@ -9,9 +9,11 @@ music, or a frequency sweep and start a burn-in session that fits your needs.
 Set playback and rest times, follow progress from the menu bar, and keep your
 burn-in history in one place.
 
-The current version is **1.0.0-dev**, targeting **macOS 27 · Apple Silicon**.
+The current version is **1.0.0-dev**, targeting **macOS 14 Sonoma or later · Apple Silicon**.
 This development build is preparing for the first stable release. See the
 [release notes](RELEASE-NOTES.md) for features and changes.
+The deployment target is macOS 14. Runtime checks on macOS 14, 15, and 26 remain
+pending; current execution evidence is from macOS 27. See [validation](VALIDATION.md).
 
 ## Getting started
 
@@ -91,7 +93,8 @@ and [1.0.0 roadmap](ROADMAP.md).
 
 ## Build locally
 
-Requires macOS 27.0 or later, Apple Silicon, Xcode 27.x, and the macOS 27 SDK.
+The development workflow requires a macOS 27.0 or later build host, Apple Silicon,
+Xcode 27.x, and the macOS 27 SDK. The generated app targets macOS 14.0 or later.
 The default uses the Swift 6.4 compiler in Swift 5 language mode with complete
 concurrency diagnostics. Yams 6.2.2 is pinned; initial setup needs internet access.
 

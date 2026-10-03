@@ -318,7 +318,7 @@
   "Done": "완료",
   "About Cinder": "Cinder 정보",
   "A timed audio signal player with planned rests and local session history.": "시간·휴식 계획에 따라 오디오 신호를 재생하고 실행 결과를 이 Mac에 기록합니다.",
-  "Requires Apple Silicon and macOS 27 or later. Core playback works offline.": "Apple Silicon과 macOS 27 이상이 필요합니다. 핵심 재생 기능은 오프라인에서 작동합니다.",
+  "Requires Apple Silicon and macOS 14 or later. Core playback works offline.": "Apple Silicon과 macOS 14 이상이 필요합니다. 핵심 재생 기능은 오프라인에서 작동합니다.",
   "Closing the window keeps Cinder in the menu bar. Quit Cinder stops playback and cancels pending schedules.": "창을 닫으면 메뉴 막대에서 계속 실행됩니다. Cinder를 완전히 종료하면 재생을 멈추고 남은 예약을 취소합니다.",
   "Project and downloads": "프로젝트 및 다운로드",
   "Report an issue": "문제 제보",

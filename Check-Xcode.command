@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 source ./Build-Identity.sh
 source ./Check-Toolchain.sh
 mode="${1:-native}"
-case "$mode" in native|swift6) ;; *) echo "Usage: bash Check-Xcode.command [native|swift6] (macOS 27 / arm64)"; exit 1 ;; esac
+case "$mode" in native|swift6) ;; *) echo "Usage: bash Check-Xcode.command [native|swift6] (build host: macOS 27 / arm64; app target: macOS $MINIMUM_MACOS+)"; exit 1 ;; esac
 check_dir="$PWD/.build/compatibility-$mode"
 mkdir -p "$check_dir"
 printf 'Version: %s\nMode: %s\nStatus: running\n' "$PUBLIC_VERSION" "$mode" > "$check_dir/result.txt"

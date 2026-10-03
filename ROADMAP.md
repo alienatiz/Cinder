@@ -1,7 +1,7 @@
 # Cinder 1.0.0 roadmap
 
 The current version is **1.0.0-dev**. The goal is a first stable release verified
-on macOS 27 / Apple Silicon. No release date has been set.
+on macOS 14 or later / Apple Silicon. No release date has been set.
 
 ## Feature scope
 
@@ -21,6 +21,7 @@ burn-in tools and macOS players. Implementation and validation are tracked separ
 | Area | Current state | Remaining before stable release |
 |---|---|---|
 | Build | Local builds: 94 tests in each language mode. GitHub staging at `bc444ab`: 91 tests per mode, downloaded arm64 archive and ad-hoc signature verified | Verify the signed distribution build and installation |
+| OS compatibility | Deployment target macOS 14; Xcode 27 / Swift 6.4 build tools retained | Run on macOS 14, 15, and 26; prioritize oldest/latest OS physical playback, menu/window, settings and sleep/wake checks |
 | Swift 6 | Separate-mode build and 94 tests passed; default remains Swift 5 | Review concurrency/resource lifetimes before deciding on the default mode |
 | Audio | Noise loop boundaries and offline source-node/mixer checks passed | Continuous real-device output, jack/USB/Bluetooth, device changes/disconnection |
 | Music | Revision 5 arrangements, dynamics, and instrumentation; loop/conversion checks passed | Listening evaluation and further arrangement refinement |

@@ -1,10 +1,38 @@
 # 1.0.0-dev validation status
 
-Evidence recorded on **2026-09-25** from local and GitHub-hosted automated checks
-and local app inspection.
+Evidence includes the **2026-10-03** deployment compatibility build and
+**2026-09-25** local/GitHub automated checks and local app inspection.
 Stable distribution and full device validation remain in progress.
 
-## Environment and results
+## macOS 14 deployment build — 2026-10-03
+
+Execution host: macOS 27.0.1 (26A434), arm64. Build tools: Xcode 27.0 (27A266a),
+Swift 6.4, selected macOS SDK 27.0. The app deployment target is now macOS 14.0;
+the development host and compiler requirements remain unchanged.
+
+- Default-mode app build and separate Swift 6 check each passed 94 tests
+  (76 core/audio/storage/platform and 18 app-model), with zero compiler warnings.
+- The arm64 app's Mach-O minimum OS and Info.plist `LSMinimumSystemVersion` both
+  report 14.0. Resource checks and strict ad-hoc signature verification passed.
+- Source/resource validation, six release-policy tests, Bash syntax, and local
+  documentation links passed.
+- Offline audio continuity and ownership/pause tests use the same connection
+  compatibility helper as playback. On this host they exercise the macOS 27 path.
+  The macOS 14–26 setup path is compiled but has not been executed on those OSes.
+
+Logs: `.build/macos14-app.log` and `.build/macos14-swift6.log`.
+No physical playback or new UI inspection was performed for this change. No new
+GitHub app build was dispatched. Prior UI/device evidence below remains tied to
+its recorded environment and build; it does not establish earlier-OS support.
+
+| Target OS | Runtime evidence for this deployment change |
+|---|---|
+| macOS 14 Sonoma | Pending: launch, playback/output changes, menu/window, settings and sleep/wake |
+| macOS 15 Sequoia | Pending: launch and core playback; expand checks for OS-specific issues |
+| macOS 26 Tahoe | Pending: launch and core playback; expand checks for OS-specific issues |
+| macOS 27 Golden Gate | Automated tests on 27.0.1 passed; physical playback and full release gates remain open |
+
+## Earlier environment and results — 2026-09-25
 
 Execution environment: macOS 27.0 / arm64, Xcode 27.0, macOS SDK 27.0, Swift 6.4.
 
@@ -74,6 +102,7 @@ do not establish the quality of the arrangements.
 
 ## Remaining validation
 
+- Runtime checks on macOS 14, 15, and 26; actual audio output on the compatibility path.
 - Jack, USB, and Bluetooth output; device changes/disconnection; actual listening.
 - Play, pause, resume, stop, preparation cancellation, and varied session lengths.
 - Lite popup layout in all three languages, keyboard access, output/time selection, playback controls, open window, and quit.

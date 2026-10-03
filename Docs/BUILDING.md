@@ -1,8 +1,18 @@
 # Building and checking Cinder
 
 Run commands from the project root, or open `Package.swift` in Xcode.
-Building and testing require macOS 27.0 or later on Apple Silicon, Xcode 27.x,
+The development workflow requires a macOS 27.0 or later host on Apple Silicon, Xcode 27.x,
 the macOS 27 SDK, and a Swift 6.x compiler at version 6.4 or later.
+The app deployment target is **macOS 14.0 or later, arm64**. Build-host requirements
+are separate from the app's minimum OS. Keep a single app binary and codebase;
+guard APIs introduced after macOS 14 with an appropriate fallback when needed.
+Builds on macOS 27 do not establish runtime compatibility with earlier versions.
+
+For staging, prioritize physical playback, menu/window behavior, settings, and
+sleep/wake checks on macOS 14 and the latest target OS. Check launch and core
+playback on intermediate target versions (currently 15 and 26) before claiming
+support. Use each major version's latest available patch for validation. Keep
+the [runtime evidence](../VALIDATION.md) separate from deployment metadata.
 
 ## Compiler, language mode, and app channel
 

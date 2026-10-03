@@ -9,7 +9,7 @@ let concurrency: [SwiftSetting] = checkSwift6 ? [] : [.enableUpcomingFeature("St
 
 let package = Package(
     name: "Cinder",
-    platforms: [.macOS("27.0")],
+    platforms: [.macOS("14.0")],
     products: [.executable(name: "Cinder", targets: ["CinderApp"])],
     dependencies: [.package(url: "https://github.com/jpsim/Yams.git", exact: "6.2.2")],
     targets: [

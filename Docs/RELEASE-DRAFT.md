@@ -31,7 +31,7 @@ Review playback and rest times and how each session ended. Search records, copy
 a summary, or export it to a file. History stays on this Mac, and basic playback
 requires no account or internet connection.
 
-macOS 27 or later · Apple Silicon · English, Korean, and Japanese
+macOS 14 or later · Apple Silicon · English, Korean, and Japanese
 
 ---
 
@@ -42,6 +42,7 @@ version has been released yet. Attached arm64 builds that passed automated check
 use ad-hoc signing and are **not Developer ID signed or notarized distributions**.
 
 - Complete the device, scheduling, upgrade, and long-duration gates in ROADMAP.md.
+- Verify runtime behavior across the stated macOS support range; deployment metadata alone is not validation.
 - Verify real-device noise continuity and the listening quality of all seven tracks.
 - Replace attached artifacts with verified, Developer ID signed and notarized distributions.
 - Check the introduction against this version's actual features; add confirmed limitations and distribution instructions.

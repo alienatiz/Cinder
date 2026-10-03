@@ -68,12 +68,7 @@ final class RenderKernel: @unchecked Sendable {
         try settings.validatePlayback(); try AudioDevices.validate(device)
         let ticket = generation
         let candidate = AVAudioEngine()
-        try candidate.outputNode.withAudioUnit { unit in
-            guard let unit else { throw CinderError.audio("No output audio unit.") }
-            var deviceID = device.id
-            let status = AudioUnitSetProperty(unit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceID, UInt32(MemoryLayout.size(ofValue: deviceID)))
-            guard status == noErr else { throw CinderError.audio("Cannot select output (OSStatus \(status)).") }
-        }
+        try AudioEngineCompatibility.selectOutput(device.id, on: candidate.outputNode)
         let sampleRate = candidate.outputNode.outputFormat(forBus: 0).sampleRate
         guard sampleRate >= 32000, sampleRate <= 192000,
               let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 2) else {
@@ -101,7 +96,7 @@ final class RenderKernel: @unchecked Sendable {
         guard candidate.outputNode.outputFormat(forBus: 0).sampleRate == sampleRate else { throw CinderError.deviceChanged }
         let node = prepared.makeSourceNode(format: format)
         candidate.attach(node)
-        try candidate.connectNode(node, to: candidate.mainMixerNode, format: format)
+        try AudioEngineCompatibility.connect(node, to: candidate.mainMixerNode, in: candidate, format: format)
         candidate.prepare()
         try candidate.start()
         engine = candidate; source = node; kernel = prepared; rate = sampleRate

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Shared preflight for the macOS 27 / Apple Silicon 1.0 development line.
+# Xcode 27 development host checks; the app deployment target is independent.
 # Callers source Build-Identity.sh first. No global xcode-select changes.
 cinder_check_toolchain() {
     local system architecture host host_major xcode sdk swift_version swift_minor
@@ -13,7 +13,7 @@ cinder_check_toolchain() {
     fi
     host="$(sw_vers -productVersion)"; host_major="${host%%.*}"
     if [[ ! "$host_major" =~ ^[0-9]+$ ]] || [ "$host_major" -lt 27 ]; then
-        echo "Cinder's tests and app require macOS $MINIMUM_MACOS or later. Host: $host" >&2; return 1
+        echo "Cinder's development workflow requires a macOS 27 or later build host. Host: $host; app deployment target: $MINIMUM_MACOS" >&2; return 1
     fi
     if ! xcode="$(xcodebuild -version 2>&1)"; then
         echo "Select a full Xcode 27 installation, or set DEVELOPER_DIR for this invocation." >&2; return 1

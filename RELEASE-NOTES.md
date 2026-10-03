@@ -7,7 +7,9 @@ music, or a frequency sweep and start a burn-in session that fits your needs.
 Set playback and rest times, follow progress from the menu bar, and keep your
 burn-in history in one place.
 
-The current version is 1.0.0-dev, targeting macOS 27 and Apple Silicon.
+The current version is 1.0.0-dev, targeting macOS 14 or later on Apple Silicon.
+Development builds continue to use Xcode 27 and Swift 6.4. Runtime validation on
+macOS 14, 15, and 26 remains pending; see [validation status](VALIDATION.md).
 These are the features and changes in the development build preparing for the
 first stable release.
 

@@ -318,7 +318,7 @@
   "Done": "Done",
   "About Cinder": "About Cinder",
   "A timed audio signal player with planned rests and local session history.": "A timed audio signal player with planned rests and local session history.",
-  "Requires Apple Silicon and macOS 27 or later. Core playback works offline.": "Requires Apple Silicon and macOS 27 or later. Core playback works offline.",
+  "Requires Apple Silicon and macOS 14 or later. Core playback works offline.": "Requires Apple Silicon and macOS 14 or later. Core playback works offline.",
   "Closing the window keeps Cinder in the menu bar. Quit Cinder stops playback and cancels pending schedules.": "Closing the window keeps Cinder in the menu bar. Quit Cinder stops playback and cancels pending schedules.",
   "Project and downloads": "Project and downloads",
   "Report an issue": "Report an issue",
