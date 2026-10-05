@@ -4,13 +4,13 @@
 
 **Audio burn-in, made simple.**
 
-Cinder is an audio burn-in app for earphones and headphones. Choose pink noise,
-music, or a frequency sweep and start a burn-in session that fits your needs.
-Set playback and rest times, follow progress from the menu bar, and keep your
-burn-in history in one place.
+Cinder is an audio burn-in app for earphones and headphones on Mac. Play pink
+noise, frequency sweeps, your own music, or one of seven built-in tracks. Set
+playback and rest times, control sessions from the menu bar, and review past
+sessions.
 
 The current version is **1.0.0-dev**, targeting **macOS 14 Sonoma or later · Apple Silicon**.
-This development build is preparing for the first stable release. See the
+This is a development build for the first stable release. See the
 [release notes](RELEASE-NOTES.md) for features and changes.
 Compatibility testing on macOS 14, 15, and 26 is still in progress. See the
 [current limitations and validation status](VALIDATION.md).
@@ -28,13 +28,13 @@ Built-in signals and music work without an account or internet connection.
 
 ## Features
 
-- **Quick Play** — Run a continuous 40-hour plan, split 40 hours into sessions, or set a custom duration. Adjust session and rest lengths. Play noise, music, a sweep, or a full 60-minute cycle, with start, pause, resume, and stop in one view.
-- **Quick Play Lite** — Choose an output and duration from the menu bar. Control playback and check status, remaining time, and schedules even with the main window closed.
-- **Music** — Select and reorder local music files, inspect file information and initial read results, or loop one of seven built-in tracks.
-- **Output** — See the selected device, connection, manufacturer, current sample rate and output channels. View device-supported rates in details; use live meters, precise gain controls and named gain presets. Mac information and published reference specifications are shown separately.
-- **Schedule** — Configure one-time or repeating schedules and import or export playback and schedule presets as JSON/YAML.
-- **Settings** — English, Korean, and Japanese; system, light, dark, and custom themes; bar or needle Peak/RMS meters; Dev/Stable update channel selection.
-- **Session history (Settings)** — Keep the latest 500 runs on this Mac, including time, rests, gain, and completion or interruption results. Search, copy summaries, or export records.
+- **Quick Play:** Choose noise, music, a frequency sweep, or the 60-minute full cycle. Start, pause, resume, and stop in one view.
+- **Quick Play Lite:** Select an output and duration, control playback, and check status, remaining time, and scheduled starts from the menu bar.
+- **Music:** Select and reorder local music files, check file information and initial read results, or loop one of seven built-in tracks.
+- **Output:** Check the selected device's connection type, manufacturer, current sample rate, channel count, and supported rates. Adjust gain, save gain presets, and monitor Peak/RMS levels. Mac information and published reference specifications are listed separately.
+- **Schedule:** Set one-time or repeating schedules. Import and export playback and schedule presets as JSON/YAML.
+- **Settings:** Choose English, Korean, or Japanese; system, light, dark, or custom themes; bar or needle meters; and a Dev/Stable update channel preference.
+- **Session history (Settings):** Review the latest 500 runs, including time, rests, gain, and completion or interruption results. Search records, copy summaries, or export them.
 
 App gain starts at −30 dB and can be adjusted manually from −60 to 0 dB.
 Choosing a device or reference profile does not change gain automatically.
@@ -63,12 +63,11 @@ rests between sessions separately. The finish estimate covers the entire split
 plan and moves later during preparation or pauses. With a full cycle, every
 session, including the last, must be at least 60 minutes.
 
-**Quick Play Lite** offers 1, 2, 4, 8, or 40 hours and custom time entry. The 1-, 2-,
-4-, and 8-hour options and custom durations are single sessions; continuous 40-hour
-and existing split plans are also available. Opening the popup does not change
-your plan. Adjust session lengths, rests, signal, music, and gain in the main
-window; Lite shares those settings. Device and time controls are locked while
-running or waiting for a schedule.
+Quick Play Lite offers single sessions of 1, 2, 4, or 8 hours, a custom duration,
+or the continuous 40-hour plan. You can also select your existing split 40-hour
+plan. Adjust session lengths, rests, signal, music, and gain in the main window;
+Lite uses the same settings. Opening the popup does not change your plan. Device
+and time controls are locked during playback or while waiting for a schedule.
 
 The close button and ⌘W close only the window. **Quit Cinder or ⌘Q** stops playback
 and cancels remaining schedules and plans. Choose **Open Cinder** in the menu bar
@@ -104,15 +103,16 @@ for detailed requirements and packaging instructions.
 
 ## Navigation and notifications
 
-Completion and error notifications are optional in Settings. Enabling them first
-requests macOS notification permission. Silent notifications cover completion,
-device changes, failures, and missed schedules, not every pause or rest.
-History is retained even if permission is denied.
+Completion and error notifications are optional in Settings. Cinder requests macOS
+notification permission the first time you enable them. Notifications are silent
+and cover completion, device changes, failures, and missed schedules. Pauses and
+rests do not trigger notifications. History is retained even if permission is denied.
 
 The main areas are Quick Play, Music, Output, and Settings. Output contains device
 selection, gain, and Mac information; Quick Play’s Output details button opens that
 tab. Scheduling stays in Quick Play. Open Session history from Settings, or the
-changelog and help from About Cinder in Settings. Long music lists and changelogs use search or pagination.
+changelog and help from About Cinder in Settings. Use search and page controls
+to browse long music lists and changelogs.
 
 While the app is active, `⌘Return` starts, pauses, or resumes; `⌘.` stops playback.
 `⌘1`–`⌘4` switch main areas, and `⌘,` opens Settings. The start shortcut is also
@@ -129,7 +129,6 @@ and installation are not available.
 ## Contributing and credits
 
 To contribute, follow the [pull request guide](DEVELOPMENT.md).
-See the [release notes](RELEASE-NOTES.md) for features and changes.
 
 Cinder is a collaboration between **Byeongcheol Kim and OpenAI**.
 See [AUTHORS.md](AUTHORS.md) and the
