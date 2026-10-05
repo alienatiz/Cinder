@@ -95,6 +95,10 @@ Actions → Build → Run workflow to start staging validation. Commit count doe
 trigger it. Stable version tags also trigger app builds. There is no always-on
 server or scheduled build.
 
+Source checks and release draft jobs use `ubuntu-24.04` explicitly so a change to
+`ubuntu-latest` does not switch their OS version. GitHub still updates packages
+within that image. The app itself is built on the `xcode-27` macOS runner.
+
 1. Check metadata, translations, music hashes, Bash syntax, and branch/tag policy.
 2. Prepare dependencies on GitHub's `xcode-27` arm64 runner.
 3. Run the separate Swift 6 check, default-mode XCTest, and release-configuration app build.
