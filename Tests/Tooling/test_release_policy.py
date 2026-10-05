@@ -10,8 +10,8 @@ SHA = 'a' * 40
 
 
 class ReleasePolicyTests(unittest.TestCase):
-    def plan(self, version='1.0.0-dev', ref='refs/heads/dev', event='push', base='', on_main=False):
-        return policy.build_plan(version, ref, event, base, SHA, on_main)
+    def plan(self, version='1.0.0-dev', ref='refs/heads/dev', event='push', base='', on_main=False, **options):
+        return policy.build_plan(version, ref, event, base, SHA, on_main, **options)
 
     def test_development_builds_are_not_releases(self):
         result = self.plan()
@@ -28,6 +28,41 @@ class ReleasePolicyTests(unittest.TestCase):
         self.assertEqual(self.plan(version='1.0.0', ref='refs/heads/main')['channel'], 'candidate')
         with self.assertRaises(ValueError):
             self.plan(ref='refs/heads/main')
+
+    def test_test_release_is_opt_in_and_identifies_commit_and_run(self):
+        self.assertNotIn('test_tag', self.plan(event='workflow_dispatch'))
+        options = dict(event='workflow_dispatch', test_release=True, run_id='123', run_attempt='1')
+        result = self.plan(**options)
+        self.assertEqual(result['channel'], 'staging')
+        self.assertEqual(result['version'], '1.0.0-dev')
+        self.assertEqual(result['test_tag'], 'test-1.0.0-dev-aaaaaaa-123.1')
+        self.assertNotEqual(result['test_tag'], self.plan(**{**options, 'run_attempt': '2'})['test_tag'])
+        self.assertNotEqual(result['test_tag'], self.plan(**{**options, 'run_id': '124'})['test_tag'])
+        other_commit = policy.build_plan('1.0.0-dev', 'refs/heads/dev', 'workflow_dispatch', '', 'b' * 40,
+                                         test_release=True, run_id='123', run_attempt='1')
+        self.assertNotEqual(result['test_tag'], other_commit['test_tag'])
+
+    def test_test_release_rejects_automatic_runs_and_other_refs(self):
+        for options in [
+            dict(event='push'),
+            dict(event='local'),
+            dict(event='pull_request', ref='refs/pull/12/merge', base='dev'),
+            dict(event='workflow_dispatch', ref='refs/heads/main', version='1.0.0'),
+            dict(event='workflow_dispatch', ref='refs/tags/v1.0.0', version='1.0.0', on_main=True),
+            dict(event='workflow_dispatch', ref='refs/heads/test-build'),
+        ]:
+            with self.subTest(options=options):
+                with self.assertRaises(ValueError):
+                    self.plan(**options, test_release=True, run_id='123', run_attempt='1')
+
+    def test_test_release_requires_valid_run_identity(self):
+        for field in ['run_id', 'run_attempt']:
+            for value in ['', '0', '-1', '1.2', '1\ntest_tag=v1.0.0']:
+                with self.subTest(field=field, value=value):
+                    options = dict(run_id='123', run_attempt='1')
+                    options[field] = value
+                    with self.assertRaises(ValueError):
+                        self.plan(event='workflow_dispatch', test_release=True, **options)
 
     def test_release_requires_matching_stable_tag_and_main_ancestry(self):
         result = self.plan(version='1.0.0', ref='refs/tags/v1.0.0', on_main=True)

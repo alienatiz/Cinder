@@ -14,7 +14,7 @@ trap 'rm -rf "$stage"' EXIT
 mkdir "$stage/content"
 ditto "dist/$APP_NAME.app" "$stage/content/$APP_NAME.app"
 ln -s /Applications "$stage/content/Applications"
-cp README.md "$stage/content/README.md"
+cp Docs/INSTALLING.md "$stage/content/README.md"
 name="${PRODUCT_NAME}-v${version}-${arch}.dmg"
 hdiutil create -volname "${PRODUCT_NAME} v${version}" -srcfolder "$stage/content" -format UDZO "$stage/$name"
 hdiutil verify "$stage/$name"

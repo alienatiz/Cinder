@@ -14,7 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 VERSION_PATTERN = r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(dev(?:\.(0|[1-9]\d*))?|(?:alpha|beta|rc)\.(0|[1-9]\d*)))?'
 
 
-def build_plan(version, ref, event, base_ref, sha, on_main=False):
+def build_plan(version, ref, event, base_ref, sha, on_main=False, *,
+               test_release=False, run_id='', run_attempt=''):
     match = re.fullmatch(VERSION_PATTERN, version)
     if not match or not re.fullmatch(r'[0-9a-f]{40}', sha):
         raise ValueError('Invalid version or commit identity')
@@ -47,7 +48,14 @@ def build_plan(version, ref, event, base_ref, sha, on_main=False):
                    'review' if event == 'pull_request' else
                    'dev' if branch == 'dev' else 'candidate')
         artifact = f'Cinder-{channel}-{version}-{sha[:7]}-arm64'
-    return {'version': version, 'channel': channel, 'artifact': artifact}
+    result = {'version': version, 'channel': channel, 'artifact': artifact}
+    if test_release:
+        if event != 'workflow_dispatch' or ref != 'refs/heads/dev':
+            raise ValueError('Test release drafts require a manual dev build')
+        if not all(re.fullmatch(r'[1-9][0-9]*', value) for value in [run_id, run_attempt]):
+            raise ValueError('Test releases require a valid workflow run and attempt')
+        result['test_tag'] = f'test-{version}-{sha[:7]}-{run_id}.{run_attempt}'
+    return result
 
 
 def check_tracked_files(paths):
@@ -78,7 +86,10 @@ def main():
             cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         ).returncode == 0
     result = build_plan(version, ref, os.environ.get('GITHUB_EVENT_NAME', 'local'),
-                        os.environ.get('GITHUB_BASE_REF', ''), sha, on_main)
+                        os.environ.get('GITHUB_BASE_REF', ''), sha, on_main,
+                        test_release=os.environ.get('CINDER_TEST_RELEASE') == 'true',
+                        run_id=os.environ.get('GITHUB_RUN_ID', ''),
+                        run_attempt=os.environ.get('GITHUB_RUN_ATTEMPT', ''))
     output = ''.join(f'{key}={value}\n' for key, value in result.items())
     if os.environ.get('GITHUB_OUTPUT'):
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as stream:

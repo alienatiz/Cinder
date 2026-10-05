@@ -6,7 +6,8 @@ version tags. There is no stable 1.0.0 or LTS release yet.
 | Stage | Source | Automated result |
 |---|---|---|
 | Development | `dev`, currently `1.0.0-dev` | Lightweight source checks; no app build |
-| Staging validation | Manual run at a chosen commit on `dev` or `main` | App ZIP and SHA-256, retained in Actions for 14 days |
+| Staging validation | Manual run on `dev` or `main` | DMG, app ZIP, SHA-256 files, and commit identification; retained in Actions for 14 days |
+| Test distribution | Manual `dev` run with **Prepare a test release draft** selected | The same files in a GitHub Release **draft**, marked as a pre-release |
 | Stable preparation | `main`, for example `1.0.0` | Lightweight source checks; no app build |
 | Release point | A tag such as `v1.0.0` on a commit included in `main` | A GitHub Release **draft** after a successful build |
 | Change review | Pull request targeting `dev` or `main` | Lightweight source checks only |
@@ -16,6 +17,57 @@ manual validation step at a selected commit, not a branch. Do not add `latest`,
 `stable`, or `beta` branches. Publish only approved versions in GitHub Releases.
 Current development source is published on `dev`; create `main` when promoting
 the first stable release.
+
+## Build the current development version
+
+Use `dev` to test the integrated application. A separate branch is not needed
+just to produce a build. For an independent feature or experiment, create a
+working branch from `dev`, test locally, and submit a pull request to `dev` before
+using this shared build workflow. Manual CI app builds accept `dev` and `main`
+only; pull requests still receive source checks.
+
+1. Commit and push the changes to `dev` after their checks pass.
+2. Open **Actions → Build → Run workflow** and select **dev**.
+3. Leave **Prepare a test release draft (dev only)** unchecked for an Actions-only
+   build. Check it when preparing files for a test distribution.
+4. Start the workflow. Confirm its commit matches the intended source, and wait
+   for source checks and the macOS job to pass.
+5. Download `Cinder-staging-1.0.0-dev-<commit>-arm64` from the run's **Artifacts**.
+   Unzip the artifact container to find the DMG, app ZIP, checksums, and build details.
+
+The branch choice selects its current commit when the run is dispatched; later
+commits do not change that run's source. Check the displayed commit before using
+its result. For repeat testing of an earlier run, choose **Re-run all jobs** on
+that run. It uses the original commit. Workflow changes made later will not be
+part of that rerun.
+
+If GitHub CLI is installed and authenticated with repository write access:
+
+```bash
+# Build files only.
+gh workflow run build.yml --repo alienatiz/Cinder --ref dev
+# Also prepare a test release draft.
+gh workflow run build.yml --repo alienatiz/Cinder --ref dev -f test_release=true
+```
+
+With the draft option selected, the final job prepares a release named
+`Cinder 1.0.0-dev · test <run>.<attempt>`. Its tag is
+`test-1.0.0-dev-<commit>-<run>.<attempt>` and targets the full commit used for the
+build. Each new run or full rerun gets a distinct tag; existing tags and releases
+are not overwritten. The `test-` prefix does not trigger the stable `v*` workflow.
+The app remains `1.0.0-dev` on the `dev` channel.
+
+A draft is not publicly downloadable. Review the assets and notes under
+**Releases**, keep **Set as a pre-release** enabled, then publish the draft when
+ready to share it. It is not designated as the latest stable release. Public
+test downloads can then use the Release assets without relying on expiring
+Actions artifacts. No draft or release is created when the option is unchecked.
+
+Test builds currently use ad-hoc signing and are not notarized. See
+[Installing Cinder](INSTALLING.md) for the first-launch steps and current testing
+limits. Publishing a test pre-release does not satisfy the stable release gates.
+For a local DMG without GitHub Actions, run `bash Build-DMG.command`; see the
+[build guide](BUILDING.md).
 
 ## Channel selection in the app
 
@@ -46,10 +98,11 @@ server or scheduled build.
 1. Check metadata, translations, music hashes, Bash syntax, and branch/tag policy.
 2. Prepare dependencies on GitHub's `xcode-27` arm64 runner.
 3. Run the separate Swift 6 check, default-mode XCTest, and release-configuration app build.
-4. Store an app ZIP preserving executable permissions, checksums, and build identification in Actions.
-5. Create a Release draft only for a stable version tag. Never publish it automatically.
+4. Create and verify a DMG; store it alongside an app ZIP preserving executable permissions, checksums, and build identification in Actions.
+5. Create a Release draft for a stable version tag, or a pre-release draft when explicitly requested on `dev`. Never publish either automatically.
 
-New branch checks cancel older checks of the same event kind and branch. Logs are
+New push/PR checks cancel older checks of the same event kind and branch. A manual
+or tag build already in progress is allowed to finish. Logs are
 retained for 7 days and app artifacts for 14 days; neither build products nor local
 working records belong in the repository. Staging filenames include the version
 and short commit hash to distinguish builds. The development app displays

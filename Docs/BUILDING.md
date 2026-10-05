@@ -53,11 +53,22 @@ bash Build-DMG.command
 bash Build-PKG.command
 ```
 
+For a local test DMG, `bash Setup-Mac.command` followed by
+`bash Build-DMG.command` is sufficient: the latter already runs default-mode
+tests and builds the app. The current output is
+`dist/Cinder-v1.0.0-dev-arm64.dmg` with a `.dmg.sha256` checksum file. The DMG
+contains the app, an Applications shortcut, and a standalone installation guide.
+Building it does not change the app version, create a branch, or publish a release.
+The [release guide](RELEASING.md#build-the-current-development-version) covers
+manual GitHub Actions builds and optional test release drafts.
+
 Logs are stored in `.build/mac-setup/`, `.build/compatibility-native/`,
 `.build/compatibility-swift6/`, and `.build/golden-gate-app/`.
 Review compiler warnings as well as exit status. Current packages use local
-ad-hoc signing. Public distribution requires Developer ID signing, notarization,
-and installation checks.
+ad-hoc signing. Test packages can be shared without a Developer ID, but macOS may
+require an explicit first-launch exception; see [installation instructions](INSTALLING.md).
+Developer ID signing, notarization, and installation checks remain requirements
+for Cinder's stable release.
 
 ## Project layout
 
