@@ -100,7 +100,7 @@ import CinderCore
                     .frame(width: 42, height: 24)
             }
             .buttonStyle(.borderedProminent)
-            .disabled(editingDuration || (model.state != .paused && !model.canStart))
+            .disabled(editingDuration || !model.canStartOrResume)
             .help(model.t(model.state == .paused ? "Resume" : "Start"))
             Button(action: model.togglePause) {
                 Label(model.t("Pause"), systemImage: "pause.fill").frame(width: 42, height: 24)
@@ -110,7 +110,7 @@ import CinderCore
             Button(action: model.stop) {
                 Label(model.t("Stop"), systemImage: "stop.fill").frame(width: 42, height: 24)
             }
-            .disabled((!model.state.locksSettings && model.armed == nil) || model.state == .stopping)
+            .disabled(!model.canStop)
             .help(model.t(model.armed != nil ? "Cancel Schedule" : "Stop"))
             Spacer()
         }

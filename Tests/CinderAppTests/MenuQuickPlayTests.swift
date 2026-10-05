@@ -120,6 +120,65 @@ final class MenuQuickPlayTests: XCTestCase {
         XCTAssertNotNil(model.error)
     }
 
+    @MainActor func testSharedControlsFollowPlaybackTransitions() throws {
+        let (model, store) = try fixture(); defer { cleanup(model, store) }
+        model.selectOutput("test-output")
+        let cases: [(PlaybackState, String, Bool, Bool, Bool, Bool)] = [
+            // State, primary title, primary enabled, play enabled, pause/resume enabled, stop enabled.
+            (.idle, "Start", true, true, false, false),
+            (.preparing, "Start", false, false, false, true),
+            (.playing, "Pause", true, false, true, true),
+            (.pausing, "Start", false, false, false, true),
+            (.paused, "Resume", true, true, true, true),
+            (.stopping, "Start", false, false, false, false),
+            (.completed, "Start", true, true, false, false),
+            (.failed, "Start", true, true, false, false)
+        ]
+        for (state, title, primary, play, pause, stop) in cases {
+            model.state = state
+            XCTAssertEqual(model.primaryPlaybackTitle, title, state.rawValue)
+            XCTAssertEqual(model.canPerformPrimaryPlaybackAction, primary, state.rawValue)
+            XCTAssertEqual(model.canStartOrResume, play, state.rawValue)
+            XCTAssertEqual(model.canTogglePause, pause, state.rawValue)
+            XCTAssertEqual(model.canStop, stop, state.rawValue)
+        }
+    }
+
+    @MainActor func testPrimaryActionDoesNotStartWhileUnavailable() throws {
+        let (model, store) = try fixture(); defer { cleanup(model, store) }
+        model.selectOutput("test-output")
+        let original = model.settings
+        let target = Date().addingTimeInterval(600)
+        model.armed = target
+        XCTAssertFalse(model.canPerformPrimaryPlaybackAction)
+        XCTAssertFalse(model.canStartOrResume)
+        XCTAssertTrue(model.canStop)
+        model.performPrimaryPlaybackAction()
+        XCTAssertEqual(model.armed, target)
+        XCTAssertEqual(model.state, .idle)
+        XCTAssertNil(model.planRun)
+        model.armed = nil
+
+        model.libraryBusy = true
+        XCTAssertFalse(model.canPerformPrimaryPlaybackAction)
+        model.performPrimaryPlaybackAction()
+        XCTAssertEqual(model.state, .idle)
+        model.libraryBusy = false
+
+        model.selectOutput("")
+        XCTAssertFalse(model.canPerformPrimaryPlaybackAction)
+        model.performPrimaryPlaybackAction()
+        XCTAssertEqual(model.state, .idle)
+        XCTAssertEqual(model.settings, original)
+        XCTAssertNil(model.planRun)
+
+        for state in [PlaybackState.preparing, .pausing, .stopping] {
+            model.state = state
+            model.performPrimaryPlaybackAction()
+            XCTAssertEqual(model.state, state)
+        }
+    }
+
     @MainActor func testStopCancelsRestingSplitPlanWithoutLaunchingAnotherSession() throws {
         let (model, store) = try fixture(); defer { cleanup(model, store) }
         model.selectOutput("test-output")
@@ -127,6 +186,9 @@ final class MenuQuickPlayTests: XCTestCase {
         run.finishSession(at: Date())
         model.planRun = run; model.armed = run.nextStart; model.state = .completed
         XCTAssertFalse(model.canStart)
+        XCTAssertFalse(model.canPerformPrimaryPlaybackAction)
+        XCTAssertFalse(model.canStartOrResume)
+        XCTAssertTrue(model.canStop)
         model.start()
         XCTAssertEqual(model.planRun, run)
         XCTAssertEqual(model.armed, run.nextStart)
@@ -135,5 +197,6 @@ final class MenuQuickPlayTests: XCTestCase {
         XCTAssertNil(model.armed)
         XCTAssertFalse(model.isLocked)
         XCTAssertTrue(model.canStart)
+        XCTAssertFalse(model.canStop)
     }
 }

@@ -162,7 +162,6 @@ import CinderStorage
         selectedUID = uid
         refreshOutputInfo(); saveUI()
     }
-    var canStart: Bool { !isLocked && device != nil && musicProblem == nil }
     func refreshDevices() {
         do { devices = try AudioDevices.outputs() }
         catch { devices = []; self.error = error.localizedDescription }

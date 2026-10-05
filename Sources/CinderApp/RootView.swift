@@ -33,8 +33,8 @@ struct RootView: View {
             }
             HStack(spacing: 14) {
                 Button(model.t("Start"), action: model.start).buttonStyle(CinderButtonStyle(prominent: true)).disabled(!model.canStart)
-                Button(model.t(model.state == .paused ? "Resume" : "Pause"), action: model.togglePause).disabled(![.playing, .paused].contains(model.state))
-                Button(model.t("Stop"), action: model.stop).disabled((!model.state.locksSettings && model.armed == nil) || model.state == .stopping)
+                Button(model.t(model.state == .paused ? "Resume" : "Pause"), action: model.togglePause).disabled(!model.canTogglePause)
+                Button(model.t("Stop"), action: model.stop).disabled(!model.canStop)
             }.controlSize(.large).fixedSize(horizontal: false, vertical: true).layoutPriority(1)
             Text(model.planRun?.nextStart != nil ? model.t("Resting between sessions") : model.armed != nil ? model.t("Waiting for scheduled start — no sound") : model.t(model.state.rawValue)).foregroundStyle(.secondary)
         }
