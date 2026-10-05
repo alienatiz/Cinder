@@ -13,8 +13,6 @@ extension SettingsStore {
     }
 
     public func saveUpdatePreferences(_ preferences: UpdatePreferences) throws {
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try JSONEncoder().encode(preferences).write(
-            to: directory.appendingPathComponent("swift-updates-v1.json"), options: .atomic)
+        try writeJSON(preferences, filename: "swift-updates-v1.json")
     }
 }

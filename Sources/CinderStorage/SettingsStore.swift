@@ -18,9 +18,7 @@ public struct SettingsStore {
     }
     public func save(_ settings: SessionSettings) throws {
         try settings.validate()
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        let data = try JSONEncoder().encode(settings)
-        try data.write(to: directory.appendingPathComponent("swift-session-v1.json"), options: .atomic)
+        try writeJSON(settings, filename: "swift-session-v1.json")
     }
     /// Save only the gain preference; do not commit unrelated live playback edits.
     public func saveGainDefault(_ gain: Double) throws {
@@ -53,7 +51,10 @@ public struct SettingsStore {
     }
     public func saveUI(_ value: UIPreferences) throws {
         try value.validate()
+        try writeJSON(value, filename: "swift-ui-v1.json")
+    }
+    func writeJSON<Value: Encodable>(_ value: Value, filename: String) throws {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try JSONEncoder().encode(value).write(to: directory.appendingPathComponent("swift-ui-v1.json"), options: .atomic)
+        try JSONEncoder().encode(value).write(to: directory.appendingPathComponent(filename), options: .atomic)
     }
 }

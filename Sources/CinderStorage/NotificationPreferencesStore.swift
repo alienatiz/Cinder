@@ -11,7 +11,6 @@ extension SettingsStore {
         return try JSONDecoder().decode(NotificationPreferences.self, from: Data(contentsOf: file))
     }
     public func saveNotificationPreferences(_ preferences: NotificationPreferences) throws {
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try JSONEncoder().encode(preferences).write(to: directory.appendingPathComponent("swift-notifications-v1.json"), options: .atomic)
+        try writeJSON(preferences, filename: "swift-notifications-v1.json")
     }
 }
