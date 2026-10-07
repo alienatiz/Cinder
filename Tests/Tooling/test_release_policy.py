@@ -1,6 +1,7 @@
 from pathlib import Path
 import importlib.util
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 spec = importlib.util.spec_from_file_location('release_policy', ROOT / 'Tools/Check-Release.py')
@@ -29,18 +30,26 @@ class ReleasePolicyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.plan(ref='refs/heads/main')
 
-    def test_test_release_is_opt_in_and_identifies_commit_and_run(self):
+    def test_test_release_is_opt_in_and_identifies_version_branch_and_commit(self):
         self.assertNotIn('test_tag', self.plan(event='workflow_dispatch'))
-        options = dict(event='workflow_dispatch', test_release=True, run_id='123', run_attempt='1')
+        options = dict(event='workflow_dispatch', test_release=True)
         result = self.plan(**options)
         self.assertEqual(result['channel'], 'staging')
         self.assertEqual(result['version'], '1.0.0-dev')
-        self.assertEqual(result['test_tag'], 'test-1.0.0-dev-aaaaaaa-123.1')
-        self.assertNotEqual(result['test_tag'], self.plan(**{**options, 'run_attempt': '2'})['test_tag'])
-        self.assertNotEqual(result['test_tag'], self.plan(**{**options, 'run_id': '124'})['test_tag'])
+        self.assertEqual(result['test_tag'], 'test-1.0.0-dev-aaaaaaa')
+        self.assertEqual(result['test_tag'], self.plan(**options)['test_tag'])
         other_commit = policy.build_plan('1.0.0-dev', 'refs/heads/dev', 'workflow_dispatch', '', 'b' * 40,
-                                         test_release=True, run_id='123', run_attempt='1')
+                                         test_release=True)
         self.assertNotEqual(result['test_tag'], other_commit['test_tag'])
+
+    def test_test_tag_uses_base_version_without_duplicating_prerelease_suffix(self):
+        for version in ['1.0.0-dev', '1.0.0-dev.1', '1.0.0-alpha.1', '1.0.0-beta.1', '1.0.0-rc.1']:
+            with self.subTest(version=version):
+                result = self.plan(version=version, event='workflow_dispatch', test_release=True)
+                self.assertEqual(result['test_tag'], 'test-1.0.0-dev-aaaaaaa')
+                self.assertEqual(result['version'], version)
+        self.assertEqual(self.plan(version='1.2.3-dev', event='workflow_dispatch',
+                                   test_release=True)['test_tag'], 'test-1.2.3-dev-aaaaaaa')
 
     def test_test_release_rejects_automatic_runs_and_other_refs(self):
         for options in [
@@ -53,16 +62,14 @@ class ReleasePolicyTests(unittest.TestCase):
         ]:
             with self.subTest(options=options):
                 with self.assertRaises(ValueError):
-                    self.plan(**options, test_release=True, run_id='123', run_attempt='1')
+                    self.plan(**options, test_release=True)
 
-    def test_test_release_requires_valid_run_identity(self):
-        for field in ['run_id', 'run_attempt']:
-            for value in ['', '0', '-1', '1.2', '1\ntest_tag=v1.0.0']:
-                with self.subTest(field=field, value=value):
-                    options = dict(run_id='123', run_attempt='1')
-                    options[field] = value
-                    with self.assertRaises(ValueError):
-                        self.plan(event='workflow_dispatch', test_release=True, **options)
+    def test_test_tag_does_not_change_between_workflow_runs(self):
+        for run_id, attempt in [('123', '1'), ('123', '2'), ('124', '1')]:
+            with self.subTest(run_id=run_id, attempt=attempt):
+                with patch.dict(policy.os.environ, GITHUB_RUN_ID=run_id, GITHUB_RUN_ATTEMPT=attempt):
+                    result = self.plan(event='workflow_dispatch', test_release=True)
+                    self.assertEqual(result['test_tag'], 'test-1.0.0-dev-aaaaaaa')
 
     def test_release_requires_matching_stable_tag_and_main_ancestry(self):
         result = self.plan(version='1.0.0', ref='refs/tags/v1.0.0', on_main=True)

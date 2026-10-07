@@ -51,11 +51,19 @@ gh workflow run build.yml --repo alienatiz/Cinder --ref dev -f test_release=true
 ```
 
 With the draft option selected, the final job prepares a release named
-`Cinder 1.0.0-dev · test <run>.<attempt>`. Its tag is
-`test-1.0.0-dev-<commit>-<run>.<attempt>` and targets the full commit used for the
-build. Each new run or full rerun gets a distinct tag; existing tags and releases
-are not overwritten. The `test-` prefix does not trigger the stable `v*` workflow.
-The app remains `1.0.0-dev` on the `dev` channel.
+`Cinder test-1.0.0-dev-<commit>`. Tags use `test-{version}-{branch}-{commit}`:
+the base version (`1.0.0`), source branch (`dev`), and seven-character commit hash.
+For example, `test-1.0.0-dev-47c362d` targets the full commit used for the build.
+The app retains its full prerelease version, currently `1.0.0-dev`, on the `dev`
+channel. Run IDs and attempt numbers appear in the notes, not the tag or title.
+
+New runs and reruns of the same commit use the same tag. If its release already
+exists for that full commit, the job keeps the original notes and assets and
+skips creation. Inspect an incomplete draft manually before sharing it; a rerun
+does not replace partial uploads. An existing tag without a release, or a release
+for a different target, stops creation for review. Existing tags and releases are
+not moved or overwritten. The `test-` prefix does not trigger the stable `v*`
+workflow. Earlier tags keep their original names and links.
 
 A draft is not publicly downloadable. Review the assets and notes under
 **Releases**, keep **Set as a pre-release** enabled, then publish the draft when

@@ -137,16 +137,35 @@ jobs:
           TEST_TAG: ${{ needs.source.outputs.test_tag }}
           VERSION: ${{ needs.source.outputs.version }}
         run: |
+          gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
+            --jq '.[].tag_name' > "$RUNNER_TEMP/test-release-tags.txt"
+          if grep -Fxq "$TEST_TAG" "$RUNNER_TEMP/test-release-tags.txt"; then
+            existing_target="$(gh release view "$TEST_TAG" --json targetCommitish --jq .targetCommitish)"
+            if [[ "$existing_target" != "$GITHUB_SHA" ]]; then
+              echo "Release $TEST_TAG already exists for another target; inspect it before retrying." >&2
+              exit 1
+            fi
+            echo "Release $TEST_TAG already exists; keeping its original notes and assets."
+            exit 0
+          fi
+          gh api "repos/$GH_REPO/git/matching-refs/tags/$TEST_TAG" \
+            --jq '.[].ref' > "$RUNNER_TEMP/test-git-tags.txt"
+          if grep -Fxq "refs/tags/$TEST_TAG" "$RUNNER_TEMP/test-git-tags.txt"; then
+            echo "Tag $TEST_TAG already exists without a release; inspect it before retrying." >&2
+            exit 1
+          fi
           {
             printf 'Test build of Cinder %s. This is not a stable release.\n\n' "$VERSION"
+            printf 'Source branch: `%s`\n\n' "$GITHUB_REF_NAME"
             printf 'Source commit: `%s`\n\n' "$GITHUB_SHA"
+            printf 'Build run: %s (attempt %s)\n\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
             printf '[Build and validation logs](%s/%s/actions/runs/%s)\n\n' \
               "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
             cat Docs/INSTALLING.md
           } > "$RUNNER_TEMP/test-release-notes.md"
           gh release create "$TEST_TAG" release-assets/* \
             --target "$GITHUB_SHA" --draft --prerelease --latest=false \
-            --title "Cinder $VERSION · test $GITHUB_RUN_ID.$GITHUB_RUN_ATTEMPT" \
+            --title "Cinder $TEST_TAG" \
             --notes-file "$RUNNER_TEMP/test-release-notes.md"
 
   release:
