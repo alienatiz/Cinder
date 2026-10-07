@@ -15,6 +15,12 @@ Cinderは、イヤホンとヘッドホンのためのMac用オーディオバ�
 macOS 14・15・26での互換性検証は進行中です。
 [現在の制限事項と検証状況（英語）](../../VALIDATION.md)をご覧ください。
 
+任意提供の **Intel（x86_64）試験版の対応範囲はmacOS 14〜26のみ**です。
+**Intel向けのmacOS 27以降には対応しません**。
+試験版は[GitHubのプレリリース](https://github.com/alienatiz/Cinder/releases)で配布します。
+[Intel版のインストールと検証範囲（英語）](../INSTALLING-INTEL.md)をご確認ください。
+実際のIntel Macでの検証はまだ完了していません。
+
 ## はじめに
 
 1. ローカルでビルドした `Cinder (Dev).app` を開きます。手順は下の **ローカルビルド** を参照してください。

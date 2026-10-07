@@ -5,14 +5,18 @@ music through a selected output, with timed sessions and optional rest intervals
 
 ## Requirements
 
-The app targets Apple Silicon and macOS 14 or later. Runtime checks on macOS 14,
+The standard **arm64** package targets Apple Silicon and macOS 14 or later.
+An optional **x86_64-experimental** package is for Intel Macs on **macOS 14 through
+26 only**; macOS 27 and later are not supported for Intel. See the
+[Intel installation guide](https://github.com/alienatiz/Cinder/blob/dev/Docs/INSTALLING-INTEL.md)
+for its testing limits. Runtime checks on macOS 14,
 15, and 26 are still pending. Development builds are intended for testing;
 physical-device playback, long sessions, and the seven music arrangements still
 need evaluation before the first stable release.
 
 ## Install and open
 
-1. Download the DMG from the selected build in
+1. Download the DMG for your Mac's processor from the selected build in
    [Cinder Releases](https://github.com/alienatiz/Cinder/releases), or use a local build.
 2. Open the DMG and drag Cinder into Applications. Development builds are named
    **Cinder (Dev)**. Quit an existing copy before replacing it.

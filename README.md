@@ -15,6 +15,12 @@ This is a development build for the first stable release. See the
 Compatibility testing on macOS 14, 15, and 26 is still in progress. See the
 [current limitations and validation status](VALIDATION.md).
 
+Optional **Intel (x86_64) experimental builds support macOS 14 through 26 only**;
+macOS 27 and later are not supported for Intel. Test packages are shared through
+[GitHub pre-releases](https://github.com/alienatiz/Cinder/releases).
+[Intel installation and testing limits](Docs/INSTALLING-INTEL.md) apply; physical
+Intel Mac validation is still pending.
+
 ## Getting started
 
 1. Open your locally built `Cinder (Dev).app`. See **Build locally** below for build instructions.

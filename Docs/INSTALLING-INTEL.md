@@ -1,7 +1,8 @@
 # Installing Cinder for Intel (experimental)
 
-This package is a development build for **64-bit Intel Macs running macOS 14
-or later**, up to the latest macOS supported by the computer. It does not support
+This package is an experimental development build for **64-bit Intel Macs running
+macOS 14 through 26 only**. **macOS 27 and later are not supported for Intel.**
+Your Mac must also support the selected macOS version. It does not support
 32-bit Macs. Cinder 1.0.0's official release target remains Apple Silicon.
 Intel builds are experimental, with no commitment to ongoing Intel releases.
 
@@ -12,7 +13,9 @@ Noise continuity and all seven music arrangements still need listening evaluatio
 
 ## Install and open
 
-1. Use the DMG whose filename ends in **x86_64-experimental.dmg**. Apple Silicon
+1. Download a test pre-release from
+   [Cinder Releases](https://github.com/alienatiz/Cinder/releases) and use the DMG
+   whose filename ends in **x86_64-experimental.dmg**. Apple Silicon
    users should use the standard **arm64.dmg** package instead.
 2. Open the DMG and drag **Cinder (Dev)** into Applications. Quit any existing copy
    before replacing it. Eject the disk image, then open the app from Applications.
@@ -25,6 +28,8 @@ Noise continuity and all seven music arrangements still need listening evaluatio
 
 Intel Macs run this app natively and do not need Rosetta. Existing Cinder settings
 are shared, so this package does not provide a separate settings profile.
+The matching **x86_64-experimental.zip** is an alternative containing the same app.
+SHA-256 files accompany both packages.
 
 ## Testing and feedback
 

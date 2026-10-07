@@ -3,8 +3,9 @@
 The current version is **1.0.0-dev**. The goal is a first stable release verified
 on macOS 14 or later / Apple Silicon. No release date has been set.
 
-An optional Intel 64-bit development build is available for experimental testing;
-see the [build guide](Docs/BUILDING.md#experimental-intel-package). It does not
+An optional Intel 64-bit development build supports **macOS 14 through 26 only**
+for experimental testing; **macOS 27 and later are not supported for Intel**.
+See the [build guide](Docs/BUILDING.md#experimental-intel-package). It does not
 expand the official 1.0.0 support target or promise ongoing Intel releases.
 Physical Intel Mac and older-OS validation remain pending. No 32-bit build is planned.
 

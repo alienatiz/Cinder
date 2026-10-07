@@ -71,6 +71,29 @@ class ReleasePolicyTests(unittest.TestCase):
                     result = self.plan(event='workflow_dispatch', test_release=True)
                     self.assertEqual(result['test_tag'], 'test-1.0.0-dev-aaaaaaa')
 
+    def test_intel_is_optional_and_keeps_arm64_artifacts_and_test_tags(self):
+        self.assertNotIn('intel_artifact', self.plan(event='workflow_dispatch'))
+        for test_release in [False, True]:
+            with self.subTest(test_release=test_release):
+                options = dict(event='workflow_dispatch', test_release=test_release)
+                standard = self.plan(**options)
+                intel = self.plan(**options, intel_experimental=True)
+                self.assertEqual(intel.pop('intel_artifact'),
+                                 'Cinder-staging-1.0.0-dev-aaaaaaa-x86_64-experimental')
+                self.assertEqual(intel, standard)
+
+    def test_intel_rejects_automatic_runs_and_non_dev_refs(self):
+        for options in [
+            dict(event='push'),
+            dict(event='local'),
+            dict(event='pull_request', ref='refs/pull/12/merge', base='dev'),
+            dict(event='workflow_dispatch', ref='refs/heads/main', version='1.0.0'),
+            dict(event='workflow_dispatch', ref='refs/tags/v1.0.0', version='1.0.0', on_main=True),
+        ]:
+            with self.subTest(options=options):
+                with self.assertRaises(ValueError):
+                    self.plan(**options, intel_experimental=True)
+
     def test_release_requires_matching_stable_tag_and_main_ancestry(self):
         result = self.plan(version='1.0.0', ref='refs/tags/v1.0.0', on_main=True)
         self.assertEqual(result['channel'], 'release')

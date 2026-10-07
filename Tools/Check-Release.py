@@ -14,7 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 VERSION_PATTERN = r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(dev(?:\.(0|[1-9]\d*))?|(?:alpha|beta|rc)\.(0|[1-9]\d*)))?'
 
 
-def build_plan(version, ref, event, base_ref, sha, on_main=False, *, test_release=False):
+def build_plan(version, ref, event, base_ref, sha, on_main=False, *, test_release=False,
+               intel_experimental=False):
     match = re.fullmatch(VERSION_PATTERN, version)
     if not match or not re.fullmatch(r'[0-9a-f]{40}', sha):
         raise ValueError('Invalid version or commit identity')
@@ -48,6 +49,10 @@ def build_plan(version, ref, event, base_ref, sha, on_main=False, *, test_releas
                    'dev' if branch == 'dev' else 'candidate')
         artifact = f'Cinder-{channel}-{version}-{sha[:7]}-arm64'
     result = {'version': version, 'channel': channel, 'artifact': artifact}
+    if intel_experimental:
+        if event != 'workflow_dispatch' or ref != 'refs/heads/dev':
+            raise ValueError('Intel experimental packages require a manual dev build')
+        result['intel_artifact'] = f'Cinder-staging-{version}-{sha[:7]}-x86_64-experimental'
     if test_release:
         if event != 'workflow_dispatch' or ref != 'refs/heads/dev':
             raise ValueError('Test release drafts require a manual dev build')
@@ -85,7 +90,8 @@ def main():
         ).returncode == 0
     result = build_plan(version, ref, os.environ.get('GITHUB_EVENT_NAME', 'local'),
                         os.environ.get('GITHUB_BASE_REF', ''), sha, on_main,
-                        test_release=os.environ.get('CINDER_TEST_RELEASE') == 'true')
+                        test_release=os.environ.get('CINDER_TEST_RELEASE') == 'true',
+                        intel_experimental=os.environ.get('CINDER_INTEL_EXPERIMENTAL') == 'true')
     output = ''.join(f'{key}={value}\n' for key, value in result.items())
     if os.environ.get('GITHUB_OUTPUT'):
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as stream:

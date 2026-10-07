@@ -14,6 +14,12 @@ Cinder는 이어폰과 헤드폰을 위한 Mac용 오디오 번인 앱입니다.
 macOS 14·15·26에서의 호환성 검증은 진행 중입니다.
 [현재 제한 사항과 검증 범위(영문)](../../VALIDATION.md)를 확인하세요.
 
+선택 제공되는 **Intel(x86_64) 시험본의 지원 범위는 macOS 14~26**이며,
+**Intel용 macOS 27 이상은 지원하지 않습니다**.
+시험본은 [GitHub 사전 릴리스](https://github.com/alienatiz/Cinder/releases)에서 배포합니다.
+[Intel 설치 및 시험 범위(영문)](../INSTALLING-INTEL.md)를 확인하세요.
+실제 Intel Mac에서의 검증은 아직 남아 있습니다.
+
 ## 처음 시작하기
 
 1. 로컬 빌드한 `Cinder (Dev).app`을 엽니다. 빌드 방법은 아래의 **로컬 빌드**를 참조하세요.

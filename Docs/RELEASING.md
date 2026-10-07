@@ -30,6 +30,8 @@ only; pull requests still receive source checks.
 2. Open **Actions → Build → Run workflow** and select **dev**.
 3. Leave **Prepare a test release draft (dev only)** unchecked for an Actions-only
    build. Check it when preparing files for a test distribution.
+   On `dev`, also select **Include experimental Intel build (macOS 14-26, dev only)**
+   to add Intel packages alongside Apple Silicon packages.
 4. Start the workflow. Confirm its commit matches the intended source, and wait
    for source checks and the macOS job to pass.
 5. Download `Cinder-staging-1.0.0-dev-<commit>-arm64` from the run's **Artifacts**.
@@ -48,6 +50,8 @@ If GitHub CLI is installed and authenticated with repository write access:
 gh workflow run build.yml --repo alienatiz/Cinder --ref dev
 # Also prepare a test release draft.
 gh workflow run build.yml --repo alienatiz/Cinder --ref dev -f test_release=true
+# Prepare one test draft containing Apple Silicon and experimental Intel files.
+gh workflow run build.yml --repo alienatiz/Cinder --ref dev -f test_release=true -f intel_experimental=true
 ```
 
 With the draft option selected, the final job prepares a release named
@@ -58,9 +62,11 @@ The app retains its full prerelease version, currently `1.0.0-dev`, on the `dev`
 channel. Run IDs and attempt numbers appear in the notes, not the tag or title.
 
 New runs and reruns of the same commit use the same tag. If its release already
-exists for that full commit, the job keeps the original notes and assets and
-skips creation. Inspect an incomplete draft manually before sharing it; a rerun
-does not replace partial uploads. An existing tag without a release, or a release
+exists for that full commit and contains all requested asset filenames, the job
+keeps the original notes and assets and skips creation. Missing files stop the job;
+this also catches requesting Intel after an arm64-only draft already exists.
+Inspect an incomplete draft manually before sharing it; a rerun does not replace
+partial uploads or append files. An existing tag without a release, or a release
 for a different target, stops creation for review. Existing tags and releases are
 not moved or overwritten. The `test-` prefix does not trigger the stable `v*`
 workflow. Earlier tags keep their original names and links.
@@ -79,19 +85,25 @@ For a local DMG without GitHub Actions, run `bash Build-DMG.command`; see the
 
 ### Optional Intel test distribution
 
-The official 1.0.0 release targets macOS 14 or later on Apple Silicon. An optional
-`x86_64` development package can be built with
-`bash Build-DMG.command intel-experimental` and shared separately for Intel user
-testing. See [Intel build instructions](BUILDING.md#experimental-intel-package).
-There is no 32-bit build or ongoing Intel support commitment.
+The official 1.0.0 release targets macOS 14 or later on Apple Silicon. Optional
+`x86_64` development packages support **macOS 14 through 26 only**. **macOS 27 and
+later are not supported for Intel.** There is no 32-bit build or ongoing Intel
+support commitment.
 
-For a test pre-release, attach the Intel experimental DMG and matching checksum
-from `dist/intel-experimental/` manually and include the
-[Intel installation and testing limits](INSTALLING-INTEL.md) in its notes.
-Keep it marked as experimental and distinguish Rosetta test results from physical
-Intel Mac results. The existing GitHub workflow continues to produce arm64 files;
-it does not build or attach Intel packages automatically. Do not present the Intel
-package as a stable release or as physically validated without device evidence.
+Select both manual options on `dev` to prepare a single test pre-release draft
+with arm64 and `x86_64-experimental` DMG/ZIP files, checksums, and build details.
+The Intel artifact is named `Cinder-staging-1.0.0-dev-<commit>-x86_64-experimental`.
+The notes include the support range and [Intel installation and testing limits](INSTALLING-INTEL.md).
+With only the Intel option selected, both packages stay in Actions without a release
+draft. Intel is off by default and rejected for automatic runs, `main`, and stable tags.
+
+The Apple Silicon runner cross-compiles Intel and runs its XCTest suite through
+Rosetta, which must already be available on the runner. A failed Intel build or
+test prevents the combined draft from being created. Keep it marked as experimental:
+Rosetta results do not establish physical Intel Mac compatibility. Do not present
+it as a stable release or as physically validated without device evidence.
+Local builds remain available with `bash Build-DMG.command intel-experimental`;
+see the [Intel build instructions](BUILDING.md#experimental-intel-package).
 
 ## Channel selection in the app
 
@@ -127,6 +139,7 @@ within that image. The app itself is built on the `xcode-27` macOS runner.
 2. Prepare dependencies on GitHub's `xcode-27` arm64 runner.
 3. Run the separate Swift 6 check, default-mode XCTest, and release-configuration app build.
 4. Create and verify a DMG; store it alongside an app ZIP preserving executable permissions, checksums, and build identification in Actions.
+   When requested on `dev`, repeat the default-mode tests and packaging for experimental Intel.
 5. Create a Release draft for a stable version tag, or a pre-release draft when explicitly requested on `dev`. Never publish either automatically.
 
 New push/PR checks cancel older checks of the same event kind and branch. A manual

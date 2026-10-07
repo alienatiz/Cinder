@@ -93,10 +93,13 @@ Outputs are kept in `dist/intel-experimental/`, including
 the arm64 outputs. Logs use `.build/golden-gate-app-intel-experimental/`.
 The DMG contains the [Intel installation guide](INSTALLING-INTEL.md).
 
-This is an experimental compatibility build, not a commitment to ongoing Intel
-releases. Intel hardware playback, long sessions, sleep/wake, and older-OS
+Intel support is limited to **macOS 14 through 26**; macOS 27 and later are not
+supported. This is an experimental compatibility build, not a commitment to
+ongoing Intel releases. Intel hardware playback, long sessions, sleep/wake, and older-OS
 runtime checks remain separate from successful compilation and Rosetta tests.
-The standard GitHub workflow and PKG command still build only arm64 packages.
+GitHub manual builds on `dev` can include Intel packages with the **Include
+experimental Intel build** option; see the [release guide](RELEASING.md).
+The default GitHub build and the PKG command remain arm64-only.
 
 ## Project layout
 
