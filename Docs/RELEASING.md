@@ -69,6 +69,22 @@ limits. Publishing a test pre-release does not satisfy the stable release gates.
 For a local DMG without GitHub Actions, run `bash Build-DMG.command`; see the
 [build guide](BUILDING.md).
 
+### Optional Intel test distribution
+
+The official 1.0.0 release targets macOS 14 or later on Apple Silicon. An optional
+`x86_64` development package can be built with
+`bash Build-DMG.command intel-experimental` and shared separately for Intel user
+testing. See [Intel build instructions](BUILDING.md#experimental-intel-package).
+There is no 32-bit build or ongoing Intel support commitment.
+
+For a test pre-release, attach the Intel experimental DMG and matching checksum
+from `dist/intel-experimental/` manually and include the
+[Intel installation and testing limits](INSTALLING-INTEL.md) in its notes.
+Keep it marked as experimental and distinguish Rosetta test results from physical
+Intel Mac results. The existing GitHub workflow continues to produce arm64 files;
+it does not build or attach Intel packages automatically. Do not present the Intel
+package as a stable release or as physically validated without device evidence.
+
 ## Channel selection in the app
 
 Choose `dev` or `stable` in Settings → Updates. The choice is saved in

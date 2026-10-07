@@ -4,7 +4,7 @@ Run commands from the project root, or open `Package.swift` in Xcode.
 The development workflow requires a macOS 27.0 or later host on Apple Silicon, Xcode 27.x,
 the macOS 27 SDK, and a Swift 6.x compiler at version 6.4 or later.
 The app deployment target is **macOS 14.0 or later, arm64**. Build-host requirements
-are separate from the app's minimum OS. Keep a single app binary and codebase;
+are separate from the app's minimum OS. Keep a single codebase;
 guard APIs introduced after macOS 14 with an appropriate fallback when needed.
 Builds on macOS 27 do not establish runtime compatibility with earlier versions.
 
@@ -69,6 +69,34 @@ ad-hoc signing. Test packages can be shared without a Developer ID, but macOS ma
 require an explicit first-launch exception; see [installation instructions](INSTALLING.md).
 Developer ID signing, notarization, and installation checks remain requirements
 for Cinder's stable release.
+
+## Experimental Intel package
+
+Cinder 1.0.0's official release target remains macOS 14 or later on Apple Silicon.
+To prepare an optional Intel test DMG from the development channel:
+
+```bash
+bash Build-DMG.command intel-experimental
+```
+
+This builds the same sources for `x86_64`, runs the tests through Rosetta on the
+Apple Silicon build host, and packages an ad-hoc signed app. Rosetta must already
+be available on the build host. Physical Intel Macs do not need Rosetta to use it.
+The Intel path builds the XCTest bundles and invokes the universal XCTest runner
+with `arch -x86_64`; Xcode 27's SwiftPM test helper is arm64-only. The current test
+suite uses XCTest, not Swift Testing.
+The command rejects non-dev channels; it does not create a stable Intel release.
+Use `bash Build-App.command intel-experimental` to build only the app.
+
+Outputs are kept in `dist/intel-experimental/`, including
+`Cinder-v1.0.0-dev-x86_64-experimental.dmg` and its SHA-256 file. They do not replace
+the arm64 outputs. Logs use `.build/golden-gate-app-intel-experimental/`.
+The DMG contains the [Intel installation guide](INSTALLING-INTEL.md).
+
+This is an experimental compatibility build, not a commitment to ongoing Intel
+releases. Intel hardware playback, long sessions, sleep/wake, and older-OS
+runtime checks remain separate from successful compilation and Rosetta tests.
+The standard GitHub workflow and PKG command still build only arm64 packages.
 
 ## Project layout
 

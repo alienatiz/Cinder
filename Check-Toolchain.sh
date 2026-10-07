@@ -1,6 +1,29 @@
 #!/bin/bash
 # Xcode 27 development host checks; the app deployment target is independent.
 # Callers source Build-Identity.sh first. No global xcode-select changes.
+cinder_configure_app_build() {
+    CINDER_BUILD_VARIANT="${1:-native}"
+    if [ "$#" -gt 1 ]; then
+        echo "Expected at most one build variant: native or intel-experimental." >&2; return 1
+    fi
+    CINDER_APP_OUTPUT="$PWD/dist"
+    CINDER_APP_SCRATCH="$PWD/.build/golden-gate-app"
+    CINDER_INSTALL_GUIDE="Docs/INSTALLING.md"
+    case "$CINDER_BUILD_VARIANT" in
+        native) ;;
+        intel-experimental)
+            if [ "$RELEASE_CHANNEL" != dev ]; then
+                echo "Intel experimental packages require the dev channel." >&2; return 1
+            fi
+            TARGET_ARCH="x86_64"
+            CINDER_APP_OUTPUT="$PWD/dist/intel-experimental"
+            CINDER_APP_SCRATCH="$PWD/.build/golden-gate-app-intel-experimental"
+            CINDER_INSTALL_GUIDE="Docs/INSTALLING-INTEL.md"
+            ;;
+        *) echo "Unknown build variant: $CINDER_BUILD_VARIANT. Use native or intel-experimental." >&2; return 1 ;;
+    esac
+}
+
 cinder_check_toolchain() {
     local system architecture host host_major xcode sdk swift_version swift_minor
     system="$(uname -s)"
@@ -8,7 +31,7 @@ cinder_check_toolchain() {
         echo "Cinder 1.0 must be built and tested on macOS 27 with Xcode 27." >&2; return 1
     fi
     architecture="$(uname -m)"
-    if [ "$architecture" != "$TARGET_ARCH" ]; then
+    if [ "$architecture" != arm64 ]; then
         echo "Use a native Apple Silicon terminal (arm64), not an Intel/Rosetta process." >&2; return 1
     fi
     host="$(sw_vers -productVersion)"; host_major="${host%%.*}"
@@ -36,7 +59,10 @@ cinder_check_toolchain() {
     export SDKROOT
     SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" || return 1
     CINDER_SWIFT_ARGS=(--arch "$TARGET_ARCH" --sdk "$SDKROOT")
-    printf '%s\n' "$xcode" "$swift_version" "SDK: $sdk" "SDK path: $SDKROOT" "Host: $host ($architecture)" "Deployment: $MINIMUM_MACOS"
+    if [ "$TARGET_ARCH" = x86_64 ] && ! arch -x86_64 /usr/bin/true; then
+        echo "Intel experimental builds require Rosetta to run the x86_64 tests on this host." >&2; return 1
+    fi
+    printf '%s\n' "$xcode" "$swift_version" "SDK: $sdk" "SDK path: $SDKROOT" "Host: $host ($architecture)" "Deployment: $MINIMUM_MACOS ($TARGET_ARCH)"
 }
 
 cinder_check_identity() {

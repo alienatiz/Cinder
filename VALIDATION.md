@@ -1,8 +1,37 @@
 # 1.0.0-dev validation status
 
-Evidence includes the **2026-10-03** deployment compatibility build and
+Evidence includes the **2026-10-07** experimental Intel and arm64 package checks,
+the **2026-10-03** deployment compatibility build, and
 **2026-09-25** local/GitHub automated checks and local app inspection.
 Stable distribution and full device validation remain in progress.
+
+## Experimental Intel package and arm64 regression - 2026-10-07
+
+Execution host: macOS 27.0.1 (26A434), Apple Silicon arm64; Xcode 27.0 (27A266a),
+Swift 6.4, selected SDK 27.0. Public version: 1.0.0-dev; internal build: 5.0.1.
+The official 1.0.0 target remains macOS 14 or later on Apple Silicon.
+
+- Default-mode XCTest passed 99 tests (79 core/audio/storage/platform, 20 app)
+  for each architecture: arm64 natively and x86_64 through Rosetta. Intel tests
+  use the universal XCTest runner explicitly; SwiftPM's helper is arm64-only.
+- Both release-configuration app builds and DMGs passed resource and ad-hoc
+  signature checks. Mach-O minimum OS and Info.plist both report macOS 14.0.
+- The Intel DMG passed integrity and SHA-256 checks. Read-only inspection verified
+  an x86_64-only app matching the build, the experimental installation guide,
+  and the Applications link. The image was unmounted after inspection.
+- Source validation passed all nine groups; 13 tooling tests passed, including
+  isolated output/cache paths and development-only Intel packaging.
+- Xcode emits an x86_64 deprecation warning referring to macOS 27 during the
+  Intel builds; the packaged app's minimum OS was separately verified as 14.0.
+  The arm64 build has no compiler warnings. The existing hdiutil commands emit
+  deprecation warnings on this host; image creation and verification succeed.
+
+Logs: `.build/intel-experimental-dmg.log`,
+`.build/golden-gate-app-intel-experimental/`, and
+`.build/intel-change-arm64-regression.log`. Swift 6 mode was not rerun for this
+packaging change. Physical Intel hardware, earlier-OS execution, UI, actual audio
+output, sleep/wake, and long sessions remain unverified. No stable release or
+ongoing Intel support is implied. Existing noise and music listening gates remain open.
 
 ## macOS 14 deployment build — 2026-10-03
 
